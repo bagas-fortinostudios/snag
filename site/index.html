@@ -101,8 +101,7 @@ kbd { font-size: .86em; border: 1px solid var(--hair); padding: 0 4px; backgroun
 
 .sheet { max-width: 1160px; margin: 0 auto; padding-inline: 20px; }
 /* rules run to the paper's edge, not the column's */
-.fullrule { height: 4px; background: var(--rule); }
-.fullrule.thin { height: 1px; margin-top: 3px; }
+.fullrule { height: 3px; background: var(--rule); }
 
 /* ---------- masthead ---------- */
 .mast { padding-top: 34px; padding-bottom: 20px; display: grid; grid-template-columns: 1fr 318px; gap: 44px; align-items: end; }
@@ -145,6 +144,13 @@ kbd { font-size: .86em; border: 1px solid var(--hair); padding: 0 4px; backgroun
 .lede { font-size: 19px; line-height: 1.5; font-weight: 600; max-width: 44ch; margin-bottom: 18px; }
 .prose { max-width: 68ch; display: grid; gap: 13px; }
 .prose strong { font-weight: 600; }
+.tools { display: grid; gap: 0; margin-top: 4px; margin-bottom: 4px; }
+.tool { border-top: 1px solid var(--hair); padding-top: 13px; padding-bottom: 13px; display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 18px; }
+.tool:last-child { border-bottom: 1px solid var(--hair); }
+.tool dt { font-family: 'Chivo', sans-serif; font-weight: 700; font-size: 15px; color: var(--ink); }
+.tool dd { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); max-width: 52ch; }
+.tool dd b { color: var(--ink); font-weight: 600; }
+@media (max-width: 560px) { .tool { grid-template-columns: 1fr; gap: 3px; } }
 .pull { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); padding-top: 12px; padding-bottom: 12px; margin-top: 6px; margin-bottom: 6px; font-family: 'Chivo', sans-serif; font-weight: 700; font-size: 17.5px; line-height: 1.32; letter-spacing: -.012em; max-width: 40ch; }
 
 .field-cyan { background: var(--cyan-field); color: #eef6f9; padding: 22px 24px; margin-top: 20px; margin-bottom: 20px; }
@@ -312,15 +318,28 @@ select.cap { font-family: 'Courier Prime', monospace; font-size: 13px; backgroun
   <article class="entry" id="what">
     <div class="bodycol">
       <h2>What this actually is</h2>
-      <p class="lede">A shell script that picks the right arguments for two programs you already trust. It downloads nothing itself.</p>
+      <p class="lede">A free way to save videos from Instagram, TikTok and YouTube onto your own Mac. You set it up once, then it is one short line every time.</p>
       <div class="prose">
-        <p><strong>yt-dlp</strong> does one hundred percent of the fetching. <strong>ffmpeg</strong> does one hundred percent of the merging, transcoding and audio extraction. Snag is about three hundred lines of shell that decide which flags to hand them, based on the link you pasted. Delete it tomorrow and you lose nothing but typing.</p>
-        <p>What it genuinely adds is judgement rather than capability: the correct sort order so that asking for maximum resolution does not quietly hand you 1080p, browser impersonation only on the sites that need it, and per-link isolation so one dead link does not kill the other nine in a batch.</p>
+        <p>It is free because it is built from open source tools that anyone can read and use. The trade is that you do the setup yourself, in an app called Terminal that comes with every Mac. It takes about ten minutes, and you only ever do it once.</p>
       </div>
+
+      <dl class="tools">
+        <div class="tool"><dt>yt-dlp</dt><dd>Fetches the video from the site. It is the part that actually does the downloading.</dd></div>
+        <div class="tool"><dt>ffmpeg</dt><dd>Joins the picture and the sound into one finished file, and converts it when you want a different format.</dd></div>
+        <div class="tool"><dt>Snag</dt><dd>The short command that runs both of them for you. On their own they need a long line of settings that changes from site to site, and it is easy to get wrong. Snag reads your link, picks the right settings, and does the whole job in one go.</dd></div>
+      </dl>
+
+      <div class="prose">
+        <p>You stay in control of what comes out. Pick the resolution you want, or ask for the audio on its own, and the order form below prints the exact line to paste.</p>
+      </div>
+
       <div class="field-cyan">
-        <h3>This page cannot touch your computer</h3>
-        <p>Every button here copies text to your clipboard. You paste it into Terminal yourself, read it first if you like, and press Enter. A web page in a browser tab cannot run commands on your Mac, cannot see your Downloads folder, and cannot test a download. Any site that claims otherwise is doing the work on their server, with your link, at their quality cap.</p>
+        <h3>This page does nothing to your computer</h3>
+        <p>Every button here copies text. Nothing happens until you paste it into Terminal and press Enter yourself, so you can read it first.</p>
+        <p style="margin-top:11px">The setup installs four things, and all four are open source with their code public on GitHub: <b style="color:#fff;font-weight:600">Homebrew</b>, which installs the other two, <b style="color:#fff;font-weight:600">yt-dlp</b>, <b style="color:#fff;font-weight:600">ffmpeg</b>, and <b style="color:#fff;font-weight:600">Snag</b> itself, whose complete code is printed further down this page for you to read before you run it.</p>
+        <p style="margin-top:11px">None of it touches anything else on your Mac. It saves social media videos, free, and you do it by hand. That is the whole trade: no money, a little effort.</p>
       </div>
+
       <div class="prose">
         <p class="pull">Nothing you paste here leaves your machine. There is no queue and no quality limit because there is nobody in the middle to impose one.</p>
         <p><strong>The honest reason not to use this:</strong> you have to open Terminal once, and follow four steps that involve typing your Mac password into a window that shows nothing while you type. If that is a dealbreaker, close this tab. There is no version of this tool that avoids it, and the sites that promise otherwise are selling your attention to advertisers instead.</p>
