@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-15T00:00:00Z",
+  "title": "Design System: Snag",
+  "extensions": {
+    "themes": {
+      "note": "Every token is declared three times in site/index.html: bare :root (light), @media (prefers-color-scheme: dark) guarded as :root:not([data-theme=\"light\"]), and :root[data-theme=\"dark\"]. Frontmatter carries the light values; the dark value of each token is recorded as colorMeta.<token>.dark.",
+      "grain": { "light": "0.55", "dark": "0.9", "purpose": "Opacity of the fixed pulp.png tile behind the page; the dark sheet takes more grain, as a press proof would." }
+    },
+    "colorMeta": {
+      "stock": { "role": "neutral", "displayName": "Pulp Stock", "canonical": "#d3d1c6", "dark": "#16160f", "purpose": "The sheet. Page ground and input ground, overlaid by the fixed grain tile.", "tonalRamp": ["#26251f", "#3c3b32", "#535146", "#6b695c", "#868373", "#a3a08f", "#c0bdac", "#e3e1d5"] },
+      "stock-2": { "role": "neutral", "displayName": "Second Stock", "canonical": "#c9c7bb", "dark": "#1e1e15", "purpose": "Half-tone deeper sheet: order stub, coupon perforation, kbd keys, scrollbar track.", "tonalRamp": ["#242420", "#393832", "#4f4e45", "#66645a", "#807e71", "#9c9a8b", "#b9b7a7", "#dedcd0"] },
+      "ink": { "role": "neutral", "displayName": "Press Ink", "canonical": "#15150e", "dark": "#e2dfd0", "purpose": "All headings, prose and hard strokes (1px stub/input/coupon, 2px section underlines).", "tonalRamp": ["#0d0d08", "#1d1d14", "#333329", "#4c4c40", "#66665a", "#858577", "#a8a89a", "#d2d2c5"] },
+      "ink-2": { "role": "neutral", "displayName": "Ink Two", "canonical": "#4f4f42", "dark": "#a8a496", "purpose": "Secondary prose: colophon, step explanations, option descriptions, rail heads.", "tonalRamp": ["#1e1e18", "#2f2f27", "#414137", "#535347", "#6a6a5c", "#878777", "#a8a897", "#d0d0c2"] },
+      "ink-3": { "role": "neutral", "displayName": "Ink Three", "canonical": "#6d6d5e", "dark": "#8a8677", "purpose": "Faintest set ink: unticked tick-box stroke, plate captions, scrollbar thumb.", "tonalRamp": ["#22221d", "#34342c", "#46463c", "#59594c", "#6d6d5e", "#8b8b7c", "#adad9e", "#d4d4c8"] },
+      "cyan": { "role": "primary", "displayName": "Process Cyan (ink)", "canonical": "#0b6a89", "dark": "#4aa8c9", "purpose": "Links, recognised-platform marks in the order queue. Brightens in dark so link ink stays legible on dark stock.", "tonalRamp": ["#04232e", "#063648", "#084c63", "#0b6a89", "#1186ad", "#2ba5cd", "#6cc3e0", "#b6e2f0"] },
+      "cyan-field": { "role": "primary", "displayName": "Process Cyan (field)", "canonical": "#0b6a89", "dark": "#0d5570", "purpose": "Whole-region ground for disclosure blocks and ::selection. Identical to cyan in light; deepens in dark so near-white text on the field keeps contrast.", "tonalRamp": ["#04232e", "#063648", "#0d5570", "#0b6a89", "#1186ad", "#2ba5cd", "#6cc3e0", "#b6e2f0"] },
+      "verm": { "role": "secondary", "displayName": "Cheap Vermilion", "canonical": "#b8371c", "dark": "#e0603f", "purpose": "Stamp ink only: step numerals, refusal crosses, focus ring, caret, hover ink, confirmed-copy field.", "tonalRamp": ["#3a1108", "#571a0d", "#752313", "#932c17", "#b8371c", "#d2593c", "#e3907b", "#f3c7bc"] },
+      "plate": { "role": "tertiary", "displayName": "Plate Black", "canonical": "#16160f", "dark": "#0d0d08", "purpose": "The catalog photograph: command plates, plate captions, source listing. Does not invert with the theme.", "tonalRamp": ["#0d0d08", "#16160f", "#22221a", "#333329", "#4b4b3f", "#6b6b5c", "#949485", "#c8c8ba"] },
+      "plate-tx": { "role": "tertiary", "displayName": "Plate Text", "canonical": "#e4e1d3", "dark": "#e4e1d3", "purpose": "Near-white command text on the plate. Same value in both themes.", "tonalRamp": ["#26251e", "#3a382e", "#4f4d40", "#676454", "#84806d", "#a4a08b", "#c4c1ae", "#eeecdf"] },
+      "plate-rl": { "role": "tertiary", "displayName": "Plate Rule", "canonical": "#34342a", "dark": "#34342a", "purpose": "1px divider between a plate caption bar and its plate.", "tonalRamp": ["#141410", "#22221b", "#2e2e25", "#34342a", "#4a4a3d", "#666655", "#8e8e7c", "#c2c2b3"] },
+      "btn-face": { "role": "neutral", "displayName": "Button Face", "canonical": "#cfcdc2", "dark": "#cfcdc2", "purpose": "Printed label stock for copy buttons; stays light in both themes.", "tonalRamp": ["#26251f", "#3b3a32", "#514f45", "#696759", "#848171", "#a19e8d", "#bfbcac", "#e5e3d9"] },
+      "btn-face2": { "role": "neutral", "displayName": "Quiet Button Face", "canonical": "#a3a196", "dark": "#9a988c", "purpose": "Darker label stock for the secondary button beside a primary.", "tonalRamp": ["#1f1f1a", "#31312a", "#43433a", "#57564b", "#6e6d5f", "#8a8879", "#a7a596", "#cfcdc0"] },
+      "rule": { "role": "neutral", "displayName": "Rule", "canonical": "#15150e", "dark": "#e2dfd0", "purpose": "Heavy separating rule: 3px entry openers and 4px full-bleed bars. Tracks the ink, so it inverts with the theme.", "tonalRamp": ["#0d0d08", "#1d1d14", "#333329", "#4c4c40", "#66665a", "#858577", "#a8a89a", "#d2d2c5"] },
+      "hair": { "role": "neutral", "displayName": "Hairline", "canonical": "rgba(21,21,14,.26)", "dark": "rgba(226,223,208,.24)", "purpose": "26%-opacity ink hair dividing rows, rails and dotted contents leaders." }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Masthead", "purpose": "The name, once per sheet. Chivo 900 caps at display scale." },
+      "headline": { "displayName": "Entry Heading", "purpose": "Opens each catalog entry." },
+      "title": { "displayName": "Strap / Pull", "purpose": "Masthead strap at 26ch, step headings, ruled pull statements at 40ch." },
+      "lede": { "displayName": "Lede", "purpose": "One honest sentence under every entry heading, max 44ch." },
+      "body": { "displayName": "Evaluation Prose", "purpose": "Source Serif 4 running copy, max 68ch." },
+      "label": { "displayName": "Catalog Label", "purpose": "Plate captions, coupon field labels, rail heads, all button text. 11-13px, .1em to .16em." },
+      "mono": { "displayName": "Marginalia", "purpose": "Colophon, rail copy, queue rows, landing line, inputs and select." },
+      "plate": { "displayName": "Command", "purpose": "Command plate text; the source listing drops to 12px / 1.62." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "strike", "value": "strike 90ms steps(2, end); from scale(1.2) rotate(-16deg) to rotate(-7deg)", "purpose": "The only animation in the build. Lands the tick stamp inside its box. Declared only inside @media (prefers-reduced-motion: no-preference)." },
+      { "name": "copy-confirm", "value": "1600ms state hold, no transition", "purpose": "A copied button holds the vermilion field with white text, then reverts. An instant swap, not a fade." }
+    ],
+    "breakpoints": [
+      { "name": "sheet", "value": "1160px", "purpose": "Max width of .sheet; full-bleed rules sit outside it." },
+      { "name": "fold", "value": "860px", "purpose": "The only breakpoint. Below it the masthead and entries collapse to one column, the stub hides, and plates wrap with a hanging indent." }
+    ],
+    "rasters": [
+      { "file": "site/assets/pulp.png", "size": "256x256", "use": "Fixed body::before ground tile at opacity var(--grain); also the coupon inner ground.", "provenance": "PNG tEXt impeccable:prompt, procedurally generated by .impeccable/assets/mkassets.py" },
+      { "file": "site/assets/halftone.png", "size": "8x8", "use": "45-degree dot screen tiled on every .plate, .plate-head and .listing.", "provenance": "PNG tEXt impeccable:prompt, procedurally generated by .impeccable/assets/mkassets.py" },
+      { "file": "site/assets/stamp.png", "size": "128x128", "use": "Inked check impression revealed inside every ticked box, resting at rotate(-7deg) and overhanging its box.", "provenance": "PNG tEXt impeccable:prompt, procedurally generated by .impeccable/assets/mkassets.py" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Stamp Button",
+      "kind": "button",
+      "refersTo": "button-stamp",
+      "description": "The printed label that copies a command. Takes the vermilion field for 1600ms once it has copied.",
+      "html": "<button class=\"ds-stamp\" type=\"button\">Copy</button> <button class=\"ds-stamp ds-stamp-quiet\" type=\"button\">Show raw yt-dlp</button> <button class=\"ds-stamp\" type=\"button\" data-done=\"1\">Copied</button>",
+      "css": ".ds-stamp { font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; white-space: nowrap; background: var(--btn-face, #cfcdc2); color: #15150e; border: 0; border-radius: 0; padding: 6px 13px; cursor: pointer; } .ds-stamp-quiet { background: var(--btn-face2, #a3a196); } .ds-stamp:hover { background: #fff; } .ds-stamp[data-done=\"1\"] { background: var(--verm, #b8371c); color: #fff; } .ds-stamp:disabled { opacity: .4; cursor: not-allowed; } .ds-stamp:focus-visible { outline: 2px solid var(--verm, #b8371c); outline-offset: 2px; }"
+    },
+    {
+      "name": "Command Plate",
+      "kind": "custom",
+      "refersTo": "plate-command",
+      "description": "A dark halftone-screened plate holding a command, with a caption bar and copy button above it. Each real line is its own span so the mobile hanging indent applies per line.",
+      "html": "<div class=\"ds-plate-head\"><span>Paste into Terminal</span><button class=\"ds-plate-btn\" type=\"button\">Copy</button></div><div class=\"ds-plate\"><span class=\"ds-ln\">pipx install \"yt-dlp[default,curl-cffi]\"</span><span class=\"ds-ln\">pipx ensurepath</span></div>",
+      "css": ".ds-plate-head { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap; background-color: var(--plate, #16160f); background-image: url(assets/halftone.png); color: var(--ink-3, #6d6d5e); border-bottom: 1px solid var(--plate-rl, #34342a); padding: 8px 15px; font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; } .ds-plate { background-color: var(--plate, #16160f); background-image: url(assets/halftone.png); color: var(--plate-tx, #e4e1d3); font-family: 'Courier Prime', 'Courier New', monospace; font-size: 13px; line-height: 1.7; padding: 14px 15px; overflow-x: auto; white-space: pre; border-radius: 0; } .ds-ln { display: block; } .ds-plate-btn { font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; background: var(--btn-face, #cfcdc2); color: #15150e; border: 0; padding: 6px 13px; cursor: pointer; } .ds-plate-btn:hover { background: #fff; } @media (max-width: 860px) { .ds-plate { white-space: pre-wrap; overflow-wrap: anywhere; } .ds-ln { padding-left: 1.3em; text-indent: -1.3em; } }"
+    },
+    {
+      "name": "Tick Row",
+      "kind": "custom",
+      "refersTo": "button-stamp",
+      "description": "The coupon's option control and the system's state model: a bare aria-pressed button whose ticked state is an inked stamp landing crooked in the box, never a fill or a hue.",
+      "html": "<div class=\"ds-modes\"><button class=\"ds-mode\" type=\"button\" aria-pressed=\"true\"><span class=\"ds-tick\"><img src=\"assets/stamp.png\" alt=\"\" aria-hidden=\"true\"></span><span><span class=\"ds-nm\">Ready to edit</span><span class=\"ds-ds\">The highest resolution that exists in H.264. No conversion.</span></span><span class=\"ds-sp\">h264 / aac / mp4</span></button><button class=\"ds-mode\" type=\"button\" aria-pressed=\"false\"><span class=\"ds-tick\"><img src=\"assets/stamp.png\" alt=\"\" aria-hidden=\"true\"></span><span><span class=\"ds-nm\">Audio only</span><span class=\"ds-ds\">Throws the picture away.</span></span><span class=\"ds-sp\">mp3 / cover art</span></button></div>",
+      "css": ".ds-modes { display: grid; } .ds-mode { display: grid; grid-template-columns: 26px minmax(0,1fr) auto; gap: 12px; align-items: baseline; width: 100%; text-align: left; background: none; border: 0; border-top: 1px solid var(--hair, rgba(21,21,14,.26)); padding: 11px 0; font: inherit; color: var(--ink-2, #4f4f42); cursor: pointer; } .ds-mode:last-child { border-bottom: 1px solid var(--hair, rgba(21,21,14,.26)); } .ds-tick { width: 18px; height: 18px; border: 1.5px solid var(--ink-3, #6d6d5e); position: relative; align-self: start; margin-top: 2px; display: block; } .ds-tick img { position: absolute; left: -7px; top: -9px; width: 31px; height: 31px; display: none; transform: rotate(-7deg); } .ds-nm { font-family: 'Chivo', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -.008em; display: block; } .ds-ds { font-family: 'Source Serif 4', Georgia, serif; font-size: 14.5px; line-height: 1.45; display: block; margin-top: 2px; max-width: 54ch; } .ds-sp { font-family: 'Courier Prime', monospace; font-size: 11.5px; white-space: nowrap; color: var(--ink-2, #4f4f42); } .ds-mode[aria-pressed=\"true\"] { color: var(--ink, #15150e); } .ds-mode[aria-pressed=\"true\"] .ds-tick { border-color: var(--ink, #15150e); } .ds-mode[aria-pressed=\"true\"] .ds-tick img { display: block; } .ds-mode:hover .ds-nm { color: var(--verm, #b8371c); } .ds-mode:focus-visible { outline: 2px solid var(--verm, #b8371c); outline-offset: 2px; } @media (prefers-reduced-motion: no-preference) { .ds-tick img { animation: ds-strike 90ms steps(2, end); } } @keyframes ds-strike { from { transform: scale(1.2) rotate(-16deg); } to { transform: scale(1) rotate(-7deg); } }"
+    },
+    {
+      "name": "Cyan Field Block",
+      "kind": "card",
+      "refersTo": "field-cyan",
+      "description": "A whole region flooded with the process cyan, reserved for the statements the page most needs believed. The system's substitute for a card.",
+      "html": "<div class=\"ds-field\"><h3>This page cannot touch your computer</h3><p>Every button here copies text to your clipboard. You paste it into Terminal yourself.</p></div>",
+      "css": ".ds-field { background: var(--cyan-field, #0b6a89); color: #eef6f9; padding: 22px 24px; margin: 20px 0; border-radius: 0; } .ds-field h3 { font-family: 'Chivo', Helvetica, Arial, sans-serif; color: #fff; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; margin: 0 0 8px; } .ds-field p { font-family: 'Source Serif 4', Georgia, serif; font-size: 16.5px; line-height: 1.62; color: #e4f0f5; max-width: 62ch; margin: 0; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-text",
+      "description": "Stock ground, hard ink stroke, typewriter text, vermilion caret. Used for the link textarea and the masthead stub input.",
+      "html": "<textarea class=\"ds-input\" rows=\"3\" spellcheck=\"false\" placeholder=\"https://www.tiktok.com/@user/video/...\"></textarea>",
+      "css": ".ds-input { width: 100%; display: block; background: var(--stock, #d3d1c6); color: var(--ink, #15150e); border: 1px solid var(--ink, #15150e); border-radius: 0; padding: 11px 12px; font-family: 'Courier Prime', 'Courier New', monospace; font-size: 13px; line-height: 1.7; resize: vertical; min-height: 84px; caret-color: var(--verm, #b8371c); } .ds-input::placeholder { color: var(--ink-2, #4f4f42); opacity: 1; } .ds-input:focus-visible { outline: 2px solid var(--verm, #b8371c); outline-offset: 2px; }"
+    },
+    {
+      "name": "Warning Block",
+      "kind": "custom",
+      "refersTo": "warn-block",
+      "description": "A hard vermilion-ruled box for the one thing that reliably frightens people (the blind password prompt). Border only; vermilion stays a mark.",
+      "html": "<div class=\"ds-warn\">It will ask for your Mac login password. Nothing appears while you type. The screen is not frozen.</div>",
+      "css": ".ds-warn { border: 2px solid var(--verm, #b8371c); border-radius: 0; padding: 11px 13px; font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 1.45; max-width: 58ch; color: var(--ink, #15150e); }"
+    },
+    {
+      "name": "Margin Rail Contents",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "The catalog's access column: a ruled section head over dotted-leader contents rows. The page has no navigation bar; this is the only wayfinding.",
+      "html": "<section class=\"ds-rail\"><h3>On this sheet</h3><nav class=\"ds-toc\"><a href=\"#what\">What this is</a><a href=\"#setup\">Setup</a><a href=\"#order\">Order form</a></nav></section>",
+      "css": ".ds-rail h3 { font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-2, #4f4f42); border-bottom: 1px solid var(--hair, rgba(21,21,14,.26)); padding-bottom: 5px; margin: 0 0 9px; } .ds-toc { display: grid; gap: 5px; } .ds-toc a { font-family: 'Chivo', sans-serif; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink, #15150e); text-decoration: none; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; } .ds-toc a::after { content: ''; flex: 1; border-bottom: 1px dotted var(--hair, rgba(21,21,14,.26)); } .ds-toc a:hover { color: var(--verm, #b8371c); } .ds-toc a:focus-visible { outline: 2px solid var(--verm, #b8371c); outline-offset: 2px; }"
+    },
+    {
+      "name": "Coupon",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The tear-off order form: a 10px radial-gradient perforation border around a ruled inner sheet on pulp ground. The only gradient in the build.",
+      "html": "<div class=\"ds-coupon\"><div class=\"ds-coupon-in\"><h3>Download order <span>no links yet</span></h3><div class=\"ds-cline\">Links, one per line</div></div></div>",
+      "css": ".ds-coupon { padding: 4px; background-color: var(--stock-2, #c9c7bb); background-image: radial-gradient(circle at 5px 5px, var(--stock, #d3d1c6) 3.4px, transparent 3.6px); background-size: 10px 10px; } .ds-coupon-in { background-color: var(--stock-2, #c9c7bb); background-image: url(assets/pulp.png); border: 1px solid var(--ink, #15150e); padding: 20px; } .ds-coupon h3 { font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .16em; color: var(--ink, #15150e); border-bottom: 2px solid var(--ink, #15150e); padding-bottom: 7px; margin: 0 0 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; } .ds-coupon h3 span { font-family: 'Courier Prime', monospace; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 12px; color: var(--ink-2, #4f4f42); } .ds-cline { font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .13em; color: var(--ink-2, #4f4f42); margin-bottom: 7px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Access-to-Tools Catalog Sheet",
+    "overview": "Snag is a cheap-offset mail-order tool catalog printed between 1968 and 1974, reproduced exactly. The ground is pulp stock, grey-olive and deliberately not cream, carried by a real 256x256 procedural grain tile fixed behind the page rather than a flat fill. Ink is heavy near-black. One process cyan carries whole regions of the sheet, not accents. A cheap vermilion is held back for stamps and marks only. Commands are set in dark halftone plates the way a catalog sets its photographs, and those plates stay dark in both themes because a photograph does not invert with the paper.\n\nDensity is catalog density: every entry is its own two-column sheet with a marginal access rail, and the rails, rules and stamps do all the separating. There is no card system, no border-radius anywhere in the build, and no box-shadow anywhere in the build. Depth is ink weight and full-field colour, nothing else. Dark theme is not a second world; it is the same sheet as a press proof, with ink and stock swapped and the grain pushed harder.\n\nThe page's authority is its honesty, and the visual system serves that: the honest paragraph is Source Serif, the machine is Courier Prime, and the imperative is Chivo 900 caps. Confirmed rejection: the centred dark terminal hero with a one-line install box and a copy button. This sheet does not centre, does not put a hero image anywhere, and prints the whole script on the page before it asks anyone to run anything.",
+    "keyCharacteristics": [
+      "Pulp stock ground with a real grain tile at token-controlled opacity (0.55 light, 0.9 dark)",
+      "One process cyan as a field, one vermilion as a mark, nothing else chromatic",
+      "Dark halftone command plates that never invert with the theme",
+      "Rules and hairlines instead of cards; zero radius, zero shadow",
+      "Three fixed voices: Chivo display and UI, Source Serif 4 prose, Courier Prime machine",
+      "Stamped motion only: one 90ms step animation, dropped entirely under reduced motion"
+    ],
+    "rules": [
+      { "name": "The Colour-Is-The-Sheet Rule", "body": "Cyan arrives as a field, not a mark. When cyan appears, it owns a whole block edge to edge with its own light text; it is never a tint, a badge, or a 1px accent border.", "section": "colors" },
+      { "name": "The Vermilion-Is-A-Mark Rule", "body": "Vermilion is only ever a stamp, a numeral, a cross, a caret, a focus ring, or a hover ink. The single exception in the build is the 1600ms confirmed-copy state on a stamp button, which is itself a stamp landing. Never a section ground, never body text.", "section": "colors" },
+      { "name": "The Plate Does Not Invert Rule", "body": "The stock and the ink swap between themes. The plate, its halftone screen and its text do not. A command plate is a photograph on the sheet, and it reads the same in light and in dark.", "section": "colors" },
+      { "name": "The Split-Token Rule", "body": "Where one token cannot hold both themes at legible contrast, split it by job, not by tint: cyan is ink, cyan-field is ground. Read the split as a contrast mechanism, not as a two-step ramp.", "section": "colors" },
+      { "name": "The Three Voices Rule", "body": "Chivo speaks for the catalog (names, headings, labels, buttons). Source Serif 4 speaks the honest evaluation. Courier Prime speaks for the machine and the margin. A voice never takes another's job; prose is never set in mono for texture, and a command is never set in the serif.", "section": "typography" },
+      { "name": "The One Imperative Per Sheet Rule", "body": "Display scale is spent once, on the masthead. Every other heading steps down to headline or below, so the sheet has exactly one thing shouting.", "section": "typography" },
+      { "name": "The Printed-Depth Rule", "body": "Depth comes from ink weight, grain and field colour. If a surface needs to feel separate, give it a rule, a field or a plate. Never a shadow, never a glow, never a lift on hover.", "section": "elevation" },
+      { "name": "The No-Card Rule", "body": "There is no card. Separation is a rule, a hairline, a stamp or a full-field colour. Nothing gets a rounded corner, a lifted edge or a container chrome it did not earn as print.", "section": "shapes" },
+      { "name": "The Stamped-Motion Rule", "body": "Motion lands, it does not travel. Every animated state change is a stepped impression of 90ms or less, and under reduced motion the system drops to no movement at all rather than to a shortened tween.", "section": "components" },
+      { "name": "The Every-Option-Present Rule", "body": "All choices are printed at once, with the chosen one struck forward by the stamp. Nothing collapses into a dropdown to hide what the visitor is turning down, except the native resolution cap, which is a numeric range rather than a set of choices.", "section": "components" }
+    ],
+    "dos": [
+      "Do paint cyan as a whole field with its own light text, not as an accent or a tint.",
+      "Do keep vermilion for marks: numerals, crosses, carets, focus rings, hover ink and stamps.",
+      "Do set every command in a dark halftone plate, one <span class=\"ln\"> per real line, with the exact text on dataset.raw for copying.",
+      "Do separate with rules, hairlines, stamps and full-field colour; use a 3px rule to open an entry and a full-bleed 4px rule to close a region.",
+      "Do put .fullrule outside .sheet so rules reach the viewport edge while type stays in the 1160px column.",
+      "Do keep .bodycol before .marg in the DOM and restore the visual left rail with CSS order.",
+      "Do hold the three voices apart: Chivo for names, headings, labels and buttons; Source Serif 4 for evaluation prose; Courier Prime for commands and marginalia.",
+      "Do show state as an inked impression at rotate(-7deg), not as a fill or a hue change.",
+      "Do cap measure: 44ch for a lede, 68ch for prose, 62ch inside a cyan field, 40ch for a pull statement.",
+      "Do theme the browser surfaces (::selection, focus ring, scrollbar, caret) so the sheet does not stop at the content edge."
+    ],
+    "donts": [
+      "Don't add a border-radius. The build has none, anywhere, in any state.",
+      "Don't add a box-shadow, a glow, or a hover lift. Depth is ink weight, grain and field colour.",
+      "Don't introduce a card, a panel or a tile. Rules and plates do the separating.",
+      "Don't invert the command plate with the theme. The plate is a photograph, and it stays dark on light and on dark stock.",
+      "Don't let a fourth colour in. The system is stock, ink, one cyan, one vermilion.",
+      "Don't animate anything longer than 90ms or with an eased tween; steps(2, end) is the grammar, and reduced motion means no movement.",
+      "Don't spend display scale twice on one sheet.",
+      "Don't clip a command. Below 860px plates wrap with a 1.3em hanging indent per line.",
+      "Don't put a hero image, a centred terminal block, or a single install box with a copy button at the top of a sheet. That is the category default this world refuses."
+    ]
+  }
+}

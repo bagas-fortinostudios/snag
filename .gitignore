@@ -1,0 +1,9 @@
+.DS_Store
+._*
+
+# local build/review scratch, not part of the site
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/questions/
+.playwright-mcp/
+.netlify/
