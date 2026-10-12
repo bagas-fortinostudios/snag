@@ -1,165 +1,518 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-15T00:00:00Z",
+  "generatedAt": "2026-10-13T00:00:00Z",
   "title": "Design System: Snag",
   "extensions": {
-    "themes": {
-      "note": "Every token is declared three times in site/index.html: bare :root (light), @media (prefers-color-scheme: dark) guarded as :root:not([data-theme=\"light\"]), and :root[data-theme=\"dark\"]. Frontmatter carries the light values; the dark value of each token is recorded as colorMeta.<token>.dark.",
-      "grain": { "light": "0.55", "dark": "0.9", "purpose": "Opacity of the fixed pulp.png tile behind the page; the dark sheet takes more grain, as a press proof would." }
-    },
     "colorMeta": {
-      "stock": { "role": "neutral", "displayName": "Pulp Stock", "canonical": "#d3d1c6", "dark": "#16160f", "purpose": "The sheet. Page ground and input ground, overlaid by the fixed grain tile.", "tonalRamp": ["#26251f", "#3c3b32", "#535146", "#6b695c", "#868373", "#a3a08f", "#c0bdac", "#e3e1d5"] },
-      "stock-2": { "role": "neutral", "displayName": "Second Stock", "canonical": "#c9c7bb", "dark": "#1e1e15", "purpose": "Half-tone deeper sheet: order stub, coupon perforation, kbd keys, scrollbar track.", "tonalRamp": ["#242420", "#393832", "#4f4e45", "#66645a", "#807e71", "#9c9a8b", "#b9b7a7", "#dedcd0"] },
-      "ink": { "role": "neutral", "displayName": "Press Ink", "canonical": "#15150e", "dark": "#e2dfd0", "purpose": "All headings, prose and hard strokes (1px stub/input/coupon, 2px section underlines).", "tonalRamp": ["#0d0d08", "#1d1d14", "#333329", "#4c4c40", "#66665a", "#858577", "#a8a89a", "#d2d2c5"] },
-      "ink-2": { "role": "neutral", "displayName": "Ink Two", "canonical": "#4f4f42", "dark": "#a8a496", "purpose": "Secondary prose: colophon, step explanations, option descriptions, rail heads.", "tonalRamp": ["#1e1e18", "#2f2f27", "#414137", "#535347", "#6a6a5c", "#878777", "#a8a897", "#d0d0c2"] },
-      "ink-3": { "role": "neutral", "displayName": "Ink Three", "canonical": "#6d6d5e", "dark": "#8a8677", "purpose": "Faintest set ink: unticked tick-box stroke, plate captions, scrollbar thumb.", "tonalRamp": ["#22221d", "#34342c", "#46463c", "#59594c", "#6d6d5e", "#8b8b7c", "#adad9e", "#d4d4c8"] },
-      "cyan": { "role": "primary", "displayName": "Process Cyan (ink)", "canonical": "#0b6a89", "dark": "#4aa8c9", "purpose": "Links, recognised-platform marks in the order queue. Brightens in dark so link ink stays legible on dark stock.", "tonalRamp": ["#04232e", "#063648", "#084c63", "#0b6a89", "#1186ad", "#2ba5cd", "#6cc3e0", "#b6e2f0"] },
-      "cyan-field": { "role": "primary", "displayName": "Process Cyan (field)", "canonical": "#0b6a89", "dark": "#0d5570", "purpose": "Whole-region ground for disclosure blocks and ::selection. Identical to cyan in light; deepens in dark so near-white text on the field keeps contrast.", "tonalRamp": ["#04232e", "#063648", "#0d5570", "#0b6a89", "#1186ad", "#2ba5cd", "#6cc3e0", "#b6e2f0"] },
-      "verm": { "role": "secondary", "displayName": "Cheap Vermilion", "canonical": "#b8371c", "dark": "#e0603f", "purpose": "Stamp ink only: step numerals, refusal crosses, focus ring, caret, hover ink, confirmed-copy field.", "tonalRamp": ["#3a1108", "#571a0d", "#752313", "#932c17", "#b8371c", "#d2593c", "#e3907b", "#f3c7bc"] },
-      "plate": { "role": "tertiary", "displayName": "Plate Black", "canonical": "#16160f", "dark": "#0d0d08", "purpose": "The catalog photograph: command plates, plate captions, source listing. Does not invert with the theme.", "tonalRamp": ["#0d0d08", "#16160f", "#22221a", "#333329", "#4b4b3f", "#6b6b5c", "#949485", "#c8c8ba"] },
-      "plate-tx": { "role": "tertiary", "displayName": "Plate Text", "canonical": "#e4e1d3", "dark": "#e4e1d3", "purpose": "Near-white command text on the plate. Same value in both themes.", "tonalRamp": ["#26251e", "#3a382e", "#4f4d40", "#676454", "#84806d", "#a4a08b", "#c4c1ae", "#eeecdf"] },
-      "plate-rl": { "role": "tertiary", "displayName": "Plate Rule", "canonical": "#34342a", "dark": "#34342a", "purpose": "1px divider between a plate caption bar and its plate.", "tonalRamp": ["#141410", "#22221b", "#2e2e25", "#34342a", "#4a4a3d", "#666655", "#8e8e7c", "#c2c2b3"] },
-      "btn-face": { "role": "neutral", "displayName": "Button Face", "canonical": "#cfcdc2", "dark": "#cfcdc2", "purpose": "Printed label stock for copy buttons; stays light in both themes.", "tonalRamp": ["#26251f", "#3b3a32", "#514f45", "#696759", "#848171", "#a19e8d", "#bfbcac", "#e5e3d9"] },
-      "btn-face2": { "role": "neutral", "displayName": "Quiet Button Face", "canonical": "#a3a196", "dark": "#9a988c", "purpose": "Darker label stock for the secondary button beside a primary.", "tonalRamp": ["#1f1f1a", "#31312a", "#43433a", "#57564b", "#6e6d5f", "#8a8879", "#a7a596", "#cfcdc0"] },
-      "rule": { "role": "neutral", "displayName": "Rule", "canonical": "#15150e", "dark": "#e2dfd0", "purpose": "Heavy separating rule: 3px entry openers and 4px full-bleed bars. Tracks the ink, so it inverts with the theme.", "tonalRamp": ["#0d0d08", "#1d1d14", "#333329", "#4c4c40", "#66665a", "#858577", "#a8a89a", "#d2d2c5"] },
-      "hair": { "role": "neutral", "displayName": "Hairline", "canonical": "rgba(21,21,14,.26)", "dark": "rgba(226,223,208,.24)", "purpose": "26%-opacity ink hair dividing rows, rails and dotted contents leaders." }
+      "system-blue": {
+        "role": "primary",
+        "displayName": "System Blue",
+        "canonical": "#0071e3",
+        "tonalRamp": [
+          "oklch(15% 0.17 255)",
+          "oklch(25% 0.17 255)",
+          "oklch(35% 0.17 255)",
+          "oklch(48% 0.17 255)",
+          "oklch(60% 0.17 255)",
+          "oklch(72% 0.17 255)",
+          "oklch(84% 0.17 255)",
+          "oklch(95% 0.17 255)"
+        ]
+      },
+      "system-blue-hover": {
+        "role": "primary",
+        "displayName": "Pressed Blue",
+        "canonical": "#0062c4",
+        "tonalRamp": [
+          "oklch(15% 0.16 255)",
+          "oklch(25% 0.16 255)",
+          "oklch(35% 0.16 255)",
+          "oklch(48% 0.16 255)",
+          "oklch(60% 0.16 255)",
+          "oklch(72% 0.16 255)",
+          "oklch(84% 0.16 255)",
+          "oklch(95% 0.16 255)"
+        ]
+      },
+      "link-blue": {
+        "role": "primary",
+        "displayName": "Link Blue",
+        "canonical": "#0066cc",
+        "tonalRamp": [
+          "oklch(15% 0.16 255)",
+          "oklch(25% 0.16 255)",
+          "oklch(35% 0.16 255)",
+          "oklch(48% 0.16 255)",
+          "oklch(60% 0.16 255)",
+          "oklch(72% 0.16 255)",
+          "oklch(84% 0.16 255)",
+          "oklch(95% 0.16 255)"
+        ]
+      },
+      "blue-wash": {
+        "role": "primary",
+        "displayName": "Blue Wash",
+        "canonical": "rgba(0, 113, 227, .09)"
+      },
+      "done-green": {
+        "role": "status",
+        "displayName": "Done Green",
+        "canonical": "#1a7f37",
+        "tonalRamp": [
+          "oklch(15% 0.13 148)",
+          "oklch(25% 0.13 148)",
+          "oklch(35% 0.13 148)",
+          "oklch(48% 0.13 148)",
+          "oklch(60% 0.13 148)",
+          "oklch(72% 0.13 148)",
+          "oklch(84% 0.13 148)",
+          "oklch(95% 0.13 148)"
+        ]
+      },
+      "switch-green": {
+        "role": "status",
+        "displayName": "Switch Green",
+        "canonical": "#34c759",
+        "tonalRamp": [
+          "oklch(15% 0.17 148)",
+          "oklch(25% 0.17 148)",
+          "oklch(35% 0.17 148)",
+          "oklch(48% 0.17 148)",
+          "oklch(60% 0.17 148)",
+          "oklch(72% 0.17 148)",
+          "oklch(84% 0.17 148)",
+          "oklch(95% 0.17 148)"
+        ]
+      },
+      "amber": {
+        "role": "status",
+        "displayName": "Amber",
+        "canonical": "#9a5b00",
+        "tonalRamp": [
+          "oklch(15% 0.13 68)",
+          "oklch(25% 0.13 68)",
+          "oklch(35% 0.13 68)",
+          "oklch(48% 0.13 68)",
+          "oklch(60% 0.13 68)",
+          "oklch(72% 0.13 68)",
+          "oklch(84% 0.13 68)",
+          "oklch(95% 0.13 68)"
+        ]
+      },
+      "amber-wash": {
+        "role": "status",
+        "displayName": "Amber Wash",
+        "canonical": "rgba(255, 159, 10, .12)"
+      },
+      "red": {
+        "role": "status",
+        "displayName": "Red",
+        "canonical": "#c4271b",
+        "tonalRamp": [
+          "oklch(15% 0.19 30)",
+          "oklch(25% 0.19 30)",
+          "oklch(35% 0.19 30)",
+          "oklch(48% 0.19 30)",
+          "oklch(60% 0.19 30)",
+          "oklch(72% 0.19 30)",
+          "oklch(84% 0.19 30)",
+          "oklch(95% 0.19 30)"
+        ]
+      },
+      "red-wash": {
+        "role": "status",
+        "displayName": "Red Wash",
+        "canonical": "rgba(255, 59, 48, .09)"
+      },
+      "ground": {
+        "role": "neutral",
+        "displayName": "Apple Ground",
+        "canonical": "#fbfbfd",
+        "tonalRamp": [
+          "oklch(15% 0.004 285)",
+          "oklch(25% 0.004 285)",
+          "oklch(35% 0.004 285)",
+          "oklch(48% 0.004 285)",
+          "oklch(60% 0.004 285)",
+          "oklch(72% 0.004 285)",
+          "oklch(84% 0.004 285)",
+          "oklch(95% 0.004 285)"
+        ]
+      },
+      "ground-2": {
+        "role": "neutral",
+        "displayName": "Footer Grey",
+        "canonical": "#f5f5f7",
+        "tonalRamp": [
+          "oklch(15% 0.004 285)",
+          "oklch(25% 0.004 285)",
+          "oklch(35% 0.004 285)",
+          "oklch(48% 0.004 285)",
+          "oklch(60% 0.004 285)",
+          "oklch(72% 0.004 285)",
+          "oklch(84% 0.004 285)",
+          "oklch(95% 0.004 285)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#1d1d1f",
+        "tonalRamp": [
+          "oklch(15% 0.004 285)",
+          "oklch(25% 0.004 285)",
+          "oklch(35% 0.004 285)",
+          "oklch(48% 0.004 285)",
+          "oklch(60% 0.004 285)",
+          "oklch(72% 0.004 285)",
+          "oklch(84% 0.004 285)",
+          "oklch(95% 0.004 285)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Secondary Ink",
+        "canonical": "#48484d",
+        "tonalRamp": [
+          "oklch(15% 0.008 285)",
+          "oklch(25% 0.008 285)",
+          "oklch(35% 0.008 285)",
+          "oklch(48% 0.008 285)",
+          "oklch(60% 0.008 285)",
+          "oklch(72% 0.008 285)",
+          "oklch(84% 0.008 285)",
+          "oklch(95% 0.008 285)"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Tertiary Ink",
+        "canonical": "#6e6e73",
+        "tonalRamp": [
+          "oklch(15% 0.008 285)",
+          "oklch(25% 0.008 285)",
+          "oklch(35% 0.008 285)",
+          "oklch(48% 0.008 285)",
+          "oklch(60% 0.008 285)",
+          "oklch(72% 0.008 285)",
+          "oklch(84% 0.008 285)",
+          "oklch(95% 0.008 285)"
+        ]
+      },
+      "hair": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "rgba(0, 0, 0, .08)"
+      },
+      "hair-2": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "rgba(0, 0, 0, .12)"
+      },
+      "glass": {
+        "role": "neutral",
+        "displayName": "Glass",
+        "canonical": "rgba(255, 255, 255, .62)"
+      },
+      "glass-strong": {
+        "role": "neutral",
+        "displayName": "Strong Glass",
+        "canonical": "rgba(255, 255, 255, .78)"
+      },
+      "glass-edge": {
+        "role": "neutral",
+        "displayName": "Glass Edge",
+        "canonical": "rgba(255, 255, 255, .9)"
+      },
+      "fill-tertiary": {
+        "role": "neutral",
+        "displayName": "Tertiary Fill",
+        "canonical": "rgba(118, 118, 128, .12)"
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff"
+      }
     },
     "typographyMeta": {
-      "display": { "displayName": "Masthead", "purpose": "The name, once per sheet. Chivo 900 caps at display scale." },
-      "headline": { "displayName": "Entry Heading", "purpose": "Opens each catalog entry." },
-      "title": { "displayName": "Strap / Pull", "purpose": "Masthead strap at 26ch, step headings, ruled pull statements at 40ch." },
-      "lede": { "displayName": "Lede", "purpose": "One honest sentence under every entry heading, max 44ch." },
-      "body": { "displayName": "Evaluation Prose", "purpose": "Source Serif 4 running copy, max 68ch." },
-      "label": { "displayName": "Catalog Label", "purpose": "Plate captions, coupon field labels, rail heads, all button text. 11-13px, .1em to .16em." },
-      "mono": { "displayName": "Marginalia", "purpose": "Colophon, rail copy, queue rows, landing line, inputs and select." },
-      "plate": { "displayName": "Command", "purpose": "Command plate text; the source listing drops to 12px / 1.62." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "The home headline only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Inner page titles."
+      },
+      "section": {
+        "displayName": "Section",
+        "purpose": "Section heads."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Setup steps and Help panels."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "The sub under any page title."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All prose, capped at 64 to 68ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons and segmented options."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Footer, chips, Terminal titles, figure captions."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Terminal bodies only."
+      }
     },
-    "shadows": [],
+    "shadows": [
+      {
+        "name": "rest",
+        "value": "0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.04)",
+        "purpose": "Secondary buttons and flow numerals."
+      },
+      {
+        "name": "float",
+        "value": "0 2px 6px rgba(0,0,0,.04), 0 12px 32px rgba(15,30,70,.08)",
+        "purpose": "Glass containers, Terminal windows, mobile nav sheet."
+      },
+      {
+        "name": "lifted",
+        "value": "0 4px 12px rgba(0,0,0,.04), 0 24px 64px rgba(15,30,70,.12)",
+        "purpose": "Paste field and popover only."
+      },
+      {
+        "name": "segment-thumb",
+        "value": "0 1px 3px rgba(0,0,0,.1), 0 3px 10px rgba(0,0,0,.06)",
+        "purpose": "Selected option in the segmented control."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 4px rgba(0,113,227,.18), 0 0 0 1px rgba(0,113,227,.5)",
+        "purpose": "Paste field focus; red version marks a bad link."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 3px solid rgba(0,113,227,.55); outline-offset: 2px",
+        "purpose": "Keyboard focus on every control."
+      }
+    ],
+    "materials": [
+      {
+        "name": "glass",
+        "value": "background rgba(255,255,255,.62); backdrop-filter saturate(180%) blur(28px); border 1px solid rgba(255,255,255,.9); box-shadow float",
+        "purpose": "Nav, field, popover, segmented track, Terminal windows and the shared glass container."
+      },
+      {
+        "name": "light-field",
+        "value": "three blurred radial blobs: rgba(120,180,255,.55) left, rgba(200,170,255,.5) right, rgba(255,196,160,.42) lower centre; filter blur(80px); 900px tall; z-index -1",
+        "purpose": "Atmosphere behind the hero; inner pages use a 560px, 75% opacity variant."
+      }
+    ],
     "motion": [
-      { "name": "strike", "value": "strike 90ms steps(2, end); from scale(1.2) rotate(-16deg) to rotate(-7deg)", "purpose": "The only animation in the build. Lands the tick stamp inside its box. Declared only inside @media (prefers-reduced-motion: no-preference)." },
-      { "name": "copy-confirm", "value": "1600ms state hold, no transition", "purpose": "A copied button holds the vermilion field with white text, then reverts. An instant swap, not a fade." }
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Shared spring-like ease-out for all movement."
+      },
+      {
+        "name": "result-drop",
+        "value": "420ms; from opacity 0, translateY(-14px), scale(.985), blur(6px)",
+        "purpose": "Terminal window entering after Get command."
+      },
+      {
+        "name": "pop-in",
+        "value": "280ms; from opacity 0, scale(.94), translateY(-6px)",
+        "purpose": "Options popover opening."
+      },
+      {
+        "name": "control",
+        "value": "200ms colour and background; 250 to 300ms for switch and segment",
+        "purpose": "Hover and state changes."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "all transitions and animations set to 0",
+        "purpose": "Instant swap under prefers-reduced-motion."
+      }
     ],
     "breakpoints": [
-      { "name": "sheet", "value": "1160px", "purpose": "Max width of .sheet; full-bleed rules sit outside it." },
-      { "name": "fold", "value": "860px", "purpose": "The only breakpoint. Below it the masthead and entries collapse to one column, the stub hides, and plates wrap with a hanging indent." }
-    ],
-    "rasters": [
-      { "file": "site/assets/pulp.png", "size": "256x256", "use": "Fixed body::before ground tile at opacity var(--grain); also the coupon inner ground.", "provenance": "PNG tEXt impeccable:prompt, procedurally generated by .impeccable/assets/mkassets.py" },
-      { "file": "site/assets/halftone.png", "size": "8x8", "use": "45-degree dot screen tiled on every .plate, .plate-head and .listing.", "provenance": "PNG tEXt impeccable:prompt, procedurally generated by .impeccable/assets/mkassets.py" },
-      { "file": "site/assets/stamp.png", "size": "128x128", "use": "Inked check impression revealed inside every ticked box, resting at rotate(-7deg) and overhanging its box.", "provenance": "PNG tEXt impeccable:prompt, procedurally generated by .impeccable/assets/mkassets.py" }
+      {
+        "name": "two-column-collapse",
+        "value": "900px"
+      },
+      {
+        "name": "nav-menu",
+        "value": "820px"
+      },
+      {
+        "name": "table-stack",
+        "value": "760px"
+      },
+      {
+        "name": "mobile",
+        "value": "680px"
+      },
+      {
+        "name": "finder-compact",
+        "value": "560px"
+      }
     ]
   },
   "components": [
     {
-      "name": "Stamp Button",
+      "name": "Primary Button",
       "kind": "button",
-      "refersTo": "button-stamp",
-      "description": "The printed label that copies a command. Takes the vermilion field for 1600ms once it has copied.",
-      "html": "<button class=\"ds-stamp\" type=\"button\">Copy</button> <button class=\"ds-stamp ds-stamp-quiet\" type=\"button\">Show raw yt-dlp</button> <button class=\"ds-stamp\" type=\"button\" data-done=\"1\">Copied</button>",
-      "css": ".ds-stamp { font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; white-space: nowrap; background: var(--btn-face, #cfcdc2); color: #15150e; border: 0; border-radius: 0; padding: 6px 13px; cursor: pointer; } .ds-stamp-quiet { background: var(--btn-face2, #a3a196); } .ds-stamp:hover { background: #fff; } .ds-stamp[data-done=\"1\"] { background: var(--verm, #b8371c); color: #fff; } .ds-stamp:disabled { opacity: .4; cursor: not-allowed; } .ds-stamp:focus-visible { outline: 2px solid var(--verm, #b8371c); outline-offset: 2px; }"
+      "refersTo": "button-primary",
+      "description": "System blue pill for Set up Snag, Get command and Copy. Turns green and reads Copied after a copy.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Get command</button> <button class=\"ds-btn ds-btn-primary ds-done\">Copied</button>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 16px;border-radius:99px;border:0;font:500 14px/1 var(--sans);letter-spacing:-.01em;cursor:pointer;transition:background-color .2s,color .2s,transform .2s var(--ease)} .ds-btn:active{transform:scale(.97)} .ds-btn:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px} .ds-btn-primary{background:var(--blue);color:#fff} .ds-btn-primary:hover{background:var(--blue-hover)} .ds-done,.ds-done:hover{background:var(--green);color:#fff}"
     },
     {
-      "name": "Command Plate",
-      "kind": "custom",
-      "refersTo": "plate-command",
-      "description": "A dark halftone-screened plate holding a command, with a caption bar and copy button above it. Each real line is its own span so the mobile hanging indent applies per line.",
-      "html": "<div class=\"ds-plate-head\"><span>Paste into Terminal</span><button class=\"ds-plate-btn\" type=\"button\">Copy</button></div><div class=\"ds-plate\"><span class=\"ds-ln\">pipx install \"yt-dlp[default,curl-cffi]\"</span><span class=\"ds-ln\">pipx ensurepath</span></div>",
-      "css": ".ds-plate-head { display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap; background-color: var(--plate, #16160f); background-image: url(assets/halftone.png); color: var(--ink-3, #6d6d5e); border-bottom: 1px solid var(--plate-rl, #34342a); padding: 8px 15px; font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; } .ds-plate { background-color: var(--plate, #16160f); background-image: url(assets/halftone.png); color: var(--plate-tx, #e4e1d3); font-family: 'Courier Prime', 'Courier New', monospace; font-size: 13px; line-height: 1.7; padding: 14px 15px; overflow-x: auto; white-space: pre; border-radius: 0; } .ds-ln { display: block; } .ds-plate-btn { font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; background: var(--btn-face, #cfcdc2); color: #15150e; border: 0; padding: 6px 13px; cursor: pointer; } .ds-plate-btn:hover { background: #fff; } @media (max-width: 860px) { .ds-plate { white-space: pre-wrap; overflow-wrap: anywhere; } .ds-ln { padding-left: 1.3em; text-indent: -1.3em; } }"
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "White pill with a hairline rim for secondary routes like Read the script.",
+      "html": "<button class=\"ds-btn ds-btn-secondary\">Read the script</button>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 16px;border-radius:99px;border:0;font:500 14px/1 var(--sans);letter-spacing:-.01em;cursor:pointer;transition:background-color .2s,color .2s,transform .2s var(--ease)} .ds-btn:active{transform:scale(.97)} .ds-btn:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px} .ds-btn-secondary{background:rgba(255,255,255,.8);color:var(--ink);box-shadow:inset 0 0 0 1px var(--hair-2),var(--shadow-sm)} .ds-btn-secondary:hover{background:#fff}"
     },
     {
-      "name": "Tick Row",
-      "kind": "custom",
-      "refersTo": "button-stamp",
-      "description": "The coupon's option control and the system's state model: a bare aria-pressed button whose ticked state is an inked stamp landing crooked in the box, never a fill or a hue.",
-      "html": "<div class=\"ds-modes\"><button class=\"ds-mode\" type=\"button\" aria-pressed=\"true\"><span class=\"ds-tick\"><img src=\"assets/stamp.png\" alt=\"\" aria-hidden=\"true\"></span><span><span class=\"ds-nm\">Ready to edit</span><span class=\"ds-ds\">The highest resolution that exists in H.264. No conversion.</span></span><span class=\"ds-sp\">h264 / aac / mp4</span></button><button class=\"ds-mode\" type=\"button\" aria-pressed=\"false\"><span class=\"ds-tick\"><img src=\"assets/stamp.png\" alt=\"\" aria-hidden=\"true\"></span><span><span class=\"ds-nm\">Audio only</span><span class=\"ds-ds\">Throws the picture away.</span></span><span class=\"ds-sp\">mp3 / cover art</span></button></div>",
-      "css": ".ds-modes { display: grid; } .ds-mode { display: grid; grid-template-columns: 26px minmax(0,1fr) auto; gap: 12px; align-items: baseline; width: 100%; text-align: left; background: none; border: 0; border-top: 1px solid var(--hair, rgba(21,21,14,.26)); padding: 11px 0; font: inherit; color: var(--ink-2, #4f4f42); cursor: pointer; } .ds-mode:last-child { border-bottom: 1px solid var(--hair, rgba(21,21,14,.26)); } .ds-tick { width: 18px; height: 18px; border: 1.5px solid var(--ink-3, #6d6d5e); position: relative; align-self: start; margin-top: 2px; display: block; } .ds-tick img { position: absolute; left: -7px; top: -9px; width: 31px; height: 31px; display: none; transform: rotate(-7deg); } .ds-nm { font-family: 'Chivo', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -.008em; display: block; } .ds-ds { font-family: 'Source Serif 4', Georgia, serif; font-size: 14.5px; line-height: 1.45; display: block; margin-top: 2px; max-width: 54ch; } .ds-sp { font-family: 'Courier Prime', monospace; font-size: 11.5px; white-space: nowrap; color: var(--ink-2, #4f4f42); } .ds-mode[aria-pressed=\"true\"] { color: var(--ink, #15150e); } .ds-mode[aria-pressed=\"true\"] .ds-tick { border-color: var(--ink, #15150e); } .ds-mode[aria-pressed=\"true\"] .ds-tick img { display: block; } .ds-mode:hover .ds-nm { color: var(--verm, #b8371c); } .ds-mode:focus-visible { outline: 2px solid var(--verm, #b8371c); outline-offset: 2px; } @media (prefers-reduced-motion: no-preference) { .ds-tick img { animation: ds-strike 90ms steps(2, end); } } @keyframes ds-strike { from { transform: scale(1.2) rotate(-16deg); } to { transform: scale(1) rotate(-7deg); } }"
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Transparent blue-text pill for Paste and Show yt-dlp.",
+      "html": "<button class=\"ds-btn ds-btn-quiet\">Paste</button>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 16px;border-radius:99px;border:0;font:500 14px/1 var(--sans);letter-spacing:-.01em;cursor:pointer;transition:background-color .2s,color .2s,transform .2s var(--ease)} .ds-btn:active{transform:scale(.97)} .ds-btn:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px} .ds-btn-quiet{background:transparent;color:var(--blue-ink);padding:0 10px} .ds-btn-quiet:hover{background:var(--blue-wash)}"
     },
     {
-      "name": "Cyan Field Block",
-      "kind": "card",
-      "refersTo": "field-cyan",
-      "description": "A whole region flooded with the process cyan, reserved for the statements the page most needs believed. The system's substitute for a card.",
-      "html": "<div class=\"ds-field\"><h3>This page cannot touch your computer</h3><p>Every button here copies text to your clipboard. You paste it into Terminal yourself.</p></div>",
-      "css": ".ds-field { background: var(--cyan-field, #0b6a89); color: #eef6f9; padding: 22px 24px; margin: 20px 0; border-radius: 0; } .ds-field h3 { font-family: 'Chivo', Helvetica, Arial, sans-serif; color: #fff; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; margin: 0 0 8px; } .ds-field p { font-family: 'Source Serif 4', Georgia, serif; font-size: 16.5px; line-height: 1.62; color: #e4f0f5; max-width: 62ch; margin: 0; }"
-    },
-    {
-      "name": "Text Input",
+      "name": "Paste Field",
       "kind": "input",
-      "refersTo": "input-text",
-      "description": "Stock ground, hard ink stroke, typewriter text, vermilion caret. Used for the link textarea and the masthead stub input.",
-      "html": "<textarea class=\"ds-input\" rows=\"3\" spellcheck=\"false\" placeholder=\"https://www.tiktok.com/@user/video/...\"></textarea>",
-      "css": ".ds-input { width: 100%; display: block; background: var(--stock, #d3d1c6); color: var(--ink, #15150e); border: 1px solid var(--ink, #15150e); border-radius: 0; padding: 11px 12px; font-family: 'Courier Prime', 'Courier New', monospace; font-size: 13px; line-height: 1.7; resize: vertical; min-height: 84px; caret-color: var(--verm, #b8371c); } .ds-input::placeholder { color: var(--ink-2, #4f4f42); opacity: 1; } .ds-input:focus-visible { outline: 2px solid var(--verm, #b8371c); outline-offset: 2px; }"
+      "refersTo": "paste-field",
+      "description": "The home search-style field: strong glass pill, platform icon, input, quiet Paste and primary Get command inside.",
+      "html": "<div class=\"ds-field\"><span class=\"ds-icon\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M10 13.5a4 4 0 0 0 5.7.4l2.8-2.8a4 4 0 0 0-5.7-5.7l-1.2 1.2\"/><path d=\"M14 10.5a4 4 0 0 0-5.7-.4l-2.8 2.8a4 4 0 0 0 5.7 5.7l1.2-1.2\"/></svg></span><input placeholder=\"Paste a video link\" aria-label=\"Video link\"><button class=\"ds-btn ds-btn-quiet\">Paste</button><button class=\"ds-btn ds-btn-primary ds-go\">Get command</button></div>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 16px;border-radius:99px;border:0;font:500 14px/1 var(--sans);letter-spacing:-.01em;cursor:pointer;transition:background-color .2s,color .2s,transform .2s var(--ease)} .ds-btn:active{transform:scale(.97)} .ds-btn:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px} .ds-field{display:flex;align-items:center;gap:6px;height:68px;max-width:720px;padding:0 8px 0 22px;border-radius:99px;background:var(--glass-strong);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid var(--glass-edge);box-shadow:0 0 0 1px rgba(0,0,0,.05),var(--shadow-lg);transition:box-shadow .3s var(--ease)} .ds-field:focus-within{box-shadow:0 0 0 4px rgba(0,113,227,.18),0 0 0 1px rgba(0,113,227,.5),var(--shadow-lg)} .ds-icon{display:grid;color:var(--ink-3)} .ds-field input{flex:1;min-width:0;height:100%;border:0;outline:0;background:transparent;font:400 19px/1 var(--sans);letter-spacing:-.02em;color:var(--ink);padding:0 8px} .ds-field input::placeholder{color:var(--ink-3)} .ds-btn-quiet{background:transparent;color:var(--blue-ink);padding:0 10px} .ds-btn-quiet:hover{background:var(--blue-wash)} .ds-btn-primary{background:var(--blue);color:#fff} .ds-btn-primary:hover{background:var(--blue-hover)} .ds-go{height:52px;padding:0 24px;font-size:16px}"
     },
     {
-      "name": "Warning Block",
+      "name": "Icon-only Get Command (under 680px)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Under 680px Get command becomes a 46px blue circle with an arrow.",
+      "html": "<button class=\"ds-go-icon\" aria-label=\"Get command\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M4 10h11m-4.5-4.5L15 10l-4.5 4.5\"/></svg></button>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-go-icon{display:grid;place-items:center;width:46px;height:46px;border:0;border-radius:99px;background:var(--blue);color:#fff;cursor:pointer;transition:background-color .2s,transform .2s var(--ease)} .ds-go-icon:hover{background:var(--blue-hover)} .ds-go-icon:active{transform:scale(.97)} .ds-go-icon:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px}"
+    },
+    {
+      "name": "Format Segmented Control",
       "kind": "custom",
-      "refersTo": "warn-block",
-      "description": "A hard vermilion-ruled box for the one thing that reliably frightens people (the blind password prompt). Border only; vermilion stays a mark.",
-      "html": "<div class=\"ds-warn\">It will ask for your Mac login password. Nothing appears while you type. The screen is not frozen.</div>",
-      "css": ".ds-warn { border: 2px solid var(--verm, #b8371c); border-radius: 0; padding: 11px 13px; font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 700; line-height: 1.45; max-width: 58ch; color: var(--ink, #15150e); }"
+      "refersTo": "segmented-track",
+      "description": "macOS segmented control for the four formats; short labels Edit, Small, Audio, 4K under 680px.",
+      "html": "<div class=\"ds-seg\" role=\"radiogroup\" aria-label=\"Deliver as\"><button role=\"radio\" aria-checked=\"true\">Ready to edit</button><button role=\"radio\" aria-checked=\"false\">Small file</button><button role=\"radio\" aria-checked=\"false\">Audio only</button><button role=\"radio\" aria-checked=\"false\">4K (slow)</button></div>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-seg{display:inline-flex;padding:4px;gap:2px;border-radius:99px;background:linear-gradient(rgba(118,118,128,.12),rgba(118,118,128,.12)),rgba(255,255,255,.72);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)} .ds-seg button{border:0;border-radius:99px;padding:8px 16px;background:transparent;color:var(--ink-2);font:500 14px/1 var(--sans);letter-spacing:-.01em;cursor:pointer;transition:background-color .25s,color .2s,box-shadow .25s} .ds-seg button:hover{color:var(--ink)} .ds-seg button:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px} .ds-seg button[aria-checked=\"true\"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.1),0 3px 10px rgba(0,0,0,.06)}"
     },
     {
-      "name": "Margin Rail Contents",
+      "name": "Terminal Window",
+      "kind": "custom",
+      "refersTo": "terminal-window",
+      "description": "Light macOS Terminal window with traffic lights and Copy; every command on the site lives in one.",
+      "html": "<div class=\"ds-term\"><div class=\"ds-bar\"><span class=\"ds-lights\"><i></i><i></i><i></i></span><span class=\"ds-title\">Terminal</span><button class=\"ds-btn ds-btn-primary ds-sm\">Copy</button></div><pre class=\"ds-body\"><span class=\"ds-cmd\">snag https://youtu.be/abc123</span></pre></div>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;height:36px;padding:0 16px;border-radius:99px;border:0;font:500 14px/1 var(--sans);letter-spacing:-.01em;cursor:pointer;transition:background-color .2s,color .2s,transform .2s var(--ease)} .ds-btn:active{transform:scale(.97)} .ds-btn:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px} .ds-btn-primary{background:var(--blue);color:#fff} .ds-btn-primary:hover{background:var(--blue-hover)} .ds-sm{height:30px;padding:0 12px;font-size:13px} .ds-term{max-width:720px;border-radius:12px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid rgba(0,0,0,.1);box-shadow:0 0 0 .5px rgba(255,255,255,.7) inset,var(--shadow-md);overflow:hidden} .ds-bar{display:flex;align-items:center;gap:12px;min-height:38px;padding:0 8px 0 14px;background:linear-gradient(#f6f6f6,#ececec);border-bottom:1px solid rgba(0,0,0,.08)} .ds-lights{display:flex;gap:8px} .ds-lights i{width:12px;height:12px;border-radius:50%;background:#ff5f57;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.14)} .ds-lights i:nth-child(2){background:#febc2e} .ds-lights i:nth-child(3){background:#28c840} .ds-title{flex:1;font-size:12.5px;font-weight:500;color:var(--ink-2)} .ds-body{margin:0;padding:14px 18px 16px;font:13.5px/1.65 var(--mono);color:var(--ink);white-space:pre-wrap} .ds-cmd::before{content:\"% \";color:var(--ink-3)}"
+    },
+    {
+      "name": "Glass Nav",
       "kind": "nav",
-      "refersTo": null,
-      "description": "The catalog's access column: a ruled section head over dotted-leader contents rows. The page has no navigation bar; this is the only wayfinding.",
-      "html": "<section class=\"ds-rail\"><h3>On this sheet</h3><nav class=\"ds-toc\"><a href=\"#what\">What this is</a><a href=\"#setup\">Setup</a><a href=\"#order\">Order form</a></nav></section>",
-      "css": ".ds-rail h3 { font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-2, #4f4f42); border-bottom: 1px solid var(--hair, rgba(21,21,14,.26)); padding-bottom: 5px; margin: 0 0 9px; } .ds-toc { display: grid; gap: 5px; } .ds-toc a { font-family: 'Chivo', sans-serif; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink, #15150e); text-decoration: none; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; } .ds-toc a::after { content: ''; flex: 1; border-bottom: 1px dotted var(--hair, rgba(21,21,14,.26)); } .ds-toc a:hover { color: var(--verm, #b8371c); } .ds-toc a:focus-visible { outline: 2px solid var(--verm, #b8371c); outline-offset: 2px; }"
+      "refersTo": "nav",
+      "description": "Sticky 52px frosted bar: wordmark left, five pill links centred, Set up Snag right.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-brand\" href=\"#\">snag</a><span class=\"ds-links\"><a href=\"#\" aria-current=\"page\">Overview</a><a href=\"#\">How it works</a><a href=\"#\">Setup</a><a href=\"#\">Help</a><a href=\"#\">Source</a></span><a class=\"ds-cta\" href=\"#\">Set up Snag</a></nav>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-nav{display:flex;align-items:center;gap:28px;height:52px;padding:0 22px;background:rgba(251,251,253,.68);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border-bottom:1px solid rgba(0,0,0,.06)} .ds-brand{font-weight:600;font-size:19px;letter-spacing:-.03em;color:var(--ink);text-decoration:none} .ds-links{display:flex;gap:4px;margin:0 auto} .ds-links a{padding:6px 12px;border-radius:99px;color:var(--ink-2);font-size:13.5px;letter-spacing:-.01em;text-decoration:none;transition:color .2s,background-color .2s} .ds-links a:hover{color:var(--ink);background:rgba(0,0,0,.045)} .ds-links a[aria-current=\"page\"]{color:var(--ink);font-weight:500;background:rgba(0,0,0,.06)} .ds-links a:focus-visible,.ds-cta:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px} .ds-cta{display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:99px;background:var(--blue);color:#fff;font:500 13px/1 var(--sans);text-decoration:none} .ds-cta:hover{background:var(--blue-hover)}"
     },
     {
-      "name": "Coupon",
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Grey pill describing where the file lands and its codec; amber and red variants for warnings.",
+      "html": "<span class=\"ds-chip\">Lands in ~/Downloads</span> <span class=\"ds-chip\">H.264 · AAC · MP4</span> <span class=\"ds-chip ds-warn\">Re-encodes, takes minutes</span>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:99px;background:rgba(118,118,128,.1);font-size:12.5px;font-weight:500;color:var(--ink-2);letter-spacing:-.005em} .ds-warn{background:rgba(255,159,10,.12);color:#9a5b00}"
+    },
+    {
+      "name": "macOS Switch",
       "kind": "custom",
-      "refersTo": null,
-      "description": "The tear-off order form: a 10px radial-gradient perforation border around a ruled inner sheet on pulp ground. The only gradient in the build.",
-      "html": "<div class=\"ds-coupon\"><div class=\"ds-coupon-in\"><h3>Download order <span>no links yet</span></h3><div class=\"ds-cline\">Links, one per line</div></div></div>",
-      "css": ".ds-coupon { padding: 4px; background-color: var(--stock-2, #c9c7bb); background-image: radial-gradient(circle at 5px 5px, var(--stock, #d3d1c6) 3.4px, transparent 3.6px); background-size: 10px 10px; } .ds-coupon-in { background-color: var(--stock-2, #c9c7bb); background-image: url(assets/pulp.png); border: 1px solid var(--ink, #15150e); padding: 20px; } .ds-coupon h3 { font-family: 'Chivo', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .16em; color: var(--ink, #15150e); border-bottom: 2px solid var(--ink, #15150e); padding-bottom: 7px; margin: 0 0 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; } .ds-coupon h3 span { font-family: 'Courier Prime', monospace; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 12px; color: var(--ink-2, #4f4f42); } .ds-cline { font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .13em; color: var(--ink-2, #4f4f42); margin-bottom: 7px; }"
+      "refersTo": "switch",
+      "description": "38 by 22 switch used only in the options popover.",
+      "html": "<button class=\"ds-switch\" role=\"switch\" aria-checked=\"true\" aria-label=\"Option\"></button> <button class=\"ds-switch\" role=\"switch\" aria-checked=\"false\" aria-label=\"Option\"></button>",
+      "css": ":host{--bg:#fbfbfd;--ink:#1d1d1f;--ink-2:#48484d;--ink-3:#6e6e73;--hair:rgba(0,0,0,.08);--hair-2:rgba(0,0,0,.12);--blue:#0071e3;--blue-hover:#0062c4;--blue-ink:#0066cc;--blue-wash:rgba(0,113,227,.09);--green:#1a7f37;--glass:rgba(255,255,255,.62);--glass-strong:rgba(255,255,255,.78);--glass-edge:rgba(255,255,255,.9);--blur:saturate(180%) blur(28px);--shadow-sm:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04);--shadow-md:0 2px 6px rgba(0,0,0,.04),0 12px 32px rgba(15,30,70,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.04),0 24px 64px rgba(15,30,70,.12);--sans:-apple-system,BlinkMacSystemFont,\"SF Pro Text\",\"SF Pro Display\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;--mono:ui-monospace,\"SF Mono\",SFMono-Regular,Menlo,Monaco,monospace;--ease:cubic-bezier(.16,1,.3,1);font-family:var(--sans);color:var(--ink)} .ds-switch{position:relative;width:38px;height:22px;border:0;border-radius:99px;padding:0;background:rgba(120,120,128,.24);cursor:pointer;transition:background-color .25s} .ds-switch::after{content:\"\";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2),0 0 0 .5px rgba(0,0,0,.04);transition:transform .3s var(--ease)} .ds-switch[aria-checked=\"true\"]{background:#34c759} .ds-switch[aria-checked=\"true\"]::after{transform:translateX(16px)} .ds-switch:focus-visible{outline:3px solid rgba(0,113,227,.55);outline-offset:2px}"
     }
   ],
   "narrative": {
-    "northStar": "The Access-to-Tools Catalog Sheet",
-    "overview": "Snag is a cheap-offset mail-order tool catalog printed between 1968 and 1974, reproduced exactly. The ground is pulp stock, grey-olive and deliberately not cream, carried by a real 256x256 procedural grain tile fixed behind the page rather than a flat fill. Ink is heavy near-black. One process cyan carries whole regions of the sheet, not accents. A cheap vermilion is held back for stamps and marks only. Commands are set in dark halftone plates the way a catalog sets its photographs, and those plates stay dark in both themes because a photograph does not invert with the paper.\n\nDensity is catalog density: every entry is its own two-column sheet with a marginal access rail, and the rails, rules and stamps do all the separating. There is no card system, no border-radius anywhere in the build, and no box-shadow anywhere in the build. Depth is ink weight and full-field colour, nothing else. Dark theme is not a second world; it is the same sheet as a press proof, with ink and stock swapped and the grain pushed harder.\n\nThe page's authority is its honesty, and the visual system serves that: the honest paragraph is Source Serif, the machine is Courier Prime, and the imperative is Chivo 900 caps. Confirmed rejection: the centred dark terminal hero with a one-line install box and a copy button. This sheet does not centre, does not put a hero image anywhere, and prints the whole script on the page before it asks anyone to run anything.",
+    "northStar": "The Site Is a Mac",
+    "overview": "Snag is a Mac utility, so the site behaves like a piece of macOS Sonoma in light mode, rendered at Apple.com fidelity. A near-white ground carries a soft blue, lilac and peach light field near the top of each page; frosted white glass sits over it. Everything a visitor touches is a native-feeling control: pill buttons, a segmented control, macOS switches, a popover, and light Terminal windows with traffic lights. The home page is one search-style field and nothing louder than it.\n\nDensity is calm and generous. Pages are centred, headlines are large, tight-tracked and bold, and explanation lives on its own page behind the nav rather than stacked under the field. The single accent is system blue; every other colour is either neutral grey or a status colour that means something.\n\nThe site builds a command. It never downloads, uploads, or tests anything, and nothing in the visual language may suggest otherwise: no progress bars, no download buttons that look like they fetch a file, no fake success states beyond \"Copied\".",
     "keyCharacteristics": [
-      "Pulp stock ground with a real grain tile at token-controlled opacity (0.55 light, 0.9 dark)",
-      "One process cyan as a field, one vermilion as a mark, nothing else chromatic",
-      "Dark halftone command plates that never invert with the theme",
-      "Rules and hairlines instead of cards; zero radius, zero shadow",
-      "Three fixed voices: Chivo display and UI, Source Serif 4 prose, Courier Prime machine",
-      "Stamped motion only: one 90ms step animation, dropped entirely under reduced motion"
+      "Light only (`color-scheme: light`); there is no dark theme.",
+      "System SF stack for text, SF Mono for commands. No web fonts.",
+      "One accent: system blue. Green, amber and red are status only.",
+      "Frosted glass over a blurred light field; soft, cool, diffuse shadows.",
+      "Every command lives in a light macOS Terminal window.",
+      "Pills everywhere a control is pressable.",
+      "No kickers or eyebrows above headings."
     ],
     "rules": [
-      { "name": "The Colour-Is-The-Sheet Rule", "body": "Cyan arrives as a field, not a mark. When cyan appears, it owns a whole block edge to edge with its own light text; it is never a tint, a badge, or a 1px accent border.", "section": "colors" },
-      { "name": "The Vermilion-Is-A-Mark Rule", "body": "Vermilion is only ever a stamp, a numeral, a cross, a caret, a focus ring, or a hover ink. The single exception in the build is the 1600ms confirmed-copy state on a stamp button, which is itself a stamp landing. Never a section ground, never body text.", "section": "colors" },
-      { "name": "The Plate Does Not Invert Rule", "body": "The stock and the ink swap between themes. The plate, its halftone screen and its text do not. A command plate is a photograph on the sheet, and it reads the same in light and in dark.", "section": "colors" },
-      { "name": "The Split-Token Rule", "body": "Where one token cannot hold both themes at legible contrast, split it by job, not by tint: cyan is ink, cyan-field is ground. Read the split as a contrast mechanism, not as a two-step ramp.", "section": "colors" },
-      { "name": "The Three Voices Rule", "body": "Chivo speaks for the catalog (names, headings, labels, buttons). Source Serif 4 speaks the honest evaluation. Courier Prime speaks for the machine and the margin. A voice never takes another's job; prose is never set in mono for texture, and a command is never set in the serif.", "section": "typography" },
-      { "name": "The One Imperative Per Sheet Rule", "body": "Display scale is spent once, on the masthead. Every other heading steps down to headline or below, so the sheet has exactly one thing shouting.", "section": "typography" },
-      { "name": "The Printed-Depth Rule", "body": "Depth comes from ink weight, grain and field colour. If a surface needs to feel separate, give it a rule, a field or a plate. Never a shadow, never a glow, never a lift on hover.", "section": "elevation" },
-      { "name": "The No-Card Rule", "body": "There is no card. Separation is a rule, a hairline, a stamp or a full-field colour. Nothing gets a rounded corner, a lifted edge or a container chrome it did not earn as print.", "section": "shapes" },
-      { "name": "The Stamped-Motion Rule", "body": "Motion lands, it does not travel. Every animated state change is a stepped impression of 90ms or less, and under reduced motion the system drops to no movement at all rather than to a shortened tween.", "section": "components" },
-      { "name": "The Every-Option-Present Rule", "body": "All choices are printed at once, with the chosen one struck forward by the stamp. Nothing collapses into a dropdown to hide what the visitor is turning down, except the native resolution cap, which is a numeric range rather than a set of choices.", "section": "components" }
+      {
+        "name": "The One Blue Rule",
+        "body": "System blue is the only accent. A second hue may appear only as a status colour with a specific meaning, or as the faint tint inside the light field and gradient glass bands.",
+        "section": "colors"
+      },
+      {
+        "name": "The Brand Colours Stay in Their Icons Rule",
+        "body": "YouTube red, Instagram pink, TikTok and X black and Facebook blue appear only inside their own platform marks in the field and the supported-sites row.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mono Means Terminal Rule",
+        "body": "Monospace is only for text that is typed into or printed by Terminal: commands, flags, file paths, the script. Never for labels or decoration.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Kicker Rule",
+        "body": "Headings stand alone. No small uppercase line, category tag or eyebrow sits above a heading on any page.",
+        "section": "typography"
+      },
+      {
+        "name": "The Light Field Stays Behind Rule",
+        "body": "The coloured light field sits at z-index -1 behind all content and is decoration only. Colour reaches the foreground only through glass.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Field Is Highest Rule",
+        "body": "The paste field and the popover carry the Lifted shadow; nothing else on the page may sit higher.",
+        "section": "elevation"
+      }
     ],
     "dos": [
-      "Do paint cyan as a whole field with its own light text, not as an accent or a tint.",
-      "Do keep vermilion for marks: numerals, crosses, carets, focus rings, hover ink and stamps.",
-      "Do set every command in a dark halftone plate, one <span class=\"ln\"> per real line, with the exact text on dataset.raw for copying.",
-      "Do separate with rules, hairlines, stamps and full-field colour; use a 3px rule to open an entry and a full-bleed 4px rule to close a region.",
-      "Do put .fullrule outside .sheet so rules reach the viewport edge while type stays in the 1160px column.",
-      "Do keep .bodycol before .marg in the DOM and restore the visual left rail with CSS order.",
-      "Do hold the three voices apart: Chivo for names, headings, labels and buttons; Source Serif 4 for evaluation prose; Courier Prime for commands and marginalia.",
-      "Do show state as an inked impression at rotate(-7deg), not as a fill or a hue change.",
-      "Do cap measure: 44ch for a lede, 68ch for prose, 62ch inside a cyan field, 40ch for a pull statement.",
-      "Do theme the browser surfaces (::selection, focus ring, scrollbar, caret) so the sheet does not stop at the content edge."
+      "**Do** keep the page light only; `color-scheme: light`, no dark variant.",
+      "**Do** set all text in the system SF stack and all commands in SF Mono.",
+      "**Do** use System Blue as the one accent and keep green, amber and red to status meanings.",
+      "**Do** put every command in a light Terminal window with traffic lights and a Copy button.",
+      "**Do** keep the hero light field behind content at z-index -1.",
+      "**Do** make every pressable control a pill.",
+      "**Do** use the shared ease `cubic-bezier(.16, 1, .3, 1)` for movement and drop to instant changes under reduced motion.",
+      "**Do** keep short segmented labels and the icon-only Get command button under 680px.",
+      "**Do** state plainly, in the footer and the copy, that the website does not download anything."
     ],
     "donts": [
-      "Don't add a border-radius. The build has none, anywhere, in any state.",
-      "Don't add a box-shadow, a glow, or a hover lift. Depth is ink weight, grain and field colour.",
-      "Don't introduce a card, a panel or a tile. Rules and plates do the separating.",
-      "Don't invert the command plate with the theme. The plate is a photograph, and it stays dark on light and on dark stock.",
-      "Don't let a fourth colour in. The system is stock, ink, one cyan, one vermilion.",
-      "Don't animate anything longer than 90ms or with an eased tween; steps(2, end) is the grammar, and reduced motion means no movement.",
-      "Don't spend display scale twice on one sheet.",
-      "Don't clip a command. Below 860px plates wrap with a 1.3em hanging indent per line.",
-      "Don't put a hero image, a centred terminal block, or a single install box with a copy button at the top of a sheet. That is the category default this world refuses."
+      "**Don't** add a dark theme or dark Terminal plates.",
+      "**Don't** load web fonts or swap in a display face.",
+      "**Don't** add a second accent colour.",
+      "**Don't** put a kicker, eyebrow or category label above a heading.",
+      "**Don't** let the light field sit in front of content or take clicks.",
+      "**Don't** show download progress, file-saved states, or any button that looks like it fetches a file; the only success state is \"Copied\".",
+      "**Don't** use hard or offset shadows; depth is glass and soft diffuse shadow.",
+      "**Don't** set labels, buttons or captions in monospace."
     ]
   }
 }

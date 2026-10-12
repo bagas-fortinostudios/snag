@@ -1,294 +1,345 @@
 ---
 name: Snag
-description: A 1968-74 mail-order tool catalog sheet that reviews itself honestly, then prints the command.
+description: A Mac utility's website that looks like the Mac it runs on. Light macOS glass, one field, light Terminal windows.
 colors:
-  stock: "#d3d1c6"
-  stock-2: "#c9c7bb"
-  ink: "#15150e"
-  ink-2: "#4f4f42"
-  ink-3: "#6d6d5e"
-  cyan: "#0b6a89"
-  cyan-field: "#0b6a89"
-  verm: "#b8371c"
-  plate: "#16160f"
-  plate-tx: "#e4e1d3"
-  plate-rl: "#34342a"
-  btn-face: "#cfcdc2"
-  btn-face2: "#a3a196"
-  rule: "#15150e"
-  hair: "rgba(21,21,14,.26)"
+  system-blue: "#0071e3"
+  system-blue-hover: "#0062c4"
+  link-blue: "#0066cc"
+  blue-wash: "rgba(0, 113, 227, .09)"
+  done-green: "#1a7f37"
+  switch-green: "#34c759"
+  amber: "#9a5b00"
+  amber-wash: "rgba(255, 159, 10, .12)"
+  red: "#c4271b"
+  red-wash: "rgba(255, 59, 48, .09)"
+  ground: "#fbfbfd"
+  ground-2: "#f5f5f7"
+  ink: "#1d1d1f"
+  ink-2: "#48484d"
+  ink-3: "#6e6e73"
+  hair: "rgba(0, 0, 0, .08)"
+  hair-2: "rgba(0, 0, 0, .12)"
+  glass: "rgba(255, 255, 255, .62)"
+  glass-strong: "rgba(255, 255, 255, .78)"
+  glass-edge: "rgba(255, 255, 255, .9)"
+  fill-tertiary: "rgba(118, 118, 128, .12)"
+  white: "#ffffff"
 typography:
   display:
-    fontFamily: "Chivo, Helvetica, Arial, sans-serif"
-    fontSize: "clamp(56px, 13vw, 150px)"
-    fontWeight: 900
-    lineHeight: 0.82
-    letterSpacing: "-.045em"
+    fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontSize: "clamp(44px, 7.4vw, 80px)"
+    fontWeight: 700
+    lineHeight: 1.03
+    letterSpacing: "-.04em"
   headline:
-    fontFamily: "Chivo, Helvetica, Arial, sans-serif"
-    fontSize: "clamp(25px, 4.2vw, 40px)"
-    fontWeight: 900
-    lineHeight: 0.98
-    letterSpacing: "-.028em"
+    fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontSize: "clamp(40px, 6vw, 64px)"
+    fontWeight: 700
+    lineHeight: 1.05
+    letterSpacing: "-.035em"
+  section:
+    fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontSize: "clamp(30px, 4vw, 44px)"
+    fontWeight: 700
+    lineHeight: 1.1
+    letterSpacing: "-.035em"
   title:
-    fontFamily: "Chivo, Helvetica, Arial, sans-serif"
-    fontSize: "clamp(16px, 2.4vw, 24px)"
+    fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontSize: "clamp(26px, 3.2vw, 34px)"
     fontWeight: 700
-    lineHeight: 1.2
-    letterSpacing: "-.012em"
+    lineHeight: 1.12
+    letterSpacing: "-.03em"
   lede:
-    fontFamily: "Source Serif 4, Georgia, serif"
-    fontSize: "19px"
-    fontWeight: 600
-    lineHeight: 1.5
-  body:
-    fontFamily: "Source Serif 4, Georgia, serif"
-    fontSize: "16.5px"
+    fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontSize: "clamp(19px, 2.2vw, 24px)"
     fontWeight: 400
-    lineHeight: 1.62
+    lineHeight: 1.35
+    letterSpacing: "-.02em"
+  body:
+    fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontSize: "17px"
+    fontWeight: 400
+    lineHeight: 1.47
+    letterSpacing: "-.022em"
   label:
-    fontFamily: "Chivo, Helvetica, Arial, sans-serif"
-    fontSize: "11px"
-    fontWeight: 700
-    lineHeight: 1.2
-    letterSpacing: ".14em"
-  mono:
-    fontFamily: "Courier Prime, Courier New, monospace"
+    fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontSize: "14px"
+    fontWeight: 500
+    lineHeight: 1
+    letterSpacing: "-.01em"
+  caption:
+    fontFamily: "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"SF Pro Display\", \"Helvetica Neue\", Helvetica, Arial, sans-serif"
     fontSize: "12.5px"
     fontWeight: 400
     lineHeight: 1.55
-  plate:
-    fontFamily: "Courier Prime, Courier New, monospace"
-    fontSize: "13px"
+    letterSpacing: "-.005em"
+  mono:
+    fontFamily: "ui-monospace, \"SF Mono\", SFMono-Regular, Menlo, Monaco, monospace"
+    fontSize: "13.5px"
     fontWeight: 400
-    lineHeight: 1.7
+    lineHeight: 1.65
+    letterSpacing: "0"
 rounded:
-  none: "0px"
+  code: "6px"
+  window: "12px"
+  md: "14px"
+  lg: "20px"
+  xl: "28px"
+  pill: "99px"
 spacing:
-  hairline: "4px"
-  tight: "6px"
-  snug: "10px"
-  plate: "14px"
-  field: "20px"
-  column-gap: "30px"
-  mast-gap: "44px"
-  entry-foot: "46px"
+  gutter: "22px"
+  nav-height: "52px"
+  stack: "44px"
+  section: "112px"
+  section-home: "120px"
 components:
-  button-stamp:
-    backgroundColor: "{colors.btn-face}"
+  button-primary:
+    backgroundColor: "{colors.system-blue}"
+    textColor: "{colors.white}"
+    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: "0 16px"
+    height: "36px"
+  button-primary-hover:
+    backgroundColor: "{colors.system-blue-hover}"
+  button-primary-done:
+    backgroundColor: "{colors.done-green}"
+    textColor: "{colors.white}"
+  button-secondary:
+    backgroundColor: "rgba(255, 255, 255, .8)"
     textColor: "{colors.ink}"
     typography: "{typography.label}"
-    rounded: "{rounded.none}"
-    padding: "6px 13px"
-  button-stamp-hover:
-    backgroundColor: "#ffffff"
-    textColor: "{colors.ink}"
-  button-stamp-quiet:
-    backgroundColor: "{colors.btn-face2}"
-    textColor: "{colors.ink}"
-  button-stamp-done:
-    backgroundColor: "{colors.verm}"
-    textColor: "#ffffff"
-  plate-command:
-    backgroundColor: "{colors.plate}"
-    textColor: "{colors.plate-tx}"
-    typography: "{typography.plate}"
-    rounded: "{rounded.none}"
-    padding: "14px 15px"
-  plate-head:
-    backgroundColor: "{colors.plate}"
-    textColor: "{colors.ink-3}"
-    typography: "{typography.label}"
-    padding: "8px 15px"
-  field-cyan:
-    backgroundColor: "{colors.cyan-field}"
-    textColor: "#eef6f9"
-    rounded: "{rounded.none}"
-    padding: "22px 24px"
-  input-text:
-    backgroundColor: "{colors.stock}"
-    textColor: "{colors.ink}"
-    typography: "{typography.plate}"
-    rounded: "{rounded.none}"
-    padding: "11px 12px"
-  warn-block:
+    rounded: "{rounded.pill}"
+    padding: "0 16px"
+    height: "36px"
+  button-secondary-hover:
+    backgroundColor: "{colors.white}"
+  button-quiet:
     backgroundColor: "transparent"
+    textColor: "{colors.link-blue}"
+    rounded: "{rounded.pill}"
+    padding: "0 10px"
+  button-quiet-hover:
+    backgroundColor: "{colors.blue-wash}"
+  button-sm:
+    height: "30px"
+    padding: "0 12px"
+  button-lg:
+    height: "48px"
+    padding: "0 24px"
+  paste-field:
+    backgroundColor: "{colors.glass-strong}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.none}"
-    padding: "11px 13px"
+    rounded: "{rounded.pill}"
+    padding: "0 8px 0 22px"
+    height: "68px"
+  segmented-track:
+    backgroundColor: "{colors.fill-tertiary}"
+    rounded: "{rounded.pill}"
+    padding: "4px"
+  segmented-option-selected:
+    backgroundColor: "{colors.white}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.pill}"
+    padding: "8px 16px"
+  terminal-window:
+    backgroundColor: "rgba(255, 255, 255, .86)"
+    textColor: "{colors.ink}"
+    typography: "{typography.mono}"
+    rounded: "{rounded.window}"
+    padding: "14px 18px 16px"
+  chip:
+    backgroundColor: "rgba(118, 118, 128, .1)"
+    textColor: "{colors.ink-2}"
+    rounded: "{rounded.pill}"
+    padding: "5px 11px"
+  callout:
+    backgroundColor: "{colors.blue-wash}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.md}"
+    padding: "16px 18px"
+  nav:
+    backgroundColor: "rgba(251, 251, 253, .68)"
+    textColor: "{colors.ink-2}"
+    height: "52px"
 ---
 
 # Design System: Snag
 
 ## Overview
 
-**Creative North Star: "The Access-to-Tools Catalog Sheet"**
+**Creative North Star: "The Site Is a Mac"**
 
-Snag is a cheap-offset mail-order tool catalog printed between 1968 and 1974, reproduced exactly. The ground is pulp stock, grey-olive and deliberately not cream, carried by a real 256x256 procedural grain tile fixed behind the page rather than a flat fill. Ink is heavy near-black. One process cyan carries whole regions of the sheet, not accents. A cheap vermilion is held back for stamps and marks only. Commands are set in dark halftone plates the way a catalog sets its photographs, and those plates stay dark in both themes because a photograph does not invert with the paper.
+Snag is a Mac utility, so the site behaves like a piece of macOS Sonoma in light mode, rendered at Apple.com fidelity. A near-white ground carries a soft blue, lilac and peach light field near the top of each page; frosted white glass sits over it. Everything a visitor touches is a native-feeling control: pill buttons, a segmented control, macOS switches, a popover, and light Terminal windows with traffic lights. The home page is one search-style field and nothing louder than it.
 
-Density is catalog density: every entry is its own two-column sheet with a marginal access rail, and the rails, rules and stamps do all the separating. There is no card system, no border-radius anywhere in the build, and no box-shadow anywhere in the build. Depth is ink weight and full-field colour, nothing else. Dark theme is not a second world; it is the same sheet as a press proof, with ink and stock swapped and the grain pushed harder.
+Density is calm and generous. Pages are centred, headlines are large, tight-tracked and bold, and explanation lives on its own page behind the nav rather than stacked under the field. The single accent is system blue; every other colour is either neutral grey or a status colour that means something.
 
-The page's authority is its honesty, and the visual system serves that: the honest paragraph is Source Serif, the machine is Courier Prime, and the imperative is Chivo 900 caps. Confirmed rejection: the centred dark terminal hero with a one-line install box and a copy button. This sheet does not centre, does not put a hero image anywhere, and prints the whole script on the page before it asks anyone to run anything.
+The site builds a command. It never downloads, uploads, or tests anything, and nothing in the visual language may suggest otherwise: no progress bars, no download buttons that look like they fetch a file, no fake success states beyond "Copied".
 
 **Key Characteristics:**
-- Pulp stock ground with a real grain tile at token-controlled opacity (0.55 light, 0.9 dark)
-- One process cyan as a field, one vermilion as a mark, nothing else chromatic
-- Dark halftone command plates that never invert with the theme
-- Rules and hairlines instead of cards; zero radius, zero shadow
-- Three fixed voices: Chivo display and UI, Source Serif 4 prose, Courier Prime machine
-- Stamped motion only: one 90ms step animation, dropped entirely under reduced motion
+- Light only (`color-scheme: light`); there is no dark theme.
+- System SF stack for text, SF Mono for commands. No web fonts.
+- One accent: system blue. Green, amber and red are status only.
+- Frosted glass over a blurred light field; soft, cool, diffuse shadows.
+- Every command lives in a light macOS Terminal window.
+- Pills everywhere a control is pressable.
+- No kickers or eyebrows above headings.
 
 ## Colors
 
-A three-ink press run on grey-olive pulp: near-black ink, one process cyan, one cheap vermilion, all sitting on stock that is never white.
+A cool, near-white Apple palette with one blue accent and three quiet status colours.
 
 ### Primary
-- **Process Cyan** (`{colors.cyan}`): The second ink. As `cyan` it carries links, the recognised-platform marks in the order queue, and the hovered-link baseline. As `cyan-field` it floods whole disclosure regions (the "this page cannot touch your computer" block, the "try this first" block) and paints `::selection`. In light theme both tokens carry the same value; the split only materialises in dark, where the link ink brightens (`#4aa8c9`) while the field ground deepens (`#0d5570`) so the region stays legible with near-white text on it.
-
-### Secondary
-- **Cheap Vermilion** (`{colors.verm}`): The stamp ink, and never a general accent. It appears as the step numerals, the refusal crosses in the margin rail, the focus ring, the caret in every input, the hover ink on links and tick-row names, the border of the password warning, and the momentary field of a button that has just copied. It is the only colour permitted to arrive as a mark rather than a region.
+- **System Blue** (system-blue): the only accent. Primary buttons, the selected Finder row, focus rings, the active setup step badge, the lead border on How it works, flow numerals, check icons in the promise pills, and the field's focus halo. Hover deepens to **Pressed Blue** (system-blue-hover).
+- **Link Blue** (link-blue): text links, quiet buttons, mono flag lines and Terminal output notes. Slightly darker than System Blue so blue text holds contrast on white.
+- **Blue Wash** (blue-wash): the default callout background and quiet-button hover.
 
 ### Neutral
-- **Pulp Stock** (`{colors.stock}`): The sheet. Page ground and the ground inside inputs, overlaid by the fixed grain tile.
-- **Second Stock** (`{colors.stock-2}`): A half-tone deeper sheet for the order stub, the coupon's perforated border, keyboard keys, and the scrollbar track.
-- **Press Ink** (`{colors.ink}`): All headings, prose and hard borders (1px stub, coupon and input strokes; 2px section underlines).
-- **Ink Two** (`{colors.ink-2}`): Secondary prose, the colophon, step explanations, option descriptions, rail section heads.
-- **Ink Three** (`{colors.ink-3}`): The faintest set ink: unticked tick-box strokes, plate captions, scrollbar thumb.
-- **Rule** (`{colors.rule}`): The heavy separating rule. Tracks the ink, which is why it inverts with the theme while the plate does not.
-- **Hairline** (`{colors.hair}`): The 26%-opacity ink hair that divides rows, rails and dotted table-of-contents leaders.
+- **Apple Ground** (ground): page background and the frosted nav tint.
+- **Footer Grey** (ground-2): footer band only.
+- **Ink** (ink): headings, input text, emphasised words.
+- **Secondary Ink** (ink-2): body prose, ledes, nav links, Terminal output.
+- **Tertiary Ink** (ink-3): placeholders, captions, metadata, the `%` prompt.
+- **Hairline** (hair) and **Strong Hairline** (hair-2): dividers between rows, steps and table lines; hair-2 also rims secondary buttons and keycaps.
+- **Glass**, **Strong Glass**, **Glass Edge** (glass, glass-strong, glass-edge): the frosted material and its white rim.
+- **Tertiary Fill** (fill-tertiary): macOS system fill for the segmented track, selects, chevron discs and step-number discs.
 
-### Tertiary
-- **Plate Black** (`{colors.plate}`) / **Plate Text** (`{colors.plate-tx}`) / **Plate Rule** (`{colors.plate-rl}`): The catalog photograph. Command plates, plate captions and the full source listing. Plate text is the same near-white in both themes.
-- **Button Face** (`{colors.btn-face}`) / **Quiet Button Face** (`{colors.btn-face2}`): Printed label faces for the copy buttons. The face stays light in both themes because it is printed label stock, not sheet.
+### Status
+- **Done Green** (done-green): a copy button after a successful copy, and the "Done when" and "The fix." labels.
+- **Switch Green** (switch-green): the macOS switch when on, nothing else.
+- **Amber** (amber, amber-wash): warning chips and warning callouts.
+- **Red** (red, red-wash): invalid-link message and field ring, error messages in Help, the cross icons in the "Snag does not" list.
 
 ### Named Rules
-**The Colour-Is-The-Sheet Rule.** Cyan arrives as a field, not a mark. When cyan appears, it owns a whole block edge to edge with its own light text; it is never a tint, a badge, or a 1px accent border.
+**The One Blue Rule.** System blue is the only accent. A second hue may appear only as a status colour with a specific meaning, or as the faint tint inside the light field and gradient glass bands.
 
-**The Vermilion-Is-A-Mark Rule.** Vermilion is only ever a stamp, a numeral, a cross, a caret, a focus ring, or a hover ink. The single exception in the build is the 1600ms confirmed-copy state on a stamp button, which is itself a stamp landing. Never a section ground, never body text.
-
-**The Plate Does Not Invert Rule.** The stock and the ink swap between themes. The plate, its halftone screen and its text do not. A command plate is a photograph on the sheet, and it reads the same in light and in dark.
-
-**The Split-Token Rule.** Where one token cannot hold both themes at legible contrast, split it by job, not by tint: `cyan` is ink, `cyan-field` is ground. Read the split as a contrast mechanism, not as a two-step ramp.
+**The Brand Colours Stay in Their Icons Rule.** YouTube red, Instagram pink, TikTok and X black and Facebook blue appear only inside their own platform marks in the field and the supported-sites row.
 
 ## Typography
 
-**Display Font:** Chivo (with Helvetica, Arial, sans-serif)
-**Body Font:** Source Serif 4 (with Georgia, serif)
-**Label/Mono Font:** Courier Prime (with Courier New, monospace)
+**Display Font:** the system SF stack (-apple-system, BlinkMacSystemFont, SF Pro Text, SF Pro Display, then Helvetica Neue)
+**Body Font:** the same stack
+**Label/Mono Font:** ui-monospace and SF Mono, then Menlo
 
-**Character:** Chivo 900 in tight negative-tracked caps is the catalog's shouting headline stock; Source Serif 4 is the honest evaluation copy a catalog writes under the photograph; Courier Prime is the typewriter that set the colophon, the margin rail and every command. The three never swap jobs.
+**Character:** pure Apple. Heavy, tight-tracked headlines over a light, slightly negative-tracked 17px body, and SF Mono reserved for anything a visitor will type or read back from Terminal.
 
 ### Hierarchy
-- **Display** (Chivo 900, `clamp(56px, 13vw, 150px)`, line-height .82, -.045em, uppercase): The masthead name only. One per sheet.
-- **Headline** (Chivo 900, `clamp(25px, 4.2vw, 40px)`, line-height .98, -.028em, uppercase): The entry heading that opens each article.
-- **Title** (Chivo 700, `clamp(16px, 2.4vw, 24px)`, line-height 1.2): The masthead strap at max 26ch; also the step headings (18px, 900) and pull statements (17.5px at max 40ch, ruled above and below).
-- **Lede** (Source Serif 4 600, 19px, line-height 1.5, max 44ch): The one-sentence honest summary directly under every entry heading.
-- **Body** (Source Serif 4 400, 16.5px, line-height 1.62, max 68ch): All evaluation prose. Field blocks cap at 62ch, fault prose at 66ch.
-- **Label** (Chivo 700, 11-13px, letter-spacing .1em to .16em, uppercase): Plate captions, coupon field labels, stub label, rail section heads, all button text.
-- **Mono** (Courier Prime 400, 11.5-13px): Colophon, margin-rail copy, queue rows, the landing line, select and input text, and every command plate (13px / 1.7) and the full source listing (12px / 1.62).
+- **Display** (700, clamp(44px, 7.4vw, 80px), 1.03): the home headline only.
+- **Headline** (700, clamp(40px, 6vw, 64px), 1.05): inner page titles.
+- **Section** (700, clamp(30px, 4vw, 44px), 1.1): section heads; home sections run slightly larger (up to 48px) and the CTA band slightly smaller (up to 40px).
+- **Title** (700, clamp(26px, 3.2vw, 34px), 1.12): setup steps and the Help first-move panel. Card titles and table rows drop to 600 at 17 to 24px.
+- **Lede** (400, clamp(19px, 2.2vw, 24px), 1.35): the sub under any page title, ink-2, balanced, 40 to 44ch.
+- **Body** (400, 17px, 1.47): all prose, ink-2, capped at 64 to 68ch.
+- **Label** (500, 14px, 1): buttons and segmented options. Nav links sit at 13.5px.
+- **Caption** (400, 12.5px): footer, chips, Terminal titles, figure captions.
+- **Mono** (13.5px, 1.65, tracking 0): Terminal bodies; the home result runs at 15px, the Source listing at 12.5px.
 
 ### Named Rules
-**The Three Voices Rule.** Chivo speaks for the catalog (names, headings, labels, buttons). Source Serif 4 speaks the honest evaluation. Courier Prime speaks for the machine and the margin. A voice never takes another's job; prose is never set in mono for texture, and a command is never set in the serif.
+**The Mono Means Terminal Rule.** Monospace is only for text that is typed into or printed by Terminal: commands, flags, file paths, the script. Never for labels or decoration.
 
-**The One Imperative Per Sheet Rule.** Display scale is spent once, on the masthead. Every other heading steps down to headline or below, so the sheet has exactly one thing shouting.
+**The No Kicker Rule.** Headings stand alone. No small uppercase line, category tag or eyebrow sits above a heading on any page.
 
 ## Layout
 
-The page is a printed sheet, not a stack of containers. `.sheet` caps at 1160px with its own 20px inline padding; heavy `.fullrule` bars (4px, and 1px in the thin variant) sit **outside** `.sheet` so rules bleed to the viewport edge while the type stays in column.
+A centred, single-column Apple layout. Content containers are 1080px (sections, nav, footer), 980px (hero and page titles) and 760px (reading column), all with a 22px gutter. The paste field and its result are 720px wide and are the largest object in the first viewport.
 
-The masthead is a two-column grid (`1fr / 318px`, 44px gap, baseline-aligned to the bottom) with the name and colophon left and the order stub right, so the coupon's first tick boxes are visible at the fold on desktop.
+The glass nav is sticky at 52px. The home hero starts 104px below it (64px under 680px); inner page titles start at 88px. Sections are separated by 112px on inner pages and 120px on home. Two-column bands (home "lands" section 5fr/7fr, Setup 230px sticky step list beside the steps, Source 300px facts panel, Help two-up) collapse to one column at 900px or 820px.
 
-Every entry is its own grid: a 232px margin column plus `minmax(0, 1fr)` body, 30px gap, opened by a 3px rule. In the DOM `.bodycol` precedes `.marg`, and CSS `order` restores the visual left rail. That keeps heading order valid for assistive technology and puts the evaluation prose first on mobile.
+The hero light field is a 900px band of three blurred radial blobs (blue left, lilac right, peach lower centre) positioned absolutely behind content at z-index -1, with main at z-index 1 above it. Inner pages use the lower, dimmer variant (560px, 75% opacity). It never sits in front of text and never takes pointer events.
 
-Setup steps are a counter-driven sequence, each a 46px numeral column plus body, divided by hairlines.
-
-Sole breakpoint at **860px**. Below it: the masthead collapses to one column and the order stub is hidden (the full coupon is one anchor away); entries collapse to a single column with the rail moving below the body and reflowing into an auto-fit 190px grid; step numerals shrink to a 34px column; command plates switch to wrapping with a 1.3em hanging indent per line, since a clipped command is an unusable command; the source listing keeps `pre` so the script stays readable by horizontal scroll.
-
-Spacing rhythm is printers' rhythm rather than an 8pt grid: 4px rules, 6-10px between related lines, 14-15px inside plates, 20-24px inside fields and the coupon, 26-30px between columns, 44-46px at the masthead and the foot of an entry.
+Responsive behaviour that is part of the system:
+- Under 820px the nav collapses to a menu button; links drop into a frosted sheet with a full-width Set up pill at the bottom.
+- Under 680px the format segmented control becomes a four-column full-width grid with short labels (Edit, Small, Audio, 4K), the full names kept as accessible labels.
+- Under 680px the Get command button becomes a 46px icon-only circle with an arrow, and the Paste button is hidden.
+- Under 560px the Downloads window drops its sidebar and Kind column.
 
 ## Elevation & Depth
 
-No shadows. There is not a single `box-shadow` in the build, and depth is entirely printed: the fixed pulp grain layer behind everything, ink weight (hairline at 26% opacity, 1px ink, 2px ink, 3px rule, 4px full-bleed rule), and full-field colour. The dark command plate reads as recessed only because it is a different ink on the same paper, screened with an 8x8 45-degree halftone dot at its own size.
+Depth comes from frosted glass over the light field, plus soft, cool, diffuse shadows tinted toward navy. There are no hard edges or offset shadows except the 1px keycap shadow under `kbd`. Glass is `saturate(180%) blur(28px)` with a white 1px rim.
 
-Browser surfaces are part of the sheet: `::selection` takes the cyan field with near-white text, scrollbars take stock track with ink-three thumb, and the caret is vermilion.
+Glass is used for the nav, the paste field, the options popover, the segmented track, every Terminal window, and the shared glass container (result tips, promise and "does not" pills, the formats table, Help faults and first-move panel, the setup step list, the Source facts panel, the CTA band).
+
+### Shadow Vocabulary
+- **Rest** (`0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.04)`): secondary buttons and flow numerals.
+- **Float** (`0 2px 6px rgba(0,0,0,.04), 0 12px 32px rgba(15,30,70,.08)`): glass containers, Terminal windows, the mobile nav sheet.
+- **Lifted** (`0 4px 12px rgba(0,0,0,.04), 0 24px 64px rgba(15,30,70,.12)`): the paste field and the popover, the two things that sit highest.
+- **Selected segment** (`0 1px 3px rgba(0,0,0,.1), 0 3px 10px rgba(0,0,0,.06)`): the white thumb in the segmented control.
+- **Focus halo** (`0 0 0 4px rgba(0,113,227,.18), 0 0 0 1px rgba(0,113,227,.5)`): the paste field when focused; the same shape in red marks a bad link.
 
 ### Named Rules
-**The Printed-Depth Rule.** Depth comes from ink weight, grain and field colour. If a surface needs to feel separate, give it a rule, a field or a plate. Never a shadow, never a glow, never a lift on hover.
+**The Light Field Stays Behind Rule.** The coloured light field sits at z-index -1 behind all content and is decoration only. Colour reaches the foreground only through glass.
+
+**The Field Is Highest Rule.** The paste field and the popover carry the Lifted shadow; nothing else on the page may sit higher.
 
 ## Shapes
 
-Every corner in the system is square. `border-radius` does not appear in the build, on any element, in any state, including inputs, buttons, plates and tick boxes. Silhouettes are rectangles cut by rules.
-
-The recurring forms are: the **full-bleed rule** (4px / 1px), the **hairline** (1px at 26% ink), the **hard stroke** (1px or 2px solid ink around stubs, inputs, the coupon and the warning), the **plate** (dark rectangle with halftone screen), and the **tick box** (18px, 16px or 15px square with a 1.5px stroke, holding a rotated stamp raster that overhangs its own box).
-
-The coupon adds the one decorative geometry in the system: a 4px perforated border drawn as a 10px radial-gradient dot pattern in second stock, wrapping the ruled inner sheet. It is the only gradient in the build and exists to read as a tear-off form.
-
-### Named Rules
-**The No-Card Rule.** There is no card. Separation is a rule, a hairline, a stamp or a full-field colour. Nothing gets a rounded corner, a lifted edge or a container chrome it did not earn as print.
+Rounded and soft, following macOS. Every pressable control is a full pill (99px): buttons, nav links, the field, the segmented track and its options, chips and list pills. Containers step up with size: 14px for callouts and tips, 20px for popovers, tables, the facts panel and the step list, 28px for the CTA band and Help panels. Terminal and Finder windows use the macOS window radius of 12px. Inline code and keycaps use 6px. Circles are reserved for traffic lights, numbered step badges, the clear button and chevron discs.
 
 ## Components
 
 ### Buttons
-Buttons are printed labels stamped on the sheet, not raised controls.
-- **Shape:** Square (0 radius), no border, 6px 13px padding, Chivo 700 11px uppercase at .1em.
-- **Primary (`.stamp`):** Light printed label face on the sheet, ink text, nowrap.
-- **Quiet (`.stamp.quiet`):** The darker label face, for the secondary action beside a primary (for example "Show raw yt-dlp" next to "Copy").
-- **Hover:** The label face goes to paper white. No movement, no shadow, no transition.
-- **Confirmed:** On a successful copy the button takes the vermilion field with white text and swaps its own text, then reverts after 1600ms. This is the only time vermilion becomes a ground.
-- **Disabled:** Opacity .4, not-allowed cursor. The copy button is disabled while the coupon has no valid link.
-- **Focus:** 2px solid vermilion, 2px offset, globally on `:focus-visible`.
+Quiet, native, pill-shaped.
+- **Shape:** full pill (99px). Heights 30px, 36px and 48px.
+- **Primary:** System Blue with white 14px/500 text. Used for Set up Snag, Get command, and Copy in every Terminal window.
+- **Hover / Focus:** hover deepens to Pressed Blue; press scales to 0.97 on the shared ease; focus shows a 3px blue outline at 55% offset by 2px.
+- **Secondary:** 80% white with a hairline inset rim and Rest shadow; hover goes solid white.
+- **Quiet:** transparent with Link Blue text; hover shows Blue Wash. Used for Paste and Show yt-dlp.
+- **Done:** after a copy the button turns Done Green and reads "Copied". This is the only success state the site shows.
+- **Disabled:** 40% opacity.
+
+### Chips
+- **Style:** 10% grey fill, 12.5px/500 ink-2 text, 13px icon, pill.
+- **State:** warning and bad variants swap to the amber and red washes. Chips describe the command (where it lands, codec, container); they never show progress.
+
+### Cards / Containers
+- **Corner Style:** 14px, 20px or 28px by size (see Shapes).
+- **Background:** Glass, sometimes with a faint blue to lilac to peach tint (CTA band) or blue tint (Help first move).
+- **Shadow Strategy:** Float.
+- **Border:** 1px white glass rim; internal rows divided by hairlines.
+- **Internal Padding:** 16px 18px for tips and callouts, 20px 26px for table rows, 22px 28px for fault rows, 56px 32px for the CTA band.
 
 ### Inputs / Fields
-- **Style:** Stock ground, 1px solid ink stroke, square, Courier Prime, vermilion caret. The order textarea is 13px / 1.7 with a minimum height of 84px and vertical resize only; the masthead stub input is 12px. The resolution cap is a native `select` styled the same way.
-- **Placeholder:** Ink-two at full opacity, carrying real example links rather than instruction text.
-- **Focus:** Global vermilion focus ring. No border colour change and no glow.
-
-### Command Plate
-The signature surface. A dark plate with the 8x8 halftone screen tiled across it, plate text in near-white Courier Prime, 14px 15px padding, `white-space: pre` and horizontal overflow on desktop. It is optionally preceded by a `.plate-head` caption bar in the same plate ink, ink-three label type, divided by a 1px plate rule, carrying the caption on the left and the copy button on the right. Every real command line is its own `<span class="ln">` so the mobile hanging indent applies per line, and the exact text lives on `dataset.raw` so copying is never polluted by markup. The full script uses the same plate at listing scale with a 460px max height.
-
-### Field Block
-A whole region flooded with the cyan field, near-white body text at max 62ch, a white Chivo 900 uppercase heading, 22px 24px padding. Reserved for the two statements the page most needs believed. Never used for decoration or for a third-level aside.
-
-### Tick Row (signature)
-The coupon's option control, and the system's state model. Each row is a bare `<button aria-pressed>` opened by a hairline, laid out as a tick column plus name, description and an optional mono spec, with the last row closed by a hairline. Unticked: ink-three box stroke, ink-two text. Ticked: ink box stroke, ink text, and the stamp raster revealed inside the box at `rotate(-7deg)`, overhanging its own box. Hovering reddens the name only. Three densities exist: the full mode row (18px box), the extras grid (16px box, auto-fit 258px columns), and the masthead stub row (15px box).
-
-**State is a mark, not a hue.** A ticked row is not a filled pill or a tinted background; it is an inked impression sitting crooked on the box, exactly as a clerk would stamp a form.
-
-### Margin Rail
-The catalog's access column. Rail section heads are Chivo 700 uppercase at .14em in ink-two over a hairline; rail body is Courier Prime 12.5px. Refusals are list items with an inline vermilion SVG cross at 11px. The table of contents rows are Chivo 700 uppercase with a dotted hairline leader filling the gap, reddening on hover.
+- **Style:** the paste field is a 68px Strong Glass pill (60px under 680px) with a 26px platform icon at the left that swaps to the detected site's mark, a 19px input, a clear disc when filled, a quiet Paste button and the primary Get command button inside it.
+- **Focus:** blue focus halo plus the Lifted shadow.
+- **Error:** red halo and a red message line below; the icon swaps to a red alert circle.
+- **Selects** in the popover are 8px-rounded Tertiary Fill with a drawn chevron.
 
 ### Navigation
-There is no navigation bar. The only wayfinding is the rail's table of contents and one jump link in the order stub, both label type, both underline-free, both taking vermilion on hover.
+- **Style:** sticky 52px frosted bar tinted with the ground colour, hairline bottom. Wordmark with the blue app-icon square left, five links centred, a small Set up Snag pill right.
+- **States:** links are 13.5px ink-2 pills; hover adds a 4.5% black fill, the current page gets 6% fill and weight 500.
+- **Mobile:** under 820px a menu button opens a frosted sheet of 17px links and a primary Set up pill.
 
-### Motion
-One animation exists: `strike`, 90ms, `steps(2, end)`, from `scale(1.2) rotate(-16deg)` to the resting `rotate(-7deg)`, applied to the stamp raster and declared only inside `@media (prefers-reduced-motion: no-preference)`. Nothing else in the system transitions; hovers are instant swaps.
+### Segmented Control
+The format picker is a macOS segmented control: a pill track of Tertiary Fill over 72% white glass, 4px inset, with a white raised thumb on the selected option. It is a radio group with arrow-key movement. Under 680px it fills the width as four equal columns with short labels.
 
-### Named Rules
-**The Stamped-Motion Rule.** Motion lands, it does not travel. Every animated state change is a stepped impression of 90ms or less, and under reduced motion the system drops to no movement at all rather than to a shortened tween.
+### macOS Switch
+38 by 22px pill, 24% grey off, Switch Green on, white 18px knob that slides 16px on the shared ease. Used only in the options popover.
 
-**The Every-Option-Present Rule.** All choices are printed at once, with the chosen one struck forward by the stamp. Nothing collapses into a dropdown to hide what the visitor is turning down, except the native resolution cap, which is a numeric range rather than a set of choices.
+### Terminal Window
+The signature component. Every command on the site sits in a light macOS Terminal window: 86% white glass, 12px radius, a light grey gradient title bar with red, yellow and green traffic lights, a 12.5px title, and Copy (and on home, Show yt-dlp) at the right. The body is SF Mono on near-white with a grey `% ` prompt; continuation lines indent. Printed output uses a paler body tint and keeps its columns, scrolling sideways as Terminal does. The Source page adds a hairline-ruled line-number gutter. The same window chrome draws the illustrated Downloads Finder window on home, which is labelled as an illustration.
+
+### Result Reveal
+Get command drops the Terminal window in below the field (420ms, from 14px up, 98.5% scale and 6px blur, on the shared ease) and copies the line at once. With reduced motion the window appears instantly.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** paint cyan as a whole field with its own light text, not as an accent or a tint.
-- **Do** keep vermilion for marks: numerals, crosses, carets, focus rings, hover ink and stamps.
-- **Do** set every command in a dark halftone plate, one `<span class="ln">` per real line, with the exact text on `dataset.raw` for copying.
-- **Do** separate with rules, hairlines, stamps and full-field colour; use a 3px rule to open an entry and a full-bleed 4px rule to close a region.
-- **Do** put `.fullrule` outside `.sheet` so rules reach the viewport edge while type stays in the 1160px column.
-- **Do** keep `.bodycol` before `.marg` in the DOM and restore the visual left rail with CSS `order`.
-- **Do** hold the three voices apart: Chivo for names, headings, labels and buttons; Source Serif 4 for evaluation prose; Courier Prime for commands and marginalia.
-- **Do** show state as an inked impression at `rotate(-7deg)`, not as a fill or a hue change.
-- **Do** cap measure: 44ch for a lede, 68ch for prose, 62ch inside a cyan field, 40ch for a pull statement.
-- **Do** theme the browser surfaces (`::selection`, focus ring, scrollbar, caret) so the sheet does not stop at the content edge.
+- **Do** keep the page light only; `color-scheme: light`, no dark variant.
+- **Do** set all text in the system SF stack and all commands in SF Mono.
+- **Do** use System Blue as the one accent and keep green, amber and red to status meanings.
+- **Do** put every command in a light Terminal window with traffic lights and a Copy button.
+- **Do** keep the hero light field behind content at z-index -1.
+- **Do** make every pressable control a pill.
+- **Do** use the shared ease `cubic-bezier(.16, 1, .3, 1)` for movement and drop to instant changes under reduced motion.
+- **Do** keep short segmented labels and the icon-only Get command button under 680px.
+- **Do** state plainly, in the footer and the copy, that the website does not download anything.
 
 ### Don't:
-- **Don't** add a border-radius. The build has none, anywhere, in any state.
-- **Don't** add a box-shadow, a glow, or a hover lift. Depth is ink weight, grain and field colour.
-- **Don't** introduce a card, a panel or a tile. Rules and plates do the separating.
-- **Don't** invert the command plate with the theme. The plate is a photograph, and it stays dark on light and on dark stock.
-- **Don't** let a fourth colour in. The system is stock, ink, one cyan, one vermilion.
-- **Don't** animate anything longer than 90ms or with an eased tween; `steps(2, end)` is the grammar, and reduced motion means no movement.
-- **Don't** spend display scale twice on one sheet.
-- **Don't** clip a command. Below 860px plates wrap with a 1.3em hanging indent per line.
-- **Don't** put a hero image, a centred terminal block, or a single install box with a copy button at the top of a sheet. That is the category default this world refuses.
+- **Don't** add a dark theme or dark Terminal plates.
+- **Don't** load web fonts or swap in a display face.
+- **Don't** add a second accent colour.
+- **Don't** put a kicker, eyebrow or category label above a heading.
+- **Don't** let the light field sit in front of content or take clicks.
+- **Don't** show download progress, file-saved states, or any button that looks like it fetches a file; the only success state is "Copied".
+- **Don't** use hard or offset shadows; depth is glass and soft diffuse shadow.
+- **Don't** set labels, buttons or captions in monospace.

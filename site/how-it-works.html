@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it works | Snag</title>
+<meta name="description" content="What Snag is, the three tools behind it, the five steps of a download, and the four formats it can deliver.">
+<meta name="theme-color" content="#fbfbfd">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/snag.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="Snag home"><img class="brand-mark" src="assets/logo-mark.svg" alt="" width="29" height="30"><img class="brand-word" src="assets/logo-wordmark.svg" alt="" height="12"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7h14M3 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="how-it-works.html" aria-current="page">How it works</a></li>
+      <li><a href="setup.html">Setup</a></li>
+      <li><a href="help.html">Help</a></li>
+      <li><a href="source.html">Source</a></li>
+      <li class="nav-links-cta"><a class="btn btn-primary" href="setup.html">Set up Snag</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm nav-cta" href="setup.html">Set up Snag</a>
+  </div>
+</header>
+
+<main>
+  <div class="aura low" aria-hidden="true"><span></span></div>
+
+  <header class="page-head">
+    <h1>Three tools.<br>One short command.</h1>
+    <p class="lede">A free way to save videos from Instagram, TikTok and YouTube onto your own Mac. Set it up once, then it is one line every time.</p>
+  </header>
+
+  <div class="parts">
+    <article class="part">
+      <h2 class="part-h"><code>yt-dlp</code> fetches the video</h2>
+      <p>The part that actually downloads from the site. Open source, and fixed within days whenever a site changes.</p>
+    </article>
+    <article class="part">
+      <h2 class="part-h"><code>ffmpeg</code> builds the file</h2>
+      <p>Joins the picture and the sound into one finished file, and converts it when you ask for a different format.</p>
+    </article>
+    <article class="part lead">
+      <h2 class="part-h"><code>snag</code> picks the settings</h2>
+      <p>On their own, those two need a long line of settings that changes from site to site, and it is easy to get wrong. Snag reads your link, picks the settings, and runs the whole job in one go.</p>
+    </article>
+  </div>
+
+  <section class="sec" aria-labelledby="flow-h">
+    <div class="sec-head c">
+      <h2 id="flow-h">How a download works</h2>
+      <p>The first four steps happen in your browser. The last one is the only thing you do in Terminal.</p>
+    </div>
+    <ol class="flow">
+      <li><h3>Find the video</h3><p>Instagram, TikTok, a YouTube Short or a full YouTube video.</p></li>
+      <li><h3>Copy the link</h3><p>The app's Share or Copy link button, or your browser's address bar.</p></li>
+      <li><h3>Paste it into Snag</h3><p>On the <a href="index.html">Overview</a> page. Pick a format.</p></li>
+      <li><h3>Get the command</h3><p>One line, copied for you.</p></li>
+      <li><h3>Paste into Terminal</h3><p>Press Enter. The file lands in Downloads.</p></li>
+    </ol>
+  </section>
+
+  <section class="sec" id="formats" aria-labelledby="formats-h">
+    <div class="sec-head">
+      <h2 id="formats-h">Four formats. One is the default for a reason.</h2>
+      <p>Each one says exactly what lands in your Downloads folder.</p>
+    </div>
+    <div class="modes-table glass">
+      <div class="mt-row">
+        <h3>Ready to edit</h3>
+        <p>The best version the site offers in H.264. Opens in Premiere, Resolve and QuickTime with no converting. Tops out at 1080p on YouTube, because that is where H.264 stops there.</p>
+        <div class="spec">H.264 · AAC · MP4<span class="flag">snag</span></div>
+      </div>
+      <div class="mt-row">
+        <h3>Small file</h3>
+        <p>The same format, capped at 720p. For sending, previewing or keeping.</p>
+        <div class="spec">720p · H.264 · MP4<span class="flag">snag -q 720</span></div>
+      </div>
+      <div class="mt-row">
+        <h3>Audio only</h3>
+        <p>Drops the picture. Cover art and track details are written into the file.</p>
+        <div class="spec">MP3 · cover art<span class="flag">snag --mp3</span></div>
+      </div>
+      <div class="mt-row">
+        <h3>4K (slow)</h3>
+        <p>The sharpest stream available, usually AV1 above 1080p, re-encoded to H.264 on your Mac so it edits. Takes real minutes, not seconds.</p>
+        <div class="spec">Best stream → H.264 CRF 18<span class="flag">snag --max --recode</span></div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:20px">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M10 9v5M10 6.2v.1"/></svg>
+      <p><b>Why the default matters.</b> Sorting by codec before resolution quietly caps you at 1080p, and sorting by resolution alone hands you AV1 or VP9, which plays fine and scrubs badly in an editor. Snag filters to H.264 first, then takes the highest resolution of those.</p>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="not-h">
+    <div class="sec-head">
+      <h2 id="not-h">What it will not do</h2>
+      <p>Better to know now than after setup.</p>
+    </div>
+    <ul class="nots">
+      <li class="glass"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8m0-8-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Run on Windows or Linux</li>
+      <li class="glass"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8m0-8-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Download from this website</li>
+      <li class="glass"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8m0-8-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Upload anything to the internet</li>
+      <li class="glass"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8m0-8-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Add ads, watermarks or a daily limit</li>
+    </ul>
+    <p class="built">Built on <a href="https://brew.sh">Homebrew</a>, <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> and <a href="https://ffmpeg.org">ffmpeg</a>.</p>
+  </section>
+
+  <section class="cta-band">
+    <div class="in glass">
+      <h2>Ready when you are.</h2>
+      <p>You need a Mac, Terminal, your Mac login password and about 10 minutes, once.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary btn-lg" href="setup.html">Start setup</a>
+        <a class="btn btn-secondary btn-lg" href="source.html">Read the script first</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <p>Snag is a wrapper around <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> and <a href="https://ffmpeg.org">ffmpeg</a>, who do the actual work.</p>
+      <p>This website does not download anything. Nothing you paste here is uploaded, logged or counted.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="how-it-works.html">How it works</a>
+      <a href="setup.html">Setup</a>
+      <a href="help.html">Help</a>
+      <a href="source.html">Source</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

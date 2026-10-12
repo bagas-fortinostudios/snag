@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Snag</title>
+<meta name="description" content="Save video from Instagram, TikTok and YouTube to your own Mac using yt-dlp and ffmpeg. Nothing uploads, nothing is capped, and the whole script is printed on the page.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;700;900&family=Courier+Prime:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<script>try{if(localStorage.getItem('snag-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+<style>
+:root {
+  --stock:    #f4f2ea;
+  --stock-2:  #e8e5da;
+  --ink:      #15150e;
+  --ink-2:    #4f4f42;
+  --ink-3:    #6d6d5e;
+  --cyan:     #0b6a89;
+  --cyan-field:#0b6a89;
+  --verm:     #b8371c;
+  --plate:    #16160f;
+  --plate-tx: #e4e1d3;
+  --plate-rl: #34342a;
+  --btn-face: #cfcdc2;
+  --btn-face2:#a3a196;
+  --rule:     #15150e;
+  --hair:     rgba(21,21,14,.26);
+  --grain:    .8;
+}
+:root[data-theme="dark"] {
+  --stock:    #16160f;
+  --stock-2:  #1e1e15;
+  --ink:      #e2dfd0;
+  --ink-2:    #a8a496;
+  --ink-3:    #8a8677;
+  --cyan:     #4aa8c9;
+  --cyan-field:#0d5570;
+  --verm:     #e0603f;
+  --plate:    #0d0d08;
+  --plate-tx: #e4e1d3;
+  --plate-rl: #34342a;
+  --btn-face: #cfcdc2;
+  --btn-face2:#9a988c;
+  --rule:     #e2dfd0;
+  --hair:     rgba(226,223,208,.24);
+  --grain:    .9;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background-color: var(--stock);
+  color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-size: 16.5px;
+  line-height: 1.62;
+  padding: 0;
+  position: relative;
+}
+/* the stock itself: a real pulp tile, not a flat fill */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1;
+  background: url(assets/pulp.png) repeat;
+  opacity: var(--grain);
+  pointer-events: none;
+}
+::selection { background: var(--cyan-field); color: #f4f2e8; }
+:focus-visible { outline: 2px solid var(--verm); outline-offset: 2px; }
+* { scrollbar-color: var(--ink-3) var(--stock-2); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: var(--stock-2); }
+::-webkit-scrollbar-thumb { background: var(--ink-3); border: 2px solid var(--stock-2); }
+
+h1,h2,h3 { font-family: 'Chivo', Helvetica, Arial, sans-serif; margin: 0; color: var(--ink); text-wrap: balance; }
+p { margin: 0; }
+a { color: var(--cyan); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { color: var(--verm); }
+code, kbd, .mono { font-family: 'Courier Prime', 'Courier New', monospace; }
+kbd { font-size: .86em; border: 1px solid var(--hair); padding: 0 4px; background: var(--stock-2); }
+
+.sheet { max-width: 1160px; margin: 0 auto; padding-inline: 20px; }
+.entry, #top { scroll-margin-top: 62px; }
+/* rules run to the paper's edge, not the column's */
+.fullrule { height: 3px; background: var(--rule); }
+
+/* ---------- masthead ---------- */
+.mast { padding-top: 34px; padding-bottom: 20px; display: grid; grid-template-columns: 1fr 318px; gap: 44px; align-items: start; }
+.mast > div:first-child { display: flex; flex-direction: column; }
+.mast .colophon { margin-top: auto; }
+.mast h1 { font-weight: 900; font-size: clamp(56px, 13vw, 150px); line-height: .82; letter-spacing: -.045em; text-transform: uppercase; margin-bottom: 12px; }
+/* the wordmark's cap-top sits 0.16em below its own box top (half-leading at .82
+   plus the ascender gap), so the stub tracks that rather than a fixed nudge */
+.mast .stub { margin-top: calc(0.16 * clamp(56px, 13vw, 150px)); }
+.mast .strap { font-family: 'Chivo', sans-serif; font-weight: 700; font-size: clamp(16px, 2.4vw, 24px); line-height: 1.2; letter-spacing: -.012em; max-width: 26ch; margin-bottom: 18px; }
+.colophon { font-family: 'Courier Prime', monospace; font-size: 12.5px; color: var(--ink-2); border-top: 1px solid var(--hair); padding-top: 10px; display: flex; flex-wrap: wrap; gap: 6px 26px; }
+.colophon b { color: var(--ink); font-weight: 400; }
+
+/* ---------- order stub: the coupon's first boxes, at the fold ---------- */
+.stub { border: 1px solid var(--ink); background: var(--stock-2); padding: 14px 15px 15px; }
+.stub .stub-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; border-bottom: 2px solid var(--ink); padding-bottom: 6px; margin-bottom: 11px; }
+.stub .mini { margin-top: 10px; display: grid; }
+
+/* ---------- entries, each with its own margin column ---------- */
+.entry { display: grid; grid-template-columns: 232px minmax(0, 1fr); gap: 0 30px; border-top: 3px solid var(--rule); }
+.entry:first-of-type { border-top: 0; }
+.entry + .entry { border-top-width: 3px; }
+.marg { order: 1; border-right: 1px solid var(--hair); padding-top: 22px; padding-right: 24px; padding-bottom: 40px; padding-left: 0; }
+.bodycol { order: 2; padding-top: 22px; padding-bottom: 46px; min-width: 0; }
+
+.marg section + section { margin-top: 22px; }
+.marg h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-2); border-bottom: 1px solid var(--hair); padding-bottom: 5px; margin-bottom: 9px; }
+.marg p, .marg li { font-family: 'Courier Prime', monospace; font-size: 12.5px; line-height: 1.55; color: var(--ink); }
+.marg ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.marg li.no { display: grid; grid-template-columns: 13px 1fr; gap: 8px; align-items: start; }
+.marg li.no svg { width: 11px; height: 11px; margin-top: 4px; }
+.marg .note { color: var(--ink-2); }
+.toc { display: grid; gap: 5px; counter-reset: mn; }
+.toc a { font-family: 'Chivo', sans-serif; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--ink); text-decoration: none; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.toc a::before { counter-increment: mn; content: counter(mn, decimal-leading-zero); font-family: 'Courier Prime', monospace; font-weight: 400; color: var(--verm); letter-spacing: 0; }
+.toc a::after { content: ''; flex: 1; border-bottom: 1px dotted var(--hair); order: 1; }
+.toc a:hover { color: var(--verm); }
+
+.bodycol > h2 { font-weight: 900; text-transform: uppercase; font-size: clamp(25px, 4.2vw, 40px); line-height: .98; letter-spacing: -.028em; margin-bottom: 16px; }
+.lede { font-size: 19px; line-height: 1.5; font-weight: 600; max-width: 44ch; margin-bottom: 18px; }
+.prose { max-width: 68ch; display: grid; gap: 13px; }
+.prose strong { font-weight: 600; }
+.tools { display: grid; gap: 0; margin-top: 4px; margin-bottom: 4px; }
+.tool { border-top: 1px solid var(--hair); padding-top: 13px; padding-bottom: 13px; display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 18px; }
+.tool:last-child { border-bottom: 1px solid var(--hair); }
+.tool dt { font-family: 'Chivo', sans-serif; font-weight: 700; font-size: 15px; color: var(--ink); }
+.tool dd { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); max-width: 52ch; }
+.tool dd b { color: var(--ink); font-weight: 600; }
+@media (max-width: 560px) { .tool { grid-template-columns: 1fr; gap: 3px; } }
+
+.field-cyan { background: var(--cyan-field); color: #eef6f9; padding: 22px 24px; margin-top: 20px; margin-bottom: 20px; }
+.field-cyan h3 { color: #fff; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; }
+.field-cyan p { color: #e4f0f5; max-width: 62ch; }
+
+/* ---------- plates: dark, and screened like a catalog photograph ---------- */
+.plate {
+  background-color: var(--plate);
+  background-image: url(assets/halftone.png);
+  color: var(--plate-tx);
+  font-family: 'Courier Prime', monospace; font-size: 13px; line-height: 1.7;
+  padding: 14px 15px; overflow-x: auto; white-space: pre; margin-top: 10px; margin-bottom: 10px;
+}
+.plate.wrap { white-space: pre-wrap; word-break: break-word; }
+.plate .ln { display: block; }
+.plate-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap;
+  background-color: var(--plate); background-image: url(assets/halftone.png);
+  color: var(--ink-3); border-bottom: 1px solid var(--plate-rl);
+  padding: 8px 15px; margin-top: 10px;
+  font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .14em;
+}
+.plate-head + .plate { margin-top: 0; }
+
+/* buttons are printed labels; vermilion is held back for the stamp */
+.stamp {
+  display: inline-block; text-decoration: none;
+  font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em; white-space: nowrap;
+  background: var(--btn-face); color: #15150e; border: 0; padding: 6px 13px; cursor: pointer;
+}
+.stamp.quiet { background: var(--btn-face2); }
+.stamp:hover { background: #fff; }
+.stamp[data-done="1"] { background: var(--verm); color: #fff; }
+.stamp:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ---------- setup steps: a real sequence ---------- */
+.steps { counter-reset: st; display: grid; margin-top: 8px; }
+.step { border-top: 1px solid var(--hair); padding-top: 20px; padding-bottom: 20px; display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 18px; }
+.step > div { min-width: 0; }
+.step::before { counter-increment: st; content: counter(st); font-family: 'Chivo', sans-serif; font-weight: 900; font-size: 34px; line-height: .9; color: var(--verm); letter-spacing: -.04em; }
+.step h3 { font-size: 18px; font-weight: 900; letter-spacing: -.012em; margin-bottom: 5px; }
+.step .said { font-size: 15.5px; color: var(--ink-2); max-width: 62ch; }
+.step .said + .said { margin-top: 8px; }
+.warn { border: 2px solid var(--verm); padding: 11px 13px; margin-top: 11px; font-family: 'Chivo', sans-serif; font-size: 14px; font-weight: 700; line-height: 1.45; max-width: 58ch; color: var(--ink); }
+
+/* ---------- coupon ---------- */
+.coupon { margin-top: 20px; padding: 4px; background-color: var(--stock-2); background-image: radial-gradient(circle at 5px 5px, var(--stock) 3.4px, transparent 3.6px); background-size: 10px 10px; }
+.coupon-in { background-color: var(--stock-2); background-image: url(assets/pulp.png); border: 1px solid var(--ink); padding: 20px; }
+.coupon h3 { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: .16em; border-bottom: 2px solid var(--ink); padding-bottom: 7px; margin-bottom: 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: baseline; }
+.coupon h3 span { font-family: 'Courier Prime', monospace; font-weight: 400; letter-spacing: 0; text-transform: none; font-size: 12px; color: var(--ink-2); }
+.cline { font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .13em; color: var(--ink-2); margin-bottom: 7px; }
+.cblock + .cblock { margin-top: 20px; }
+
+textarea#links { width: 100%; display: block; background: var(--stock); color: var(--ink); border: 1px solid var(--ink); padding: 11px 12px; font-family: 'Courier Prime', monospace; font-size: 13px; line-height: 1.7; resize: vertical; min-height: 84px; caret-color: var(--verm); }
+textarea#links::placeholder { color: var(--ink-2); opacity: 1; }
+
+.queue { margin-top: 9px; display: grid; gap: 3px; }
+.queue:empty { display: none; }
+.qrow { font-family: 'Courier Prime', monospace; font-size: 12px; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 10px; align-items: baseline; }
+.qrow b { font-weight: 700; color: var(--cyan); }
+.qrow.unknown b { color: var(--ink-2); }
+.qrow span { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.modes { display: grid; }
+.mode { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; width: 100%; text-align: left; background: none; border: 0; border-top: 1px solid var(--hair); padding-top: 11px; padding-bottom: 11px; font: inherit; color: var(--ink-2); cursor: pointer; }
+.mode:last-child { border-bottom: 1px solid var(--hair); }
+.tick { width: 18px; height: 18px; border: 1.5px solid var(--ink-3); position: relative; align-self: start; margin-top: 2px; }
+.tick img { position: absolute; left: -7px; top: -9px; width: 31px; height: 31px; display: none; transform: rotate(-7deg); }
+.mode .nm { font-family: 'Chivo', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: -.008em; display: block; }
+.mode .ds { font-size: 14.5px; line-height: 1.45; display: block; margin-top: 2px; max-width: 54ch; }
+.mode .sp { font-family: 'Courier Prime', monospace; font-size: 11.5px; white-space: nowrap; color: var(--ink-2); }
+.mode[aria-pressed="true"] { color: var(--ink); }
+.mode[aria-pressed="true"] .tick { border-color: var(--ink); }
+.mode[aria-pressed="true"] .tick img { display: block; }
+.mode:hover .nm { color: var(--verm); }
+
+.opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 0 26px; }
+.opt { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 12px; align-items: start; background: none; border: 0; border-top: 1px solid var(--hair); padding-top: 10px; padding-bottom: 10px; font: inherit; color: var(--ink); cursor: pointer; text-align: left; width: 100%; }
+.opt .nm { font-family: 'Chivo', sans-serif; font-weight: 700; font-size: 13.5px; display: block; }
+.opt .ds { font-size: 13px; line-height: 1.4; color: var(--ink-2); display: block; margin-top: 1px; }
+.opt[aria-pressed="false"] .nm { color: var(--ink-2); }
+.opt:hover .nm { color: var(--verm); }
+.opt .tick { width: 16px; height: 16px; margin-top: 3px; }
+.opt .tick img { left: -8px; top: -10px; width: 30px; height: 30px; }
+.opt[aria-pressed="true"] .tick { border-color: var(--ink); }
+.opt[aria-pressed="true"] .tick img { display: block; }
+
+/* compact ticks in the masthead stub */
+.mini .mrow { display: grid; grid-template-columns: 22px minmax(0,1fr); gap: 9px; align-items: center; background: none; border: 0; border-top: 1px solid var(--hair); padding-top: 8px; padding-bottom: 8px; width: 100%; text-align: left; font: inherit; cursor: pointer; color: var(--ink-2); }
+.mini .mrow:last-child { border-bottom: 1px solid var(--hair); }
+.mini .mrow .nm { font-family: 'Chivo', sans-serif; font-weight: 700; font-size: 12.5px; }
+.mini .mrow[aria-pressed="true"] { color: var(--ink); }
+.mini .mrow[aria-pressed="true"] .tick { border-color: var(--ink); }
+.mini .mrow[aria-pressed="true"] .tick img { display: block; }
+.mini .tick { width: 15px; height: 15px; margin-top: 0; }
+.mini .tick img { left: -8px; top: -10px; width: 29px; height: 29px; }
+
+select.cap { font-family: 'Courier Prime', monospace; font-size: 13px; background: var(--stock); color: var(--ink); border: 1px solid var(--ink); padding: 6px 9px; cursor: pointer; }
+.lands { font-family: 'Courier Prime', monospace; font-size: 12.5px; color: var(--ink-2); border-top: 1px solid var(--hair); margin-top: 14px; padding-top: 10px; }
+.lands b { color: var(--ink); font-weight: 700; }
+
+.listing { background-color: var(--plate); background-image: url(assets/halftone.png); color: var(--plate-tx); font-family: 'Courier Prime', monospace; font-size: 12px; line-height: 1.62; padding: 16px; overflow: auto; max-height: 460px; white-space: pre; margin-top: 10px; }
+
+.fault { border-top: 1px solid var(--hair); padding-top: 16px; padding-bottom: 16px; }
+.fault h3 { font-family: 'Courier Prime', monospace; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+.fault .prose { max-width: 66ch; }
+
+.foot { padding-top: 20px; padding-bottom: 46px; font-family: 'Courier Prime', monospace; font-size: 12.5px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 14px 30px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .mast { grid-template-columns: 1fr; gap: 0; }
+  .stub { display: none; }
+  .entry { grid-template-columns: 1fr; }
+  .bodycol { order: 1; padding-top: 20px; padding-bottom: 30px; }
+  .marg { order: 2; border-right: 0; border-top: 1px solid var(--hair); padding-top: 18px; padding-bottom: 32px; }
+  .marg > div { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 26px 26px; align-items: start; }
+  .marg section + section { margin-top: 0; }
+  .step { grid-template-columns: 34px minmax(0, 1fr); gap: 12px; }
+  .step::before { font-size: 26px; }
+  .mode { grid-template-columns: 26px minmax(0, 1fr); }
+  .mode .sp { grid-column: 2; white-space: normal; margin-top: 4px; }
+  .plate-head { letter-spacing: .1em; padding: 8px 12px; }
+  .plate-head > span:first-child { flex: 1 1 100%; }
+  /* a clipped command is an unusable command: wrap it with a hanging indent */
+  .plate { white-space: pre-wrap; overflow-wrap: anywhere; }
+  .plate .ln { padding-left: 1.3em; text-indent: -1.3em; }
+  .listing { white-space: pre; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tick img { animation: strike 90ms steps(2, end); }
+}
+
+/* ---------- running head: the catalog's page header, pinned ---------- */
+/* Not a navigation bar. It is the running head a catalog prints at the top of
+   every sheet, and it appears whole rather than sliding, per the motion rule. */
+.runhead {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+  background-color: var(--stock); background-image: url(assets/pulp.png);
+  border-bottom: 3px solid var(--rule);
+  display: none;
+}
+.runhead[data-on="1"] { display: block; }
+.runhead .rh { max-width: 1160px; margin: 0 auto; padding: 8px 20px; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 4px 20px; align-items: center; }
+.runhead .rh-name { font-family: 'Chivo', sans-serif; font-weight: 900; font-size: 23px; line-height: 1; letter-spacing: -.035em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.runhead .rh-name:hover { color: var(--verm); }
+.runhead .rh-strap { font-family: 'Courier Prime', monospace; font-size: 12px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.runhead .rh-act { display: flex; gap: 8px; align-items: center; }
+@media (max-width: 720px) { .runhead .rh { grid-template-columns: auto auto; } .runhead .rh-strap { display: none; } }
+
+/* ---------- theme toggle: a printed label, like every other control ---------- */
+button.themebtn { font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; background: none; border: 1px solid var(--hair); color: var(--ink-2); padding: 5px 10px; cursor: pointer; white-space: nowrap; }
+button.themebtn:hover { color: var(--verm); border-color: var(--verm); }
+.colophon .themebtn { margin-left: auto; }
+
+/* ---------- the stub's call to order ---------- */
+.stub .order-cta { display: block; width: 100%; text-align: center; margin-top: 13px; background: var(--ink); color: var(--stock); font-family: 'Chivo', sans-serif; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .1em; padding: 11px 12px; text-decoration: none; border: 0; cursor: pointer; }
+.stub .order-cta:hover { background: var(--verm); color: #fff; }
+.mobile-only { display: none; }
+@media (max-width: 860px) { .mobile-only { display: block; } .mast .order-cta { margin-top: 16px; } }
+.stub .stub-note { font-family: 'Courier Prime', monospace; font-size: 11.5px; color: var(--ink-2); margin-top: 9px; line-height: 1.45; }
+
+/* ---------- tickable rail checklist ---------- */
+.checkrail { display: grid; }
+.checkrail .crow { display: grid; grid-template-columns: 20px minmax(0,1fr); gap: 9px; align-items: center; background: none; border: 0; border-top: 1px solid var(--hair); padding: 7px 0; width: 100%; text-align: left; font: inherit; cursor: pointer; color: var(--ink-2); font-family: 'Courier Prime', monospace; font-size: 12.5px; }
+.checkrail .crow:last-child { border-bottom: 1px solid var(--hair); }
+.checkrail .crow[aria-pressed="true"] { color: var(--ink); }
+.checkrail .crow[aria-pressed="true"] .tick { border-color: var(--ink); }
+.checkrail .crow[aria-pressed="true"] .tick img { display: block; }
+.checkrail .tick { width: 14px; height: 14px; margin: 0; }
+.checkrail .tick img { left: -8px; top: -10px; width: 28px; height: 28px; }
+
+/* ---------- folded regions: the long listing does not have to be printed open ---------- */
+details.fold { margin-top: 10px; }
+details.fold > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  background-color: var(--plate); background-image: url(assets/halftone.png); color: var(--ink-3);
+  border-bottom: 1px solid var(--plate-rl); padding: 10px 15px;
+  font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary:hover { color: var(--plate-tx); }
+details.fold > summary .sig { color: var(--plate-tx); }
+details.fold[open] > summary .sig-shut { display: none; }
+details.fold:not([open]) > summary .sig-open { display: none; }
+details.fold > summary + .listing, details.fold > summary + .plate { margin-top: 0; }
+
+/* ---------- what Terminal prints back ---------- */
+/* The plate does not invert, so its dimmed ink cannot be a theme token either. */
+.plate.answer { color: #918d7e; }
+.plate.answer b { color: var(--plate-tx); font-weight: 400; }
+.plate.answer .note { color: var(--plate-tx); }
+
+.subhead { font-family: 'Chivo', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .16em; color: var(--ink-2); border-bottom: 1px solid var(--hair); padding-bottom: 5px; margin-top: 30px; }
+
+/* ---------- problem / solution pairs ---------- */
+.fault .fix { font-family: 'Chivo', sans-serif; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--ink-2); margin-top: 10px; margin-bottom: 4px; }
+
+@keyframes strike { from { transform: scale(1.2) rotate(-16deg); } to { transform: scale(1) rotate(-7deg); } }
+</style>
+</head>
+<body>
+
+<div class="runhead" id="runhead">
+  <div class="rh">
+    <a class="rh-name" href="#top">Snag</a>
+    <span class="rh-strap">Ready to order your video from the internet, delivered to your Mac?</span>
+    <span class="rh-act">
+      <button class="themebtn" type="button" id="themeBtn2" aria-pressed="false">Dark</button>
+      <a class="stamp" href="#order">Order your video now</a>
+    </span>
+  </div>
+</div>
+
+<div class="sheet" id="top">
+  <header class="mast">
+    <div>
+      <h1>Snag</h1>
+      <p class="strap">Video off the internet, onto your own disk.</p>
+      <div class="colophon">
+        <span>Version <b>1.0</b></span>
+        <span>Price <b>Nothing</b></span>
+        <span>Runs on <b>macOS</b></span>
+        <span>Built from <b>yt-dlp + ffmpeg</b></span>
+        <button class="themebtn" type="button" id="themeBtn" aria-pressed="false">Dark</button>
+      </div>
+      <a class="order-cta mobile-only" href="#order">Order your video now</a>
+    </div>
+    <div class="stub">
+      <div class="stub-label">Start an order</div>
+      <p class="stub-note" style="margin-top:0;margin-bottom:11px">Ready to order your video from the internet, delivered to your Mac?</p>
+      <div class="mini" id="modesMini"></div>
+      <a class="order-cta" href="#order">Order your video now</a>
+    </div>
+  </header>
+</div>
+<div class="fullrule"></div>
+
+<div class="sheet">
+
+  <article class="entry" id="what">
+    <div class="bodycol">
+      <h2>What this actually is</h2>
+      <p class="lede">A free way to save videos from Instagram, TikTok and YouTube onto your own Mac. You set it up once, then it is one short line every time.</p>
+
+      <dl class="tools">
+        <div class="tool"><dt>yt-dlp</dt><dd>Fetches the video from the site. It is the part that actually does the downloading.</dd></div>
+        <div class="tool"><dt>ffmpeg</dt><dd>Joins the picture and the sound into one finished file, and converts it when you want a different format.</dd></div>
+        <div class="tool"><dt>Snag</dt><dd>The short command that runs both of them for you. On their own they need a long line of settings that changes from site to site, and it is easy to get wrong. Snag reads your link, picks the right settings, and does the whole job in one go.</dd></div>
+      </dl>
+
+      <h3 class="subhead">How an order works</h3>
+      <div class="steps">
+
+        <div class="step"><div>
+          <h3>Find the video</h3>
+          <p class="said">Instagram, TikTok, a YouTube Short or a full-length YouTube video. If it plays in a browser, it works here.</p>
+        </div></div>
+
+        <div class="step"><div>
+          <h3>Copy the share link</h3>
+          <p class="said">Use the app's own Share or Copy link button. The address in your browser bar works too.</p>
+        </div></div>
+
+        <div class="step"><div>
+          <h3>Paste it into the order form</h3>
+          <p class="said">Down this sheet under <a href="#order">Order form</a>. Tick how you want the file delivered.</p>
+        </div></div>
+
+        <div class="step"><div>
+          <h3>Copy your receipt</h3>
+          <p class="said">The form prints one line at the bottom. That line is your order. Press Copy.</p>
+        </div></div>
+
+        <div class="step"><div>
+          <h3>Paste it into Terminal</h3>
+          <p class="said">Once the one-time <a href="#setup">setup</a> is done, this is the only step you repeat. Paste, press Enter, and the file lands in your Downloads folder.</p>
+        </div></div>
+
+      </div>
+    </div>
+    <div class="marg">
+      <div>
+        <section>
+          <h3>What you need</h3>
+          <div class="checkrail" id="needs"></div>
+        </section>
+        <section>
+          <h3>What it is built on</h3>
+          <ul>
+            <li><a href="https://brew.sh">Homebrew</a></li>
+            <li><a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a></li>
+            <li><a href="https://ffmpeg.org">ffmpeg</a></li>
+          </ul>
+        </section>
+        <section>
+          <h3>What it will not do</h3>
+          <ul>
+            <li class="no"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5 L10.5 10.5 M10.5 1.5 L1.5 10.5" stroke="var(--verm)" stroke-width="2.2" stroke-linecap="round"/></svg><span>Work on Windows or Linux</span></li>
+            <li class="no"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5 L10.5 10.5 M10.5 1.5 L1.5 10.5" stroke="var(--verm)" stroke-width="2.2" stroke-linecap="round"/></svg><span>Hack your computer</span></li>
+            <li class="no"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1.5 L10.5 10.5 M10.5 1.5 L1.5 10.5" stroke="var(--verm)" stroke-width="2.2" stroke-linecap="round"/></svg><span>Upload anything to the internet</span></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Other menus</h3>
+          <nav class="toc">
+            <a href="#what">What this is</a>
+            <a href="#setup">Setup</a>
+            <a href="#order">Order form</a>
+            <a href="#source">The script</a>
+            <a href="#health">Monthly check</a>
+            <a href="#faults">When it breaks</a>
+          </nav>
+        </section>
+      </div>
+    </div>
+  </article>
+
+  <article class="entry" id="setup">
+    <div class="bodycol">
+      <h2>Setup, once</h2>
+      <p class="lede">Four steps, then you never do this again.</p>
+      <div class="steps">
+
+        <div class="step"><div>
+          <h3>Install Homebrew</h3>
+          <p class="said">Open Terminal. Press <kbd>Cmd</kbd>+<kbd>Space</kbd>, type "Terminal", press Enter. Paste this line and press Enter.</p>
+          <div class="plate-head"><span>Paste into Terminal</span><button class="stamp" type="button" data-copy="brew">Copy</button></div>
+          <div class="plate wrap" id="cmd-brew">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+          <div class="warn">It will ask for your Mac login password. Nothing appears while you type. No dots, no stars, nothing at all. The screen is not frozen and your keyboard is not broken. Type it, press Enter, then press Enter again when it asks to continue.</div>
+          <p class="said">When it finishes, the last thing it prints is a block headed <b>==&gt; Next steps:</b> containing two commands. They are not optional and they are not the same on every Mac, so run the two <b>it</b> printed, not the two printed here. They put Homebrew on your PATH.</p>
+          <div class="plate-head"><span>Terminal prints something like this</span></div>
+          <div class="plate answer">==&gt; Installation successful!
+
+==&gt; Next steps:
+- Run these commands in your terminal to add Homebrew to your PATH:
+    <b>echo &gt;&gt; /Users/you/.zprofile</b>
+    <b>echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; /Users/you/.zprofile</b>
+    <b>eval "$(/opt/homebrew/bin/brew shellenv)"</b></div>
+          <p class="said">Copy the bold lines out of your own Terminal one at a time, paste each one, press Enter. Nothing visible happens, which is correct.</p>
+        </div></div>
+
+        <div class="step"><div>
+          <h3>Install ffmpeg and pipx</h3>
+          <div class="plate-head"><span>Paste into Terminal</span><button class="stamp" type="button" data-copy="tools">Copy</button></div>
+          <div class="plate" id="cmd-tools">brew install ffmpeg pipx</div>
+          <p class="said">ffmpeg merges the separate video and audio streams that these sites serve, and handles any conversion. pipx installs yt-dlp in its own isolated environment so it cannot break anything else.</p>
+          <div class="plate-head"><span>Terminal prints something like this</span></div>
+          <div class="plate answer">==&gt; Fetching ffmpeg
+==&gt; Pouring ffmpeg--7.1.arm64_sonoma.bottle.tar.gz
+==&gt; Pouring pipx--1.7.1.arm64_sonoma.bottle.tar.gz
+<b>🍺  /opt/homebrew/Cellar/ffmpeg/7.1: 285 files, 51.6MB</b></div>
+          <p class="said">This one takes a few minutes and prints a lot. A wall of text is normal. What you want at the end is the beer glass, not an error.</p>
+        </div></div>
+
+        <div class="step"><div>
+          <h3>Install yt-dlp</h3>
+          <div class="plate-head"><span>Paste into Terminal</span><button class="stamp" type="button" data-copy="ytdlp">Copy</button></div>
+          <div class="plate" id="cmd-ytdlp">pipx install "yt-dlp[default,curl-cffi]"
+pipx ensurepath</div>
+          <p class="said">The <code>curl-cffi</code> part is the piece that matters and the piece most guides leave out. It lets yt-dlp reproduce a real Chrome network fingerprint. Without it, TikTok answers every request with 403 Forbidden no matter which other flags you use.</p>
+          <div class="plate-head"><span>Terminal prints something like this</span></div>
+          <div class="plate answer"><b>installed package yt-dlp 2025.09.05, installed using Python 3.13.1</b>
+  These apps are now globally available
+    - yt-dlp
+<b>done! ✨ 🌟 ✨</b></div>
+          <p class="said">If it says <code>yt-dlp is already installed</code>, add <code>--force</code> to the front command and run it again.</p>
+        </div></div>
+
+        <div class="step"><div>
+          <h3>Restart Terminal and check</h3>
+          <p class="said">Quit Terminal completely with <kbd>Cmd</kbd>+<kbd>Q</kbd>, then open it again. This is not optional; the new commands are not on your path until you do.</p>
+          <div class="plate-head"><span>Paste into Terminal</span><button class="stamp" type="button" data-copy="verify">Copy</button></div>
+          <div class="plate" id="cmd-verify">yt-dlp --version
+yt-dlp --list-impersonate-targets</div>
+          <p class="said">Two answers come back. The first is a version number, written as year, month, day. The second is a table of the browsers yt-dlp can pretend to be. Both need to look like this.</p>
+          <div class="plate-head"><span>Terminal prints something like this</span></div>
+          <div class="plate answer"><b>2025.09.05</b>
+                    <span class="note">&larr; the version. Four digits, month, day.</span>
+
+Client   Version  OS       Source
+------   -------  -------  ---------
+<b>chrome   131      windows  curl_cffi</b>
+<b>chrome   131      macos    curl_cffi</b>
+<b>safari   18.0     macos    curl_cffi</b>
+<b>edge     101      windows  curl_cffi</b></div>
+          <p class="said"><b>The version number</b> is a date. If yours reads something like 2024.03.10, it is over a year old and downloads will start failing. Run <code>pipx upgrade yt-dlp</code>.</p>
+          <p class="said"><b>The browser table</b> is the important one. You want rows in it, with <code>curl_cffi</code> in the Source column and chrome and safari among the clients. If the table is empty, or the command errors, the curl-cffi part did not install and TikTok will return 403 Forbidden. Run step three again with <code>--force</code>.</p>
+        </div></div>
+
+      </div>
+    </div>
+    <div class="marg">
+      <div>
+        <section>
+          <h3>Before you start</h3>
+          <p>Allow about 10 minutes. You will need your Mac login password for step 1.</p>
+        </section>
+        <section>
+          <h3>See also</h3>
+          <p class="note"><a href="#faults">When it breaks</a>, if a step refuses.</p>
+        </section>
+      </div>
+    </div>
+  </article>
+
+  <article class="entry" id="order">
+    <div class="bodycol">
+      <h2>Order form</h2>
+      <p class="lede">Tick what you want. The command prints at the bottom. Paste it into Terminal.</p>
+      <div class="coupon"><div class="coupon-in">
+        <h3>Download order <span id="stamp-line">no links yet</span></h3>
+        <div class="cblock">
+          <div class="cline">Links, one per line</div>
+          <textarea id="links" rows="3" spellcheck="false" autocomplete="off" placeholder="https://www.instagram.com/reel/...
+https://www.tiktok.com/@user/video/...
+https://youtube.com/watch?v=...">https://www.youtube.com/watch?v=jNQXAC9IVRw</textarea>
+          <div class="queue" id="queue"></div>
+        </div>
+        <div class="cblock">
+          <div class="cline">Deliver as</div>
+          <div class="modes" id="modes"></div>
+        </div>
+        <div class="cblock">
+          <div class="cline">Resolution limit</div>
+          <select class="cap" id="cap">
+            <option value="">No limit</option>
+            <option value="2160">2160p</option><option value="1440">1440p</option>
+            <option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option>
+          </select>
+        </div>
+        <div class="cblock">
+          <div class="cline">Also</div>
+          <div class="opts" id="opts"></div>
+        </div>
+        <div class="cblock">
+          <div class="plate-head"><span>Your order, ready to paste into Terminal</span>
+            <span style="display:flex;gap:7px">
+              <button class="stamp quiet" type="button" id="rawBtn">Show raw yt-dlp</button>
+              <button class="stamp" type="button" id="copyCmd">Copy</button>
+            </span>
+          </div>
+          <div class="plate wrap" id="cmd">Paste a link above.</div>
+          <div class="lands" id="lands"></div>
+        </div>
+      </div></div>
+    </div>
+    <div class="marg">
+      <div>
+        <section>
+          <h3>Check your link</h3>
+          <p>A link Snag understands is listed under <b>Download order</b> with its site named next to it. If a line comes back as <b>unrecognised</b>, the link is wrong or the site is not supported. Fix it before you copy the command.</p>
+        </section>
+        <section>
+          <h3>Note</h3>
+          <p class="note">Every option is printed here, including the ones you did not pick, so you can see what you are turning down.</p>
+        </section>
+        <section>
+          <h3>Where it goes</h3>
+          <p class="note">Always <code>~/Downloads</code>, unless you pass <code>-o</code> yourself.</p>
+        </section>
+      </div>
+    </div>
+  </article>
+
+  <article class="entry" id="source">
+    <div class="bodycol">
+      <h2>The script, in full</h2>
+      <p class="lede">You should not paste an installer from a stranger's website without reading it. So here it is, all of it.</p>
+      <div class="prose">
+        <p>Copy the installer below and paste it into ChatGPT, Claude or whichever assistant you use, with a question like <b>"is this safe to run on my Mac, and what exactly does it do?"</b> Then copy the complete source underneath and ask the same about that. You do not have to read shell to check something written in it.</p>
+        <p>When you are satisfied, paste the installer into Terminal and open a new tab.</p>
+      </div>
+      <div class="plate-head"><span>Installer</span><button class="stamp" type="button" id="copyInstall">Copy installer</button></div>
+      <div class="plate wrap" id="installPreview"></div>
+      <details class="fold" style="margin-top:22px">
+        <summary>
+          <span>Complete source <span id="srcCount"></span></span>
+          <span class="sig"><span class="sig-shut">Show it &darr;</span><span class="sig-open">Hide it &uarr;</span></span>
+        </summary>
+        <div class="listing" id="listing"></div>
+      </details>
+      <div style="margin-top:14px"><button class="stamp quiet" type="button" id="copySource">Copy the source to ask your AI</button></div>
+    </div>
+    <div class="marg">
+      <div>
+        <section>
+          <h3>What it writes</h3>
+          <p>One file, <code>~/bin/snag</code>. One line appended to <code>~/.zshrc</code> if your PATH needs it. Nothing else.</p>
+        </section>
+        <section>
+          <h3>Length</h3>
+          <p class="note" id="srcLines"></p>
+        </section>
+        <section>
+          <h3>Before you run it</h3>
+          <p class="note">Copy it, paste it to an AI, and ask what it does. That is a reasonable thing to do with any script you did not write.</p>
+        </section>
+      </div>
+    </div>
+  </article>
+
+  <article class="entry" id="health">
+    <div class="bodycol">
+      <h2>Monthly check</h2>
+      <p class="lede">Once a month, check the yt-dlp inside your Mac. One command opens a small panel that does it for you.</p>
+      <div class="prose">
+        <p>These sites change how they serve video every few weeks, and yt-dlp ships fixes within days. A copy more than a month or two old is the single most common reason downloads stop working. Checking it monthly means you find out before a download fails, not after.</p>
+      </div>
+      <div class="plate-head"><span>Paste into Terminal</span><button class="stamp" type="button" data-copy="dash">Copy</button></div>
+      <div class="plate" id="cmd-dash">snag dash</div>
+      <div class="prose">
+        <p>A page opens in your browser. It shows how old your yt-dlp is, with a coloured flag: green means fresh, blue means worth upgrading, red means this is probably your problem. One button upgrades it. Another runs a self-test that downloads a 19-second video, checks the file came out in the right codec, and deletes it again. It also lists what you downloaded recently.</p>
+        <p>This panel really can run things, because it is a small server on your own Mac rather than a page on the internet. It listens on <code>127.0.0.1</code> only, nothing outside your Mac can reach it, and closing the Terminal window stops it.</p>
+      </div>
+      <h3 class="subhead">If you would rather not open the panel</h3>
+      <div class="prose"><p>This one line does the upgrade on its own. It is the same thing the green button does.</p></div>
+      <div class="plate-head"><span>Paste into Terminal</span><button class="stamp" type="button" data-copy="upgrade">Copy</button></div>
+      <div class="plate" id="cmd-upgrade">pipx upgrade yt-dlp</div>
+    </div>
+    <div class="marg">
+      <div>
+        <section>
+          <h3>How often</h3>
+          <p>Once a month. Put it in your calendar, or run it the first time a download looks wrong.</p>
+        </section>
+        <section>
+          <h3>What the flag means</h3>
+          <ul>
+            <li>Green: under 30 days. Fine.</li>
+            <li>Blue: 30 to 60 days. Upgrade it.</li>
+            <li>Red: over 60 days. This is your problem.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </article>
+
+  <article class="entry" id="faults">
+    <div class="bodycol">
+      <h2>When it breaks</h2>
+      <p class="lede">Find the message you saw. Each one has one fix.</p>
+      <div class="field-cyan">
+        <h3>Do this first, whatever the message says</h3>
+        <p>Run <b style="color:#fff;font-weight:600">pipx upgrade yt-dlp</b> in Terminal, then try your download again. This alone fixes most failures. Only work through the list below if the problem survives an upgrade.</p>
+      </div>
+      <div style="margin-top:26px">
+
+        <div class="fault"><h3>HTTP Error 403: Forbidden</h3>
+          <div class="prose">
+            <p><b>What it means.</b> The site refused to answer. It could not tell that the request came from a real browser.</p>
+            <p class="fix">The fix</p>
+            <p>The Chrome-impersonation support is missing. Check it by running <code>yt-dlp --list-impersonate-targets</code>. If that prints an empty table, or errors, run the line below and try again.</p>
+          </div>
+          <div class="plate-head"><span>Paste into Terminal</span><button class="stamp" type="button" data-copy="force">Copy</button></div>
+          <div class="plate wrap" id="cmd-force">pipx install --force "yt-dlp[default,curl-cffi]"</div>
+        </div>
+
+        <div class="fault"><h3>Login required, or Please wait a few minutes before you try again</h3>
+          <div class="prose">
+            <p><b>What it means.</b> Instagram will not show the video to someone who is not signed in.</p>
+            <p class="fix">The fix</p>
+            <p>Sign into Instagram in Chrome. Then quit Chrome completely with <kbd>Cmd</kbd>+<kbd>Q</kbd>, not just closing the window. macOS will not let Snag read your login while Chrome is open. Then run your command again. The order form ticks <b>Use my Chrome login</b> for Instagram and TikTok links automatically, so the command already carries it.</p>
+          </div></div>
+
+        <div class="fault"><h3>ERROR: Unable to extract</h3>
+          <div class="prose">
+            <p><b>What it means.</b> The site changed how its pages are built, and yt-dlp has not caught up on your machine.</p>
+            <p class="fix">The fix</p>
+            <p>Upgrade yt-dlp. This is the upgrade case at the top of this list, almost every time.</p>
+          </div></div>
+
+        <div class="fault"><h3>command not found: snag</h3>
+          <div class="prose">
+            <p><b>What it means.</b> Snag is installed, but your Terminal does not know where to look for it.</p>
+            <p class="fix">The fix</p>
+            <p>Paste the line below, then quit Terminal with <kbd>Cmd</kbd>+<kbd>Q</kbd> and open it again. The second part matters; the change does not take effect until Terminal restarts.</p>
+          </div>
+          <div class="plate-head"><span>Paste into Terminal</span><button class="stamp" type="button" data-copy="path">Copy</button></div>
+          <div class="plate wrap" id="cmd-path">echo 'export PATH="$HOME/bin:$PATH"' &gt;&gt; ~/.zshrc</div>
+        </div>
+
+        <div class="fault"><h3>It downloaded a whole playlist instead of one video</h3>
+          <div class="prose">
+            <p><b>What it means.</b> Your YouTube link had <code>&amp;list=</code> in it, and <b>Whole playlist</b> was ticked on the order form.</p>
+            <p class="fix">The fix</p>
+            <p>Untick <b>Whole playlist</b> and build the command again. With it off, a link carrying a playlist gets you only the one video you were watching.</p>
+          </div></div>
+
+        <div class="fault"><h3>The file plays fine but my editing software struggles with it</h3>
+          <div class="prose">
+            <p><b>What it means.</b> You have an AV1 or VP9 file. Browsers play those easily. Premiere and Resolve decode them in software, so scrubbing becomes unusable.</p>
+            <p class="fix">The fix</p>
+            <p>Use <b>Ready to edit</b> on the order form. That restricts the download to H.264, which every editor handles natively, and it needs no conversion. It tops out at 1080p, because that is where H.264 stops on YouTube. If you need 4K that edits, use <b>4K, slow</b> instead, which downloads the best stream and re-encodes it. That takes real minutes.</p>
+          </div></div>
+
+      </div>
+    </div>
+    <div class="marg">
+      <div>
+        <section>
+          <h3>First move</h3>
+          <p>Upgrade yt-dlp. It fixes most failures.</p>
+        </section>
+        <section>
+          <h3>Shortcut</h3>
+          <p class="note"><code>snag dash</code> does the upgrade and the test for you. See <a href="#health">Monthly check</a>.</p>
+        </section>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<div class="fullrule"></div>
+<div class="sheet">
+  <footer class="foot">
+    <span>Snag &mdash; a wrapper around <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> and <a href="https://ffmpeg.org">ffmpeg</a>, who do the actual work.</span>
+    <span>Runs on your machine. Nothing is uploaded, logged or counted.</span>
+  </footer>
+</div>
+
+<script type="application/json" id="snagSource">"#!/usr/bin/env bash\n# snag - social media video downloader (Instagram / TikTok / YouTube)\n# Companion to `grab` (which handles Drive / Dropbox / Frame.io client footage).\n# Usage: snag [options] [URL...]        # no URL = read clipboard\n\nset -o pipefail\n\nDEFAULT_DEST=\"$HOME/Downloads\"\n\nBOLD=$'\\033[1m'; DIM=$'\\033[2m'; GREEN=$'\\033[32m'; YELLOW=$'\\033[33m'\nRED=$'\\033[31m'; CYAN=$'\\033[36m'; RESET=$'\\033[0m'\n\nsay()  { printf \"%s\\n\" \"$*\"; }\ninfo() { printf \"%s%s%s\\n\" \"$CYAN\" \"$*\" \"$RESET\"; }\nok()   { printf \"%s%s%s\\n\" \"$GREEN\" \"$*\" \"$RESET\"; }\nwarn() { printf \"%s%s%s\\n\" \"$YELLOW\" \"$*\" \"$RESET\"; }\ndie()  { printf \"%s%s%s\\n\" \"$RED\" \"$*\" \"$RESET\" >&2; exit 1; }\n\nSELF=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)/$(basename \"${BASH_SOURCE[0]}\")\"\n\n# Hidden mode: yt-dlp calls us back per finished file to force an H.264 transcode.\n# --recode-video mp4 will NOT re-encode a file that is already in an mp4 container,\n# so AV1/VP9 would silently survive. This does the real thing.\nif [ \"$1\" = \"--__transcode\" ]; then\n  f=\"$2\"\n  [ -f \"$f\" ] || exit 0\n  codec=\"$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 \"$f\" 2>/dev/null)\"\n  if [ \"$codec\" = \"h264\" ]; then\n    printf \"%s[transcode] already H.264, leaving as-is%s\\n\" \"$DIM\" \"$RESET\"\n    exit 0\n  fi\n  printf \"%s[transcode] %s -> H.264 (this takes a while)%s\\n\" \"$CYAN\" \"${codec:-unknown}\" \"$RESET\"\n  tmp=\"${f%.*}.h264.mp4\"\n  if ffmpeg -nostdin -v error -stats -i \"$f\" \\\n       -c:v libx264 -preset medium -crf 18 -pix_fmt yuv420p \\\n       -c:a aac -b:a 320k -movflags +faststart \"$tmp\" <\/dev/null; then\n    mv -f \"$tmp\" \"${f%.*}.mp4\"\n    [ \"${f%.*}.mp4\" != \"$f\" ] && rm -f \"$f\"\n    printf \"%s[transcode] done%s\\n\" \"$GREEN\" \"$RESET\"\n  else\n    rm -f \"$tmp\"\n    printf \"%s[transcode] failed, keeping original %s file%s\\n\" \"$YELLOW\" \"$codec\" \"$RESET\"\n  fi\n  exit 0\nfi\n\n# ---------- snag dash: a local control panel that can actually run things ----------\n# Binds to 127.0.0.1 only and requires a per-run token, because this executes\n# commands and any web page in your browser can otherwise POST to localhost.\nif [ \"$1\" = \"dash\" ]; then\n  command -v python3 >/dev/null 2>&1 || die \"snag dash needs python3 (it ships with macOS).\"\n  SNAG_BIN=\"$SELF\" python3 -u - \"$@\" <<'PYEOF'\nimport http.server, json, os, re, secrets, shutil, socket, subprocess, sys, tempfile, threading, webbrowser\nfrom datetime import date, datetime\n\nTOKEN = secrets.token_urlsafe(18)\nSNAG = os.environ.get(\"SNAG_BIN\", os.path.expanduser(\"~/bin/snag\"))\n\nANSI = re.compile(r\"\\x1b\\[[0-9;]*[A-Za-z]\")\n\ndef run(cmd, timeout=900):\n    try:\n        p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)\n        return p.returncode, ANSI.sub(\"\", (p.stdout or \"\") + (p.stderr or \"\"))\n    except FileNotFoundError:\n        return 127, \"not installed\"\n    except subprocess.TimeoutExpired:\n        return 124, \"timed out\"\n\ndef which(n):\n    return shutil.which(n) or \"\"\n\ndef ytdlp_version():\n    rc, out = run([\"yt-dlp\", \"--version\"], 30)\n    v = out.strip().splitlines()[-1].strip() if rc == 0 and out.strip() else \"\"\n    days = None\n    m = re.match(r\"^(\\d{4})\\.(\\d{2})\\.(\\d{2})\", v)\n    if m:\n        try:\n            days = (date.today() - date(int(m.group(1)), int(m.group(2)), int(m.group(3)))).days\n        except ValueError:\n            pass\n    return v, days\n\ndef status():\n    v, days = ytdlp_version()\n    rc, imp = run([\"yt-dlp\", \"--list-impersonate-targets\"], 60)\n    targets = len([l for l in imp.splitlines() if \"curl_cffi\" in l]) if rc == 0 else 0\n    rcf, ff = run([\"ffmpeg\", \"-version\"], 30)\n    ffv = ff.splitlines()[0].split(\" \")[2] if rcf == 0 and ff.strip() else \"\"\n    if days is None:      state, note = \"unknown\", \"Could not read the version.\"\n    elif days > 60:       state, note = \"stale\",  \"%d days old. This is the usual cause of downloads failing.\" % days\n    elif days > 30:       state, note = \"aging\",  \"%d days old. Worth upgrading.\" % days\n    else:                 state, note = \"fresh\",  \"%d days old.\" % days\n    return {\n        \"ytdlp\": v or \"not installed\", \"ytdlpDays\": days, \"state\": state, \"note\": note,\n        \"targets\": targets, \"ffmpeg\": ffv or \"not installed\",\n        \"snag\": SNAG, \"python\": sys.version.split()[0],\n        \"downloads\": os.path.expanduser(\"~/Downloads\"),\n    }\n\ndef recent():\n    d = os.path.expanduser(\"~/Downloads\")\n    out = []\n    try:\n        ents = [(os.path.getmtime(os.path.join(d, f)), f) for f in os.listdir(d)\n                if f.lower().endswith((\".mp4\", \".mp3\", \".mkv\", \".webm\", \".m4a\"))]\n        for mt, f in sorted(ents, reverse=True)[:8]:\n            out.append({\"name\": f, \"when\": datetime.fromtimestamp(mt).strftime(\"%d %b %H:%M\"),\n                        \"size\": \"%.1f MB\" % (os.path.getsize(os.path.join(d, f)) / 1048576)})\n    except OSError:\n        pass\n    return out\n\ndef selftest():\n    tmp = tempfile.mkdtemp(prefix=\"snag-selftest-\")\n    log = [\"Downloading a 19-second test video to a temporary folder.\", \"\"]\n    rc, out = run([SNAG, \"-o\", tmp, \"https://www.youtube.com/watch?v=jNQXAC9IVRw\"], 300)\n    log.append(out.strip())\n    files = [f for f in os.listdir(tmp)] if os.path.isdir(tmp) else []\n    ok = False\n    if files:\n        f = os.path.join(tmp, files[0])\n        rc2, codec = run([\"ffprobe\", \"-v\", \"error\", \"-select_streams\", \"v:0\",\n                          \"-show_entries\", \"stream=codec_name,height\", \"-of\", \"csv=p=0\", f], 60)\n        log += [\"\", \"File produced: \" + files[0], \"Video stream: \" + codec.strip()]\n        ok = rc == 0 and \"h264\" in codec\n    shutil.rmtree(tmp, ignore_errors=True)\n    log += [\"\", \"Temporary folder removed.\"]\n    log.append(\"PASS. yt-dlp, ffmpeg and snag are all working.\" if ok\n               else \"FAIL. Try Upgrade yt-dlp, then run this again.\")\n    return ok, \"\\n\".join(log)\n\nACTIONS = {\n    \"upgrade\":  lambda: run([\"pipx\", \"upgrade\", \"yt-dlp\"], 600),\n    \"reinstall\":lambda: run([\"pipx\", \"install\", \"--force\", \"yt-dlp[default,curl-cffi]\"], 900),\n    \"selftest\": None,\n}\n\nclass H(http.server.BaseHTTPRequestHandler):\n    def log_message(self, *a): pass\n\n    def _guard(self):\n        host = (self.headers.get(\"Host\") or \"\").split(\":\")[0]\n        if host not in (\"127.0.0.1\", \"localhost\"):\n            self.send_error(403, \"bad host\"); return False\n        origin = self.headers.get(\"Origin\")\n        if origin and not re.match(r\"^https?://(127\\.0\\.0\\.1|localhost)(:\\d+)?$\", origin):\n            self.send_error(403, \"bad origin\"); return False\n        return True\n\n    def _json(self, obj, code=200):\n        b = json.dumps(obj).encode()\n        self.send_response(code)\n        self.send_header(\"Content-Type\", \"application/json\")\n        self.send_header(\"Content-Length\", str(len(b)))\n        self.end_headers(); self.wfile.write(b)\n\n    def do_GET(self):\n        if not self._guard(): return\n        if self.path.startswith(\"/?t=\") or self.path == \"/\":\n            if (\"t=\" + TOKEN) not in self.path:\n                self.send_error(403, \"open the URL snag printed in your Terminal\"); return\n            b = PAGE.replace(\"__TOKEN__\", TOKEN).encode()\n            self.send_response(200)\n            self.send_header(\"Content-Type\", \"text/html; charset=utf-8\")\n            self.send_header(\"Content-Length\", str(len(b)))\n            self.end_headers(); self.wfile.write(b); return\n        if self.path.startswith(\"/api/status\"):\n            if (\"t=\" + TOKEN) not in self.path: self.send_error(403); return\n            return self._json({\"status\": status(), \"recent\": recent()})\n        self.send_error(404)\n\n    def do_POST(self):\n        if not self._guard(): return\n        n = int(self.headers.get(\"Content-Length\") or 0)\n        try: body = json.loads(self.rfile.read(n) or b\"{}\")\n        except ValueError: body = {}\n        if body.get(\"token\") != TOKEN:\n            self.send_error(403, \"bad token\"); return\n        act = body.get(\"action\")\n        if act == \"selftest\":\n            ok, log = selftest()\n            return self._json({\"ok\": ok, \"log\": log, \"status\": status()})\n        if act == \"reveal\":\n            subprocess.run([\"open\", os.path.expanduser(\"~/Downloads\")])\n            return self._json({\"ok\": True, \"log\": \"Opened ~/Downloads in Finder.\", \"status\": status()})\n        fn = ACTIONS.get(act)\n        if not fn:\n            return self._json({\"ok\": False, \"log\": \"Unknown action.\"}, 400)\n        rc, out = fn()\n        return self._json({\"ok\": rc == 0, \"log\": out.strip() or \"Done.\", \"status\": status()})\n\nPAGE = r\"\"\"<!DOCTYPE html><html lang=\"en\"><head><meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Snag control<\/title>\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Chivo:wght@400;700;900&family=Courier+Prime:wght@400;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap\">\n<style>\n:root{--stock:#d3d1c6;--stock2:#c5c3b6;--ink:#15150e;--ink2:#4f4f42;--cyan:#0b6a89;--verm:#b8371c;\n--plate:#16160f;--plateTx:#e4e1d3;--hair:rgba(21,21,14,.26);--ok:#1d6b42}\n@media(prefers-color-scheme:dark){:root{--stock:#16160f;--stock2:#1e1e15;--ink:#e2dfd0;--ink2:#a8a496;\n--cyan:#4aa8c9;--verm:#e0603f;--plate:#0d0d08;--hair:rgba(226,223,208,.24);--ok:#5fc48c}}\n*{box-sizing:border-box}body{margin:0;background:var(--stock);color:var(--ink);\nfont-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.6;padding:0 20px 60px}\n.w{max-width:820px;margin:0 auto}h1,h2{font-family:'Chivo',sans-serif;margin:0}\nh1{font-weight:900;font-size:clamp(38px,9vw,78px);line-height:.85;letter-spacing:-.04em;text-transform:uppercase;padding-top:30px}\n.sub{font-family:'Courier Prime',monospace;font-size:12.5px;color:var(--ink2);\nborder-top:1px solid var(--hair);margin-top:14px;padding-top:9px}\nh2{font-weight:900;text-transform:uppercase;font-size:20px;letter-spacing:-.02em;margin-bottom:12px}\nsection{border-top:3px solid var(--ink);padding-top:18px;margin-top:30px}\n.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0 24px}\n.row{border-top:1px solid var(--hair);padding:10px 0;display:flex;justify-content:space-between;gap:12px;align-items:baseline}\n.k{font-family:'Chivo',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--ink2)}\n.v{font-family:'Courier Prime',monospace;font-size:13.5px;text-align:right;word-break:break-all}\n.note{font-size:14.5px;color:var(--ink2);margin-top:10px;max-width:62ch}\n.flag{display:inline-block;font-family:'Chivo',sans-serif;font-size:11px;font-weight:700;\ntext-transform:uppercase;letter-spacing:.1em;padding:3px 9px;color:#fff}\n.fresh{background:var(--ok)}.aging{background:var(--cyan)}.stale,.unknown{background:var(--verm)}\n.acts{display:flex;flex-wrap:wrap;gap:9px;margin-top:8px}\nbutton{font-family:'Chivo',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;\nletter-spacing:.09em;border:0;padding:10px 16px;color:#fff;background:var(--ink);cursor:pointer}\nbutton.go{background:var(--verm)}button.alt{background:var(--cyan)}\nbutton:disabled{opacity:.45;cursor:not-allowed}button:focus-visible{outline:2px solid var(--verm);outline-offset:2px}\npre{background:var(--plate);color:var(--plateTx);font-family:'Courier Prime',monospace;font-size:12.5px;\nline-height:1.65;padding:14px;overflow:auto;max-height:340px;white-space:pre-wrap;word-break:break-word;margin:12px 0 0}\npre:empty{display:none}\ntable{width:100%;border-collapse:collapse;font-family:'Courier Prime',monospace;font-size:12.5px}\ntd{border-top:1px solid var(--hair);padding:7px 0;vertical-align:top}\ntd+td{text-align:right;white-space:nowrap;color:var(--ink2);padding-left:14px}\n<\/style><\/head><body><div class=\"w\">\n<h1>Snag<br>control<\/h1>\n<div class=\"sub\">Running on your Mac &middot; 127.0.0.1 only &middot; close the Terminal window to stop it<\/div>\n\n<section><h2>Condition<\/h2>\n<div id=\"flag\"><\/div>\n<p class=\"note\" id=\"note\">Reading...<\/p>\n<div class=\"grid\" id=\"stat\"><\/div>\n<\/section>\n\n<section><h2>Maintenance<\/h2>\n<p class=\"note\">Upgrading yt-dlp fixes most download failures. The self-test pulls a 19-second video, checks the codec, and deletes it.<\/p>\n<div class=\"acts\">\n<button class=\"go\" data-a=\"upgrade\">Upgrade yt-dlp<\/button>\n<button class=\"alt\" data-a=\"selftest\">Run self-test<\/button>\n<button data-a=\"reinstall\">Reinstall with TikTok support<\/button>\n<button data-a=\"reveal\">Open Downloads<\/button>\n<\/div>\n<pre id=\"log\"><\/pre>\n<\/section>\n\n<section><h2>Recent downloads<\/h2>\n<table id=\"recent\"><\/table>\n<\/section>\n<\/div>\n<script>\nvar T=\"__TOKEN__\",log=document.getElementById(\"log\");\nfunction paint(s,r){\n  document.getElementById(\"flag\").innerHTML='<span class=\"flag '+s.state+'\">'+s.state+'<\/span>';\n  document.getElementById(\"note\").textContent=s.note;\n  var rows=[[\"yt-dlp\",s.ytdlp],[\"ffmpeg\",s.ffmpeg],[\"impersonation targets\",s.targets],\n            [\"snag\",s.snag],[\"saves to\",s.downloads]];\n  document.getElementById(\"stat\").innerHTML=rows.map(function(x){\n    return '<div class=\"row\"><span class=\"k\">'+x[0]+'<\/span><span class=\"v\">'+x[1]+'<\/span><\/div>';}).join(\"\");\n  document.getElementById(\"recent\").innerHTML = r.length\n    ? r.map(function(f){return '<tr><td>'+f.name+'<\/td><td>'+f.size+'<br>'+f.when+'<\/td><\/tr>';}).join(\"\")\n    : '<tr><td>Nothing downloaded yet.<\/td><\/tr>';\n}\nfunction load(){fetch(\"/api/status?t=\"+T).then(function(r){return r.json()}).then(function(d){paint(d.status,d.recent)});}\ndocument.querySelectorAll(\"button[data-a]\").forEach(function(b){\n  b.addEventListener(\"click\",function(){\n    var all=document.querySelectorAll(\"button[data-a]\");\n    all.forEach(function(x){x.disabled=true});\n    var old=b.textContent; b.textContent=\"Working...\";\n    log.textContent=\"Running. This can take a few minutes.\";\n    fetch(\"/\",{method:\"POST\",headers:{\"Content-Type\":\"application/json\"},\n      body:JSON.stringify({token:T,action:b.dataset.a})})\n      .then(function(r){return r.json()})\n      .then(function(d){log.textContent=d.log; if(d.status)paint(d.status,[]); load();})\n      .catch(function(e){log.textContent=\"Request failed: \"+e;})\n      .then(function(){all.forEach(function(x){x.disabled=false}); b.textContent=old;});\n  });\n});\nload();\n<\/script><\/body><\/html>\"\"\"\n\nsrv = http.server.ThreadingHTTPServer((\"127.0.0.1\", 0), H)\nport = srv.server_address[1]\nurl = \"http://127.0.0.1:%d/?t=%s\" % (port, TOKEN)\nprint(\"\")\nprint(\"  Snag control is running at:\")\nprint(\"  \" + url)\nprint(\"\")\nprint(\"  Only this Mac can reach it. Press Control-C here to stop it.\")\nprint(\"\")\ntry:\n    webbrowser.open(url)\nexcept Exception:\n    pass\ntry:\n    srv.serve_forever()\nexcept KeyboardInterrupt:\n    print(\"\\n  Stopped.\")\nPYEOF\n  exit 0\nfi\n\nusage() {\n  cat <<'HELPTEXT'\nsnag - download social media video to ~/Downloads\n\nUSAGE\n  snag [options] [URL...]\n  snag                      download whatever link is on your clipboard\n\nQUALITY\n  (default)       best H.264 available, merged to MP4.\n                  Opens in QuickTime, Premiere and Resolve with no transcode.\n  --max           best resolution available, any codec (VP9/AV1 4K).\n                  May need a transcode before editing.\n  --max --recode  best resolution, re-encoded to H.264 MP4.\n                  Slow, but gives you 4K that drops straight into a timeline.\n  --mp3           audio only, 320k MP3 with cover art and metadata.\n  -q HEIGHT       cap resolution, e.g. -q 1080\n\nOPTIONS\n  -o DIR          save somewhere else (default: ~/Downloads)\n  --sub           download English subs, embed them and keep a .srt\n  --cookies       use your Chrome login (fixes Instagram \"login required\")\n  --playlist      download the whole playlist, not just the one video\n  --nosponsor     cut sponsor / self-promo segments from YouTube\n  --keep-names    keep the original title in the filename, emoji and all\n                  (plain ASCII filenames are the default)\n  --once          skip anything already downloaded before\n  -n, --dry-run   print the yt-dlp command instead of running it\n  -h, --help      this\n\nCONTROL PANEL\n  snag dash       open a control panel in your browser, running on this Mac.\n                  Shows how stale yt-dlp is, upgrades it, runs a self-test,\n                  and lists what you downloaded recently. Reachable only\n                  from this machine. Control-C in Terminal stops it.\n\nEXAMPLES\n  snag https://www.tiktok.com/@user/video/123\n  snag --mp3 https://youtu.be/abc\n  snag --max --recode https://youtube.com/watch?v=abc\n  snag -q 1080 --sub https://youtube.com/watch?v=abc\n  pbpaste | snag\nHELPTEXT\n}\n\n# ---------- defaults ----------\n\nDEST=\"$DEFAULT_DEST\"\nMODE=\"edit\"          # edit | max | mp3\nRECODE=0\nHEIGHT=\"\"\nWANT_SUB=0\nWANT_COOKIES=0\nWANT_PLAYLIST=0\nWANT_SPONSOR=0\nWANT_SAFE=1\nWANT_ONCE=0\nDRY=0\nURLS=()\n\n# ---------- args ----------\n\nwhile [ $# -gt 0 ]; do\n  case \"$1\" in\n    --max)        MODE=\"max\" ;;\n    --mp3|--audio) MODE=\"mp3\" ;;\n    --recode)     RECODE=1 ;;\n    -q)           HEIGHT=\"$2\"; shift ;;\n    -q*)          HEIGHT=\"${1#-q}\" ;;\n    -o)           DEST=\"$2\"; shift ;;\n    --sub|--subs) WANT_SUB=1 ;;\n    --cookies)    WANT_COOKIES=1 ;;\n    --playlist)   WANT_PLAYLIST=1 ;;\n    --nosponsor)  WANT_SPONSOR=1 ;;\n    --safe)       WANT_SAFE=1 ;;\n    --keep-names|--nosafe) WANT_SAFE=0 ;;\n    --once)       WANT_ONCE=1 ;;\n    -n|--dry-run) DRY=1 ;;\n    -h|--help)    usage; exit 0 ;;\n    -*)           die \"Unknown option: $1  (snag --help)\" ;;\n    *)            URLS+=(\"$1\") ;;\n  esac\n  shift\ndone\n\n# ---------- checks ----------\n\ncommand -v yt-dlp >/dev/null 2>&1 || die \"yt-dlp not found. Install: pipx install \\\"yt-dlp[default,curl-cffi]\\\"\"\ncommand -v ffmpeg >/dev/null 2>&1 || die \"ffmpeg not found. Install: brew install ffmpeg\"\n\n# ---------- collect URLs ----------\n\nif [ ${#URLS[@]} -eq 0 ] && [ ! -t 0 ]; then\n  while IFS= read -r line; do\n    line=\"${line%%[[:space:]]}\"\n    [ -n \"$line\" ] && URLS+=(\"$line\")\n  done\nfi\n\nif [ ${#URLS[@]} -eq 0 ] && command -v pbpaste >/dev/null 2>&1; then\n  clip=\"$(pbpaste 2>/dev/null)\"\n  while IFS= read -r line; do\n    case \"$line\" in\n      http://*|https://*) URLS+=(\"$line\") ;;\n    esac\n  done <<< \"$clip\"\n  [ ${#URLS[@]} -gt 0 ] && info \"Using ${#URLS[@]} link(s) from clipboard.\"\nfi\n\nif [ ${#URLS[@]} -eq 0 ]; then\n  usage\n  exit 1\nfi\n\nDEST=\"${DEST/#\\~/$HOME}\"\nmkdir -p \"$DEST\" || die \"Cannot create $DEST\"\n\n# ---------- helpers ----------\n\nplatform_of() {\n  case \"$1\" in\n    *instagram.com*)            printf \"Instagram\" ;;\n    *tiktok.com*)               printf \"TikTok\" ;;\n    *youtube.com*|*youtu.be*)   printf \"YouTube\" ;;\n    *facebook.com*|*fb.watch*)  printf \"Facebook\" ;;\n    *x.com*|*twitter.com*)      printf \"X\" ;;\n    *)                          printf \"Other\" ;;\n  esac\n}\n\n# ---------- build the flag set for one URL ----------\n\nbuild_args() {\n  local url=\"$1\" platform=\"$2\"\n  ARGS=()\n\n  # --- output ---\n  local tpl='%(uploader,channel,creator,id)s - %(title).80B [%(id)s].%(ext)s'\n  ARGS+=(-P \"$DEST\" -o \"$tpl\" --trim-filenames 200)\n  [ \"$WANT_SAFE\" = 1 ] && ARGS+=(--restrict-filenames)\n\n  # --- format ---\n  local hfilter=\"\"\n  [ -n \"$HEIGHT\" ] && hfilter=\"[height<=${HEIGHT}]\"\n\n  case \"$MODE\" in\n    mp3)\n      ARGS+=(-x --audio-format mp3 --audio-quality 0\n             --embed-metadata --embed-thumbnail)\n      ;;\n    max)\n      # resolution first, then prefer AAC audio so it muxes cleanly into MP4\n      ARGS+=(-f \"bv*${hfilter}+ba/b${hfilter}\"\n             -S \"res,fps,acodec:m4a,vcodec\"\n             --merge-output-format mp4)\n      if [ \"$RECODE\" = 1 ]; then\n        ARGS+=(--exec \"after_move:'$SELF' --__transcode %(filepath)q\")\n      fi\n      ;;\n    edit)\n      # restrict to H.264 video up front, THEN take the highest resolution of those\n      ARGS+=(-f \"bv*[vcodec^=avc1]${hfilter}+ba[acodec^=mp4a]/bv*[vcodec^=avc1]${hfilter}+ba/b[vcodec^=avc1]${hfilter}/b${hfilter}\"\n             -S \"res,fps\"\n             --merge-output-format mp4)\n      ;;\n  esac\n\n  # --- per-platform ---\n  case \"$platform\" in\n    TikTok)\n      ARGS+=(--impersonate chrome)\n      ;;\n    Instagram)\n      ARGS+=(--impersonate chrome)\n      ;;\n  esac\n\n  # --- playlist safety: a YouTube link inside a playlist grabs the playlist ---\n  if [ \"$WANT_PLAYLIST\" = 1 ]; then\n    ARGS+=(--yes-playlist)\n  else\n    ARGS+=(--no-playlist)\n  fi\n\n  # --- optional extras ---\n  [ \"$WANT_COOKIES\" = 1 ] && ARGS+=(--cookies-from-browser chrome)\n  [ \"$WANT_SPONSOR\" = 1 ] && ARGS+=(--sponsorblock-remove \"sponsor,selfpromo,interaction\")\n  [ \"$WANT_ONCE\" = 1 ]    && ARGS+=(--download-archive \"$HOME/.config/snag/archive.txt\")\n\n  if [ \"$WANT_SUB\" = 1 ] && [ \"$MODE\" != \"mp3\" ]; then\n    ARGS+=(--write-subs --write-auto-subs --sub-langs \"en.*\"\n           --convert-subs srt --embed-subs)\n  fi\n\n  # --- metadata + reliability ---\n  [ \"$MODE\" != \"mp3\" ] && ARGS+=(--embed-metadata)\n  ARGS+=(--concurrent-fragments 4 --retries 10 --fragment-retries 10\n         --no-abort-on-error --progress)\n}\n\nquote_cmd() {\n  local out=\"yt-dlp\" a\n  for a in \"$@\"; do\n    case \"$a\" in\n      *[![:alnum:]_./:=-]*) out+=\" \\\"${a//\\\"/\\\\\\\"}\\\"\" ;;\n      *) out+=\" $a\" ;;\n    esac\n  done\n  printf \"%s\" \"$out\"\n}\n\n# ---------- run ----------\n\nmkdir -p \"$HOME/.config/snag\" 2>/dev/null\n\n# Chrome holds its cookie database open, and macOS will not let yt-dlp read it\n# while that is true. Catch it here instead of letting every link fail in turn.\nif [ \"$WANT_COOKIES\" = 1 ] && pgrep -x \"Google Chrome\" >/dev/null 2>&1; then\n  warn \"Chrome is running, so your login cannot be read.\"\n  warn \"  Quit Chrome completely (Cmd+Q, not just the window), then run this again.\"\n  warn \"  Continuing without your login. Instagram may ask you to log in.\"\n  WANT_COOKIES=0\nfi\n\ntotal=${#URLS[@]}\nsucceeded=0\nfailed=0\nFAILED_URLS=()\n\nsay \"\"\ncase \"$MODE\" in\n  mp3) info \"Mode: MP3 audio (320k)\" ;;\n  max) if [ \"$RECODE\" = 1 ]; then info \"Mode: max resolution, re-encoded to H.264 (slow)\"\n       else info \"Mode: max resolution, original codec\"; fi ;;\n  edit) info \"Mode: edit-ready H.264 MP4\" ;;\nesac\n[ -n \"$HEIGHT\" ] && info \"Capped at ${HEIGHT}p\"\ninfo \"Saving to: $DEST\"\nsay \"\"\n\ni=0\nfor url in \"${URLS[@]}\"; do\n  i=$((i+1))\n  platform=\"$(platform_of \"$url\")\"\n  printf \"%s[%d/%d]%s %s%s%s  %s\\n\" \"$BOLD\" \"$i\" \"$total\" \"$RESET\" \"$DIM\" \"$platform\" \"$RESET\" \"$url\"\n\n  build_args \"$url\" \"$platform\"\n\n  if [ \"$DRY\" = 1 ]; then\n    say \"$(quote_cmd \"${ARGS[@]}\" \"$url\")\"\n    say \"\"\n    continue\n  fi\n\n  if yt-dlp \"${ARGS[@]}\" \"$url\"; then\n    succeeded=$((succeeded+1))\n  else\n    rc=$?\n    failed=$((failed+1))\n    FAILED_URLS+=(\"$url\")\n    warn \"Failed ($platform, exit $rc): $url\"\n    case \"$platform\" in\n      Instagram) warn \"  Try: snag --cookies \\\"$url\\\"   (needs you logged into Instagram in Chrome)\" ;;\n      TikTok)    warn \"  Try: pipx upgrade yt-dlp     (TikTok changes their protection often)\" ;;\n      *)         warn \"  Try: pipx upgrade yt-dlp\" ;;\n    esac\n  fi\n  say \"\"\ndone\n\n[ \"$DRY\" = 1 ] && exit 0\n\n# ---------- summary ----------\n\nif [ \"$failed\" -eq 0 ]; then\n  ok \"Done. $succeeded/$total downloaded to $DEST\"\nelse\n  warn \"Done. $succeeded ok, $failed failed.\"\n  for u in \"${FAILED_URLS[@]}\"; do say \"  ${RED}x${RESET} $u\"; done\n  say \"\"\n  say \"${DIM}Most failures are a stale yt-dlp. Run: pipx upgrade yt-dlp${RESET}\"\nfi\n\nif [ \"$succeeded\" -gt 0 ] && [ -t 0 ] && command -v open >/dev/null 2>&1; then\n  say \"\"\n  printf \"%sReveal in Finder? [y/N]: %s\" \"$BOLD\" \"$RESET\"\n  IFS= read -r reply\n  case \"$reply\" in y|Y|yes|YES) open \"$DEST\" ;; esac\nfi\n"</script>
+<script>
+(function () {
+  'use strict';
+  var DEST = '~/Downloads';
+  var TPL = '%(uploader,channel,creator,id)s - %(title).80B [%(id)s].%(ext)s';
+  var TICK = '<img src="assets/stamp.png" alt="" aria-hidden="true">';
+
+  var MODES = [
+    { id: 'edit',   nm: 'Ready to edit',  sp: 'h264 / aac / mp4',    ds: 'The best quality that needs no conversion. Instant, and it drops straight into Premiere or Resolve. Up to 1080p.' },
+    { id: 'small',  nm: 'Low resolution', sp: '720p / h264 / mp4',   ds: 'A smaller file for sending, previewing or keeping. Same format, less picture.' },
+    { id: 'mp3',    nm: 'Audio only',     sp: 'mp3 / cover art',     ds: 'Throws the picture away. Cover art and track details are written into the file.' },
+    { id: 'recode', nm: '4K, slow',       sp: 'av1 to h264 / crf18', ds: 'The only way to get above 1080p in a format that edits. It re-encodes the file, which takes real minutes, not seconds.' }
+  ];
+  var OPTS = [
+    { id: 'sub',      nm: 'Subtitles',           ds: 'English subtitles inside the file, plus a separate .srt beside it' },
+    { id: 'cookies',  nm: 'Use my Chrome login', ds: 'On automatically for Instagram and TikTok. Quit Chrome before you run the command.' },
+    { id: 'sponsor',  nm: 'Cut sponsor reads',   ds: 'Cuts the in-video sponsor and self-promo segments out of YouTube videos' },
+    { id: 'playlist', nm: 'Whole playlist',      ds: 'For YouTube. Off means a link with &list= gets you only that one video' },
+    { id: 'once',     nm: 'Skip repeats',        ds: 'Remembers what you already pulled and does not pull it twice' }
+  ];
+
+  var state = { mode: 'edit', cap: '', raw: false };
+  OPTS.forEach(function (o) { state[o.id] = false; });
+  // Filenames are always stripped of emoji and accents now. It is not a choice,
+  // so it is not on the form and --restrict-filenames is always passed.
+  // Chrome login is decided by the links, unless the visitor overrides it by hand.
+  var cookiesTouched = false;
+
+  var $ = function (i) { return document.getElementById(i); };
+  var links = $('links'), cmdEl = $('cmd'), queue = $('queue'),
+      lands = $('lands'), stampLine = $('stamp-line');
+
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function setPlate(el, text) {
+    el.dataset.raw = text;
+    el.innerHTML = text.split('\n').map(function (l) {
+      return '<span class="ln">' + (esc(l) || '&nbsp;') + '</span>';
+    }).join('');
+  }
+  function plateText(el) { return el.dataset.raw !== undefined ? el.dataset.raw : el.textContent; }
+  function shq(a) { return /^[A-Za-z0-9_.\/:=-]+$/.test(a) ? a : '"' + a.replace(/"/g, '\\"') + '"'; }
+  function platformOf(u) {
+    if (/instagram\.com/i.test(u)) return 'Instagram';
+    if (/tiktok\.com/i.test(u)) return 'TikTok';
+    if (/youtube\.com|youtu\.be/i.test(u)) return 'YouTube';
+    if (/facebook\.com|fb\.watch/i.test(u)) return 'Facebook';
+    if (/(^|\/\/)(www\.)?(x|twitter)\.com/i.test(u)) return 'X';
+    return null;
+  }
+  function getUrls() { return links.value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean); }
+
+  // Low resolution is a 720p ceiling. An explicit lower limit still wins.
+  function effCap() {
+    if (state.mode !== 'small') return state.cap;
+    if (!state.cap) return '720';
+    return String(Math.min(parseInt(state.cap, 10), 720));
+  }
+  function snagFlags() {
+    var f = [];
+    if (state.mode === 'recode') f.push('--max', '--recode');
+    if (state.mode === 'mp3') f.push('--mp3');
+    var cap = effCap();
+    if (cap) f.push('-q', cap);
+    if (state.sub) f.push('--sub');
+    if (state.cookies) f.push('--cookies');
+    if (state.sponsor) f.push('--nosponsor');
+    if (state.playlist) f.push('--playlist');
+    if (state.once) f.push('--once');
+    return f;
+  }
+  function buildSnag(urls) {
+    var head = ['snag'].concat(snagFlags());
+    if (urls.length === 1) return head.concat([shq(urls[0])]).join(' ');
+    return head.join(' ') + urls.map(function (u) { return ' \\\n  ' + shq(u); }).join('');
+  }
+  function buildRawFor(urls, platform) {
+    var a = ['yt-dlp', '-P', DEST, '-o', TPL, '--trim-filenames', '200', '--restrict-filenames'];
+    var cap = effCap();
+    var hf = cap ? '[height<=' + cap + ']' : '';
+    if (state.mode === 'mp3') {
+      a.push('-x', '--audio-format', 'mp3', '--audio-quality', '0', '--embed-metadata', '--embed-thumbnail');
+    } else if (state.mode === 'recode') {
+      a.push('-f', 'bv*' + hf + '+ba/b' + hf, '-S', 'res,fps,acodec:m4a,vcodec', '--merge-output-format', 'mp4');
+      if (state.mode === 'recode') a.push('--exec', "after_move:'~/bin/snag' --__transcode %(filepath)q");
+    } else {
+      a.push('-f', 'bv*[vcodec^=avc1]' + hf + '+ba[acodec^=mp4a]/bv*[vcodec^=avc1]' + hf + '+ba/b[vcodec^=avc1]' + hf + '/b' + hf,
+             '-S', 'res,fps', '--merge-output-format', 'mp4');
+    }
+    if (platform === 'TikTok' || platform === 'Instagram') a.push('--impersonate', 'chrome');
+    a.push(state.playlist ? '--yes-playlist' : '--no-playlist');
+    if (state.cookies) a.push('--cookies-from-browser', 'chrome');
+    if (state.sponsor) a.push('--sponsorblock-remove', 'sponsor,selfpromo,interaction');
+    if (state.once) a.push('--download-archive', '~/.config/snag/archive.txt');
+    if (state.sub && state.mode !== 'mp3') a.push('--write-subs', '--write-auto-subs', '--sub-langs', 'en.*', '--convert-subs', 'srt', '--embed-subs');
+    if (state.mode !== 'mp3') a.push('--embed-metadata');
+    a.push('--concurrent-fragments', '4', '--retries', '10', '--fragment-retries', '10', '--no-abort-on-error', '--progress');
+    return a.map(function (t, i) { return i === 0 ? t : shq(t); }).join(' ')
+         + urls.map(function (u) { return ' ' + shq(u); }).join('');
+  }
+  function buildRaw(urls) {
+    var g = {}, order = [];
+    urls.forEach(function (u) {
+      var p = platformOf(u) || 'Other';
+      if (!g[p]) { g[p] = []; order.push(p); }
+      g[p].push(u);
+    });
+    return order.map(function (p) { return buildRawFor(g[p], p); }).join('\n\n');
+  }
+
+  function renderModes() {
+    $('modes').innerHTML = MODES.map(function (m) {
+      return '<button class="mode" type="button" data-mode="' + m.id + '" aria-pressed="' + (state.mode === m.id) + '">'
+        + '<span class="tick">' + TICK + '</span>'
+        + '<span><span class="nm">' + m.nm + '</span><span class="ds">' + m.ds + '</span></span>'
+        + '<span class="sp">' + m.sp + '</span></button>';
+    }).join('');
+    $('modesMini').innerHTML = MODES.map(function (m) {
+      return '<button class="mrow" type="button" data-mode="' + m.id + '" aria-pressed="' + (state.mode === m.id) + '">'
+        + '<span class="tick">' + TICK + '</span><span class="nm">' + m.nm + '</span></button>';
+    }).join('');
+  }
+  function renderOpts() {
+    $('opts').innerHTML = OPTS.map(function (o) {
+      return '<button class="opt" type="button" data-opt="' + o.id + '" aria-pressed="' + !!state[o.id] + '">'
+        + '<span class="tick">' + TICK + '</span>'
+        + '<span><span class="nm">' + o.nm + '</span><span class="ds">' + o.ds + '</span></span></button>';
+    }).join('');
+  }
+
+  function render() {
+    var urls = getUrls();
+
+    // Instagram and TikTok are the two that ask you to log in, so tick it for them.
+    if (!cookiesTouched) {
+      var needsLogin = urls.some(function (u) {
+        var pf = platformOf(u); return pf === 'Instagram' || pf === 'TikTok';
+      });
+      if (needsLogin !== state.cookies) { state.cookies = needsLogin; renderOpts(); }
+    }
+
+    queue.innerHTML = urls.map(function (u) {
+      var p = platformOf(u);
+      return '<div class="qrow' + (p ? '' : ' unknown') + '"><b>' + esc(p || 'unrecognised') + '</b><span>' + esc(u) + '</span></div>';
+    }).join('');
+    stampLine.textContent = urls.length === 0 ? 'no links yet' : urls.length + (urls.length === 1 ? ' link' : ' links');
+    var m = MODES.filter(function (x) { return x.id === state.mode; })[0];
+    if (urls.length === 0) {
+      setPlate(cmdEl, 'Paste a link above.');
+      lands.innerHTML = ''; $('copyCmd').disabled = true; return;
+    }
+    $('copyCmd').disabled = false;
+    var text = state.raw ? buildRaw(urls) : buildSnag(urls);
+    setPlate(cmdEl, text); cmdEl.dataset.cmd = text;
+    var cap = effCap();
+    var bits = ['Lands in <b>~/Downloads</b>', 'as <b>' + esc(m.sp) + '</b>'];
+    if (cap) bits.push('no larger than <b>' + esc(cap) + 'p</b>');
+    if (state.sub && state.mode !== 'mp3') bits.push('with a <b>.srt</b> beside it');
+    var line = bits.join(', ') + '.';
+    if (state.cookies) line += ' <b>Quit Chrome before you run this</b>, or your login cannot be read.';
+    lands.innerHTML = line;
+  }
+
+  links.addEventListener('input', render);
+  $('cap').addEventListener('change', function () { state.cap = this.value; render(); });
+
+  function pickMode(e) {
+    var b = e.target.closest('[data-mode]');
+    if (!b) return;
+    state.mode = b.dataset.mode; renderModes(); render();
+  }
+  $('modes').addEventListener('click', pickMode);
+  $('modesMini').addEventListener('click', pickMode);
+  $('opts').addEventListener('click', function (e) {
+    var b = e.target.closest('.opt'); if (!b) return;
+    if (b.dataset.opt === 'cookies') cookiesTouched = true;
+    state[b.dataset.opt] = !state[b.dataset.opt]; renderOpts(); render();
+  });
+  $('rawBtn').addEventListener('click', function () {
+    state.raw = !state.raw;
+    this.textContent = state.raw ? 'Show snag command' : 'Show raw yt-dlp';
+    render();
+  });
+
+  function copy(text, btn, label) {
+    var old = btn.textContent;
+    var done = function () {
+      btn.textContent = label || 'Copied';
+      btn.dataset.done = '1';
+      setTimeout(function () { btn.textContent = old; delete btn.dataset.done; }, 1600);
+    };
+    var fb = function () {
+      var t = document.createElement('textarea');
+      t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(t); done();
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fb);
+    else fb();
+  }
+  // .answer plates are printed Terminal output, already marked up; leave them alone
+  Array.prototype.forEach.call(document.querySelectorAll('.plate:not(.answer)'), function (el) {
+    if (el.dataset.raw === undefined) setPlate(el, el.textContent);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-copy]'), function (b) {
+    b.addEventListener('click', function () { copy(plateText($('cmd-' + b.dataset.copy)), b); });
+  });
+  $('copyCmd').addEventListener('click', function () { if (cmdEl.dataset.cmd) copy(cmdEl.dataset.cmd, this); });
+
+  var src = JSON.parse($('snagSource').textContent).replace(/^\n/, '').replace(/\s+$/, '');
+  var lineCount = src.split('\n').length;
+  $('listing').textContent = src;
+  $('srcLines').textContent = lineCount + ' lines of shell.';
+  $('srcCount').textContent = '(' + lineCount + ' lines)';
+  var installer = 'mkdir -p ~/bin\n'
+    + "cat > ~/bin/snag <<'SNAG_INSTALL_EOF'\n" + src + '\nSNAG_INSTALL_EOF\n'
+    + 'chmod +x ~/bin/snag\n'
+    + 'grep -q \'HOME/bin\' ~/.zshrc 2>/dev/null || echo \'export PATH="$HOME/bin:$PATH"\' >> ~/.zshrc\n'
+    + 'echo "snag installed. Open a new Terminal tab, then run: snag --help"';
+  setPlate($('installPreview'), 'mkdir -p ~/bin\n'
+    + "cat > ~/bin/snag <<'SNAG_INSTALL_EOF'\n"
+    + '   ... the ' + lineCount + ' lines printed below ...\n'
+    + 'SNAG_INSTALL_EOF\n' + 'chmod +x ~/bin/snag');
+  $('copyInstall').addEventListener('click', function () { copy(installer, this, 'Copied'); });
+  $('copySource').addEventListener('click', function () { copy(src, this, 'Copied'); });
+
+  // ---------- the sheet's theme. Light is the default; the choice is remembered.
+  var THEME_KEY = 'snag-theme';
+  var themeBtns = [$('themeBtn'), $('themeBtn2')].filter(Boolean);
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    themeBtns.forEach(function (b) {
+      b.textContent = t === 'dark' ? 'Light' : 'Dark';
+      b.setAttribute('aria-pressed', String(t === 'dark'));
+      b.setAttribute('aria-label', t === 'dark' ? 'Switch to the light sheet' : 'Switch to the dark sheet');
+    });
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  }
+  var saved = 'light';
+  try { if (localStorage.getItem(THEME_KEY) === 'dark') saved = 'dark'; } catch (e) {}
+  applyTheme(saved);
+  themeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  });
+
+  // ---------- the running head appears once the masthead has gone past
+  var runhead = $('runhead'), mastEl = document.querySelector('.mast');
+  function positionRunhead() {
+    var past = mastEl.getBoundingClientRect().bottom < 0;
+    runhead.dataset.on = past ? '1' : '0';
+  }
+  window.addEventListener('scroll', positionRunhead, { passive: true });
+  window.addEventListener('resize', positionRunhead);
+  positionRunhead();
+
+  // ---------- the rail checklist: three things to have in front of you
+  var NEEDS = [
+    { id: 'mac',  nm: 'A Mac' },
+    { id: 'term', nm: 'Terminal' },
+    { id: 'time', nm: '10 minutes of your time to set up' }
+  ];
+  var needState = {};
+  var needsEl = $('needs');
+  function renderNeeds() {
+    needsEl.innerHTML = NEEDS.map(function (n) {
+      return '<button class="crow" type="button" data-need="' + n.id + '" aria-pressed="' + !!needState[n.id] + '">'
+        + '<span class="tick">' + TICK + '</span><span>' + n.nm + '</span></button>';
+    }).join('');
+  }
+  needsEl.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-need]'); if (!b) return;
+    needState[b.dataset.need] = !needState[b.dataset.need];
+    renderNeeds();
+  });
+  renderNeeds();
+
+  renderModes(); renderOpts();
+  render();
+})();
+</script>
+</body>
+</html>

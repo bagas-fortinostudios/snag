@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Static HTML/CSS/JS, single page, no framework. Deployed to Netlify (user's own Netlify account is connected). Also published as a Claude artifact during iteration. No build step: the page must be deployable as plain files.
+Static HTML/CSS/JS, five pages sharing one stylesheet, no framework. Deployed by GitHub Pages from `site/` on every push to `main`. Also published as a Claude artifact during iteration. No build step: the page must be deployable as plain files.
 
 ## Users
 

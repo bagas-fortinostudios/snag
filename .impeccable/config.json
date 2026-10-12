@@ -1,3 +1,36 @@
 {
-  "buildPath": "code"
+  "buildPath": "code",
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "radial-spotlight-glow",
+        "value": "*",
+        "files": [
+          "site/assets/snag.css"
+        ],
+        "createdAt": "2026-10-12T18:26:03.922Z",
+        "reason": "Bagas pinned an Apple.com light-glass look; the soft light field behind the hero is what the frosted glass refracts"
+      },
+      {
+        "rule": "gpt-thin-border-wide-shadow",
+        "value": "*",
+        "files": [
+          "site/assets/snag.css"
+        ],
+        "createdAt": "2026-10-12T18:26:03.950Z",
+        "reason": "Bagas pinned macOS glass; a white hairline edge plus soft elevation is the native material"
+      },
+      {
+        "rule": "em-dash-overuse",
+        "value": "*",
+        "files": [
+          "site/source.html"
+        ],
+        "createdAt": "2026-10-12T18:26:03.980Z",
+        "reason": "the matches are -- flags inside the printed shell script, not prose"
+      }
+    ]
+  }
 }

@@ -3,7 +3,10 @@
 Save video from Instagram, TikTok, YouTube Shorts and YouTube longform to your
 own Mac, in a codec that actually edits.
 
-**Site:** the `site/` directory is a single static page, no build step.
+**Site:** the `site/` directory is five static pages (Overview, How it works,
+Setup, Help, Source) sharing one stylesheet, no build step. It is published by
+GitHub Pages from `.github/workflows/pages.yml` on every push to `main`. The
+logo files are in `brand/`.
 
 ## What this is
 
@@ -48,8 +51,16 @@ snag                                    # no URL reads your clipboard
 snag --mp3 https://youtu.be/abc
 snag --max --recode https://youtube.com/watch?v=abc
 snag -q 1080 --sub https://youtube.com/watch?v=abc
+snag --keep-names https://youtu.be/abc  # keep emoji and accents in the filename
 snag dash                               # local control panel
 ```
+
+Filenames are stripped to plain ASCII by default, because emoji and accents
+break some editing software. `--keep-names` turns that off.
+
+`--cookies` reads your Chrome login, which Instagram often requires. Chrome
+holds its cookie database open, so quit Chrome first. If it is running, snag
+says so and continues without the login rather than failing every link.
 
 `snag dash` runs a small server on `127.0.0.1` that reports how stale your yt-dlp
 is, upgrades it, and runs a self-test that downloads a short video, checks the
@@ -61,7 +72,7 @@ codec, and deletes it. It is reachable only from your own machine.
 |---|---|
 | default | Best resolution available **in H.264**. No transcode, cuts immediately. |
 | `--max` | Genuinely the best stream, usually AV1 above 1080p. Plays fine, edits badly. |
-| `--max --recode` | Best stream re-encoded to H.264 CRF 18. Slow, but 4K that edits. |
+| `--max --recode` | Best stream re-encoded to H.264 CRF 18. Slow, but 4K that edits. This is what the site calls **4K (slow)**. |
 | `--mp3` | Audio only, with cover art and metadata. |
 
 ## When it breaks

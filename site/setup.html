@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup | Snag</title>
+<meta name="description" content="Set up Snag on your Mac once: Homebrew, ffmpeg and pipx, yt-dlp, a check, then Snag itself. About 10 minutes.">
+<meta name="theme-color" content="#fbfbfd">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/snag.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="Snag home"><img class="brand-mark" src="assets/logo-mark.svg" alt="" width="29" height="30"><img class="brand-word" src="assets/logo-wordmark.svg" alt="" height="12"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7h14M3 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="setup.html" aria-current="page">Setup</a></li>
+      <li><a href="help.html">Help</a></li>
+      <li><a href="source.html">Source</a></li>
+      <li class="nav-links-cta"><a class="btn btn-primary" href="setup.html">Set up Snag</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm nav-cta" href="setup.html">Set up Snag</a>
+  </div>
+</header>
+
+<main>
+  <div class="aura low" aria-hidden="true"><span></span></div>
+
+  <header class="page-head">
+    <h1>Set up once.<br>Then it is one line.</h1>
+    <p class="lede">Five steps in Terminal, about 10 minutes. Each one shows what you should see when it worked.</p>
+  </header>
+
+  <div class="setup-grid">
+    <nav class="steps-nav glass" aria-label="Setup steps">
+      <p class="before"><b>Before you start</b>Have your Mac login password ready for step 1.</p>
+      <ol>
+        <li><a href="#homebrew">Install Homebrew</a></li>
+        <li><a href="#tools">Install ffmpeg and pipx</a></li>
+        <li><a href="#ytdlp">Install yt-dlp</a></li>
+        <li><a href="#check">Restart and check</a></li>
+        <li><a href="#snag">Install Snag</a></li>
+      </ol>
+    </nav>
+
+    <div>
+      <section class="step" id="homebrew">
+        <h2><span class="n">1.</span> Install Homebrew</h2>
+        <p>Open Terminal: press <kbd>⌘</kbd> <kbd>Space</kbd>, type Terminal, press Enter. Paste this line and press Enter.</p>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Paste into Terminal</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="cmd-brew">Copy</button></span></div>
+          <pre class="term-body" id="cmd-brew" data-command>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</pre>
+        </div>
+        <div class="callout warn">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.8 18 17H2z"/><path d="M10 8v4M10 14.4v.1"/></svg>
+          <p><b>It asks for your Mac login password, and nothing appears while you type.</b> No dots, no stars. The screen is not frozen. Type it, press Enter, then press Enter again when it asks to continue.</p>
+        </div>
+        <p>When it finishes, it prints a block headed <b>Next steps</b> with two or three commands. They are not optional, and they differ from Mac to Mac, so run the ones <b>your</b> Terminal printed, not the ones below. They put Homebrew on your path.</p>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Terminal prints something like this</span></div>
+<pre class="term-body out">==&gt; Installation successful!
+
+==&gt; Next steps:
+- Run these commands in your terminal to add Homebrew to your PATH:
+    <b>echo &gt;&gt; /Users/you/.zprofile</b>
+    <b>echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' &gt;&gt; /Users/you/.zprofile</b>
+    <b>eval "$(/opt/homebrew/bin/brew shellenv)"</b></pre>
+        </div>
+        <p class="done-line">Copy each bold line from <b>your own</b> Terminal, paste it, press Enter. Nothing visible happens, which is correct.</p>
+      </section>
+
+      <section class="step" id="tools">
+        <h2><span class="n">2.</span> Install ffmpeg and pipx</h2>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Paste into Terminal</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="cmd-tools">Copy</button></span></div>
+          <pre class="term-body" id="cmd-tools" data-command>brew install ffmpeg pipx</pre>
+        </div>
+        <p>ffmpeg joins the separate video and audio streams these sites serve, and handles any converting. pipx installs yt-dlp in its own space, so it cannot break anything else on your Mac.</p>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Terminal prints something like this</span></div>
+<pre class="term-body out">==&gt; Fetching ffmpeg
+==&gt; Pouring ffmpeg--7.1.arm64_sonoma.bottle.tar.gz
+==&gt; Pouring pipx--1.7.1.arm64_sonoma.bottle.tar.gz
+<b>🍺  /opt/homebrew/Cellar/ffmpeg/7.1: 285 files, 51.6MB</b></pre>
+        </div>
+        <p class="done-line">A few minutes and a wall of text is normal. <b>Done when</b> you see the beer glass, not an error.</p>
+      </section>
+
+      <section class="step" id="ytdlp">
+        <h2><span class="n">3.</span> Install yt-dlp</h2>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Paste into Terminal</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="cmd-ytdlp">Copy</button></span></div>
+          <pre class="term-body" id="cmd-ytdlp" data-command>pipx install "yt-dlp[default,curl-cffi]"
+pipx ensurepath</pre>
+        </div>
+        <p>The <code>curl-cffi</code> part is the piece most guides leave out. It lets yt-dlp present itself like a real Chrome browser. Without it, TikTok answers every request with <b>403 Forbidden</b>, whatever else you try.</p>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Terminal prints something like this</span></div>
+<pre class="term-body out"><b>installed package yt-dlp 2026.08.19, installed using Python 3.13.1</b>
+  These apps are now globally available
+    - yt-dlp
+<b>done! ✨ 🌟 ✨</b></pre>
+        </div>
+        <p class="done-line">If it says <code>yt-dlp is already installed</code>, run the first line again with <code>--force</code> after <code>install</code>.</p>
+      </section>
+
+      <section class="step" id="check">
+        <h2><span class="n">4.</span> Restart Terminal and check</h2>
+        <p>Quit Terminal completely with <kbd>⌘</kbd> <kbd>Q</kbd>, then open it again. This is not optional: the new commands are not found until you do.</p>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Paste into Terminal</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="cmd-verify">Copy</button></span></div>
+          <pre class="term-body" id="cmd-verify" data-command>yt-dlp --version
+yt-dlp --list-impersonate-targets</pre>
+        </div>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Terminal prints something like this</span></div>
+<pre class="term-body out"><b>2026.08.19</b>      <span class="note">← the version, written as a date</span>
+
+Client   Version  OS       Source
+------   -------  -------  ---------
+<b>chrome   131      windows  curl_cffi</b>
+<b>chrome   131      macos    curl_cffi</b>
+<b>safari   18.0     macos    curl_cffi</b>
+<b>edge     101      windows  curl_cffi</b></pre>
+        </div>
+        <p><b>The version is a date.</b> If yours reads something like 2025.03.10, it is over a year old and downloads will fail. Run <code>pipx upgrade yt-dlp</code>.</p>
+        <p><b>The table is the important part.</b> You want rows with <code>curl_cffi</code> in the Source column, and chrome and safari among them. If it is empty or errors, the Chrome support did not install and TikTok will return 403 Forbidden. Run step 3 again with <code>--force</code>.</p>
+      </section>
+
+      <section class="step" id="snag">
+        <h2><span class="n">5.</span> Install Snag</h2>
+        <p>This writes one file, <code>~/bin/snag</code>, makes it runnable, and adds one line to <code>~/.zshrc</code> if your path needs it. Nothing else.</p>
+        <div class="callout">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.5 3.5 5v4.6c0 4 2.8 6.9 6.5 7.9 3.7-1 6.5-3.9 6.5-7.9V5z"/><path d="M7.3 10.2l1.9 1.9 3.6-3.8"/></svg>
+          <p><b>Do not paste an installer from a website you have not read.</b> The whole script, all <span data-line-count></span> lines, is on the <a href="source.html">Source</a> page. Paste it into ChatGPT or Claude and ask what it does before you run this.</p>
+        </div>
+        <div class="term">
+          <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">The installer (shortened here, the copy is complete)</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy-installer>Copy installer</button></span></div>
+          <pre class="term-body" data-installer-preview></pre>
+        </div>
+        <p class="done-line">Open a new Terminal tab with <kbd>⌘</kbd> <kbd>T</kbd> and run <code>snag --help</code>. <b>Done when</b> it prints the list of options. Now go back to the <a href="index.html">Overview</a> and paste a link.</p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <p>Snag is a wrapper around <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> and <a href="https://ffmpeg.org">ffmpeg</a>, who do the actual work.</p>
+      <p>This website does not download anything. Nothing you paste here is uploaded, logged or counted.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="how-it-works.html">How it works</a>
+      <a href="setup.html">Setup</a>
+      <a href="help.html">Help</a>
+      <a href="source.html">Source</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/snag-source.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/setup.js"></script>
+</body>
+</html>

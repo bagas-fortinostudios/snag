@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help | Snag</title>
+<meta name="description" content="When a Snag download fails: the one fix that works most often, every common error message and its fix, and the monthly check.">
+<meta name="theme-color" content="#fbfbfd">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/snag.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="index.html" aria-label="Snag home"><img class="brand-mark" src="assets/logo-mark.svg" alt="" width="29" height="30"><img class="brand-word" src="assets/logo-wordmark.svg" alt="" height="12"></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7h14M3 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="how-it-works.html">How it works</a></li>
+      <li><a href="setup.html">Setup</a></li>
+      <li><a href="help.html" aria-current="page">Help</a></li>
+      <li><a href="source.html">Source</a></li>
+      <li class="nav-links-cta"><a class="btn btn-primary" href="setup.html">Set up Snag</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm nav-cta" href="setup.html">Set up Snag</a>
+  </div>
+</header>
+
+<main>
+  <div class="aura low" aria-hidden="true"><span></span></div>
+
+  <header class="page-head">
+    <h1>When it breaks</h1>
+    <p class="lede">Find the message you saw. Each one has one fix.</p>
+  </header>
+
+  <div class="read" style="max-width:880px">
+    <section class="first-move glass" aria-labelledby="first-h">
+      <div>
+        <h2 id="first-h">Do this first, whatever the message says.</h2>
+        <p>Sites change how they serve video every few weeks, and yt-dlp ships fixes within days. An old copy is the most common reason a download fails. Upgrade it, then try again.</p>
+      </div>
+      <div class="term">
+        <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Paste into Terminal</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="cmd-upgrade">Copy</button></span></div>
+        <pre class="term-body" id="cmd-upgrade" data-command>pipx upgrade yt-dlp</pre>
+      </div>
+    </section>
+
+    <div class="faults glass">
+      <details class="fault">
+        <summary><span class="msg"><code>HTTP Error 403: Forbidden</code></span><span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="fault-body">
+          <p class="what"><b>What it means.</b> The site refused to answer, because it could not tell the request came from a real browser.</p>
+          <div class="fix">
+            <p><b class="lbl">The fix.</b> The Chrome support is missing. Check by running <code>yt-dlp --list-impersonate-targets</code>. If that prints an empty table or an error, run this and try again.</p>
+            <div class="term">
+              <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Paste into Terminal</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="cmd-force">Copy</button></span></div>
+              <pre class="term-body" id="cmd-force" data-command>pipx install --force "yt-dlp[default,curl-cffi]"</pre>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="fault">
+        <summary><span class="msg"><code>Login required</code> or <code>Please wait a few minutes</code></span><span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="fault-body">
+          <p class="what"><b>What it means.</b> Instagram will not show the video to someone who is not signed in.</p>
+          <div class="fix">
+            <p><b class="lbl">The fix.</b> Sign into Instagram in Chrome. Then quit Chrome completely with <kbd>⌘</kbd> <kbd>Q</kbd>, not just the window, because macOS will not let Snag read your login while Chrome is open. Run your command again. For Instagram and TikTok links, Snag turns <b>Use my Chrome login</b> on by itself, so the command already asks for it.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="fault">
+        <summary><span class="msg"><code>ERROR: Unable to extract</code></span><span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="fault-body">
+          <p class="what"><b>What it means.</b> The site changed how its pages are built, and the yt-dlp on your Mac has not caught up.</p>
+          <div class="fix">
+            <p><b class="lbl">The fix.</b> Upgrade yt-dlp with the command at the top of this page. That fixes this almost every time.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="fault">
+        <summary><span class="msg"><code>command not found: snag</code></span><span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="fault-body">
+          <p class="what"><b>What it means.</b> Snag is installed, but Terminal does not know where to look for it.</p>
+          <div class="fix">
+            <p><b class="lbl">The fix.</b> Paste this, then quit Terminal with <kbd>⌘</kbd> <kbd>Q</kbd> and open it again. The restart matters: the change does not take effect until then.</p>
+            <div class="term">
+              <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Paste into Terminal</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="cmd-path">Copy</button></span></div>
+              <pre class="term-body" id="cmd-path" data-command>echo 'export PATH="$HOME/bin:$PATH"' &gt;&gt; ~/.zshrc</pre>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <details class="fault">
+        <summary><span class="msg">It downloaded a whole playlist instead of one video</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="fault-body">
+          <p class="what"><b>What it means.</b> Your YouTube link had <code>&amp;list=</code> in it, and <b>Whole playlist</b> was switched on under Options.</p>
+          <div class="fix">
+            <p><b class="lbl">The fix.</b> Switch <b>Whole playlist</b> off and get the command again. With it off, a link that carries a playlist gets only the video you were watching.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="fault">
+        <summary><span class="msg">The file plays fine, but my editing software struggles with it</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
+        <div class="fault-body">
+          <p class="what"><b>What it means.</b> You have an AV1 or VP9 file. Browsers play those easily. Premiere and Resolve decode them in software, so scrubbing becomes unusable.</p>
+          <div class="fix">
+            <p><b class="lbl">The fix.</b> Use <b>Ready to edit</b>. It downloads H.264, which every editor handles natively, with no converting. It tops out at 1080p on YouTube. For 4K that edits, use <b>4K (slow)</b>, which re-encodes the best stream and takes real minutes.</p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <section class="sec" id="monthly" aria-labelledby="monthly-h">
+    <div class="read" style="max-width:880px;padding:0">
+      <div class="sec-head">
+        <h2 id="monthly-h">The monthly check</h2>
+        <p>Once a month, check the yt-dlp on your Mac before a download fails, not after.</p>
+      </div>
+      <div class="dash-grid">
+        <div>
+          <div class="term">
+            <div class="term-bar"><span class="lights" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">Paste into Terminal</span><span class="term-actions"><button class="btn btn-primary btn-sm" type="button" data-copy="cmd-dash">Copy</button></span></div>
+            <pre class="term-body" id="cmd-dash" data-command>snag dash</pre>
+          </div>
+          <div class="prose" style="margin-top:18px">
+            <p>A small panel opens in your browser. It shows how old your yt-dlp is, upgrades it with one button, and runs a self-test that downloads a 19-second video, checks it came out as H.264, and deletes it. It also lists what you downloaded recently.</p>
+            <p>That panel can run things because it is a small server on <b>your own Mac</b>, not a page on the internet. It listens on <code>127.0.0.1</code> only, and closing the Terminal window stops it.</p>
+          </div>
+        </div>
+        <div>
+          <h3 style="font-size:17px;letter-spacing:-.02em">What the colour means</h3>
+          <ul class="flags">
+            <li><span class="dot" style="background:#34c759"></span><span><b>Green</b>, under 30 days old. Fine.</span></li>
+            <li><span class="dot" style="background:#0071e3"></span><span><b>Blue</b>, 30 to 60 days. Upgrade it.</span></li>
+            <li><span class="dot" style="background:#ff3b30"></span><span><b>Red</b>, over 60 days. This is probably your problem.</span></li>
+          </ul>
+          <p class="built" style="margin-top:22px">Rather not open the panel? <code>pipx upgrade yt-dlp</code> does the same upgrade on its own.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div>
+      <p>Snag is a wrapper around <a href="https://github.com/yt-dlp/yt-dlp">yt-dlp</a> and <a href="https://ffmpeg.org">ffmpeg</a>, who do the actual work.</p>
+      <p>This website does not download anything. Nothing you paste here is uploaded, logged or counted.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="how-it-works.html">How it works</a>
+      <a href="setup.html">Setup</a>
+      <a href="help.html">Help</a>
+      <a href="source.html">Source</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
